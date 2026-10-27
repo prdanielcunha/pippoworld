@@ -80,7 +80,8 @@ test('barreira, cancelamento, preferências persistentes e recuperação', async
   await expect(page.locator('canvas')).toHaveAttribute('data-place', 'yard');
 });
 
-test('multitoque real, liberação independente e cancelamento', async ({ page, context }) => {
+test('multitoque real, liberação independente e cancelamento', async ({ page, context, browserName }) => {
+  test.skip(browserName !== 'chromium', 'CDP é exclusivo do Chromium; entrada por Pointer Events tem caso portátil separado.');
   await begin(page); await page.locator('nav').getByRole('button', { name: 'Casa da Música', exact: true }).click(); await tap(page, 'keyboard_eight');
   const a = (await page.locator('[data-target=key_0]').boundingBox())!;
   const b = (await page.locator('[data-target=key_4]').boundingBox())!;

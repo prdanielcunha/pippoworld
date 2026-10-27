@@ -6,11 +6,14 @@ export class Mixer {
   private context?: AudioContext; private buses = {} as Record<Channel, GainNode>;
   private voices: Voice[] = []; private buffers = new Map<RecordedId, AudioBuffer>();
   private recording?: RecordedId; private noise?: AudioBuffer;
-  constructor(private preferences: Preferences) {}
+  private retiring = new Set<Voice>(); private desiredRunning = false; private revision = 0;
+  constructor(private preferences: Preferences, private onInterruption?: () => void) {}
   async unlock() {
+    this.desiredRunning = true; const revision = ++this.revision;
     try {
       if (!this.context) {
         const ctx = this.context = new AudioContext({ latencyHint: 'interactive' });
+        ctx.onstatechange = () => { if (this.desiredRunning && ctx.state !== 'running') this.onInterruption?.(); };
         const limiter = ctx.createDynamicsCompressor(); limiter.threshold.value = -10; limiter.ratio.value = 12; limiter.connect(ctx.destination);
         for (const c of ['voice', 'animals', 'instruments', 'ambience'] as Channel[]) { const bus = ctx.createGain(); bus.connect(limiter); this.buses[c] = bus; }
         this.configure(this.preferences);
@@ -19,7 +22,9 @@ export class Mixer {
         // Ruído instrumental, nunca usado como vocalização animal.
         let seed = 17; for (let i = 0; i < data.length; i++) { seed = (seed * 16807) % 2147483647; data[i] = seed / 1073741824 - 1; }
       }
-      await this.context.resume(); return this.context.state === 'running';
+      await this.context.resume();
+      if (!this.desiredRunning) { await this.context.suspend(); return false; }
+      return revision === this.revision && this.context.state === 'running';
     } catch { return false; }
   }
   configure(p: Preferences) { this.preferences = p; if (this.context) for (const c of Object.keys(p.volumes) as Channel[]) this.buses[c].gain.setTargetAtTime(p.volumes[c] * .65, this.context.currentTime, .015); }
@@ -27,13 +32,18 @@ export class Mixer {
     const ctx = this.context!; const now = ctx.currentTime;
     v.gain.gain.cancelScheduledValues(now); v.gain.gain.setTargetAtTime(0, now, .012);
     try { v.source.stop(now + .06); } catch { /* já finalizada */ }
-    this.voices = this.voices.filter(x => x !== v);
+    this.voices = this.voices.filter(x => x !== v); this.retiring.add(v);
   }
   stopKey(key: string) { for (const v of [...this.voices]) if (v.key === key) this.release(v); }
   stopChannels(channels: Channel[]) { for (const v of [...this.voices]) if (channels.includes(v.channel)) this.release(v); this.recording = undefined; }
   stop() { this.stopChannels(['voice', 'animals', 'instruments', 'ambience']); }
-  suspend() { const pending = [...this.voices]; this.stop(); for (const v of pending) v.gain.disconnect(); void this.context?.suspend(); }
-  dispose() { this.stop(); void this.context?.close(); }
+  suspend() {
+    this.desiredRunning = false; this.revision++; this.stop();
+    // Inclui fontes em liberação: nenhuma cauda antiga reaparece ao retomar.
+    for (const v of this.retiring) { v.gain.disconnect(); try { v.source.stop(); } catch { /* já terminou */ } }
+    this.retiring.clear(); void this.context?.suspend().catch(() => {});
+  }
+  dispose() { this.suspend(); if (this.context) this.context.onstatechange = null; void this.context?.close().catch(() => {}); }
   get status() { return { state: this.context?.state ?? 'locked', voices: this.voices.length, channels: this.voices.map(v => v.channel) }; }
   private attach(source: AudioScheduledSourceNode, channel: Channel, key: string, level: number, duration: number, sustained = false) {
     const ctx = this.context!; const now = ctx.currentTime;
@@ -41,11 +51,11 @@ export class Mixer {
     const gain = ctx.createGain(); gain.gain.setValueAtTime(0, now); gain.gain.linearRampToValueAtTime(level, now + .006); if (sustained) gain.gain.setValueAtTime(level, now + Math.max(.007, duration - .04)); gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
     source.connect(gain); gain.connect(this.buses[channel]);
     const voice = { source, gain, channel, key }; this.voices.push(voice);
-    source.onended = () => { this.voices = this.voices.filter(v => v !== voice); source.disconnect(); gain.disconnect(); };
+    source.onended = () => { this.retiring.delete(voice); this.voices = this.voices.filter(v => v !== voice); source.disconnect(); gain.disconnect(); };
     source.start(now); source.stop(now + duration + .02); return voice;
   }
   instrument(kind: 'key' | 'drum' | 'shaker', key: string, index = 0) {
-    const ctx = this.context; if (!ctx || ctx.state !== 'running') return;
+    const ctx = this.context; if (!ctx || ctx.state !== 'running') { if (ctx && this.desiredRunning) this.onInterruption?.(); return; }
     this.stopChannels(['voice', 'animals']); this.stopKey(key);
     if (kind === 'shaker') {
       const source = ctx.createBufferSource(); source.buffer = this.noise!;
@@ -77,6 +87,7 @@ export class Mixer {
   }
   recorded(id: RecordedId) {
     const ctx = this.context; const buffer = this.buffers.get(id); const r = recordings[id];
+    if (!buffer) { this.stopChannels(['voice', 'animals']); return false; }
     if (!ctx || ctx.state !== 'running' || !buffer || (r.channel === 'voice' && !this.preferences.speech)) return false;
     if (this.recording === id && this.voices.some(v => v.key === id)) return true;
     this.stopChannels(['voice', 'animals']); this.recording = id;

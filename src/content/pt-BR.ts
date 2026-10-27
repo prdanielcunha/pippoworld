@@ -1,6 +1,8 @@
 // Nomes de exibição, identidade e texto localizável; nunca usados como IDs.
 export const content = {
   locale: 'pt-BR', title: 'Mundo Pippo', eyebrow: 'Vale dos Bichinhos',
+  prototype: 'Protótipo em avaliação. Acompanhe o teste: arte e instrumentos provisórios; voz e gravações dos animais ainda ausentes.',
+  version: 'Versão de teste:',
   loading: 'Preparando as brincadeiras…', ready: 'Prévia jogável · arte e áudio em produção',
   unavailable: 'Não foi possível abrir a cena 3D. Use um navegador com WebGL habilitado.',
   notice: 'Prévia de desenvolvimento. Modelos e animações provisórios.',

@@ -13,7 +13,8 @@ const el = <K extends keyof HTMLElementTagNameMap>(tag: K, parent: HTMLElement, 
 const button = (parent: HTMLElement, icon: string, label: string, action: () => void, className = '') => {
   const b = el('button', parent, className, icon); b.type = 'button'; b.setAttribute('aria-label', label); b.title = label; b.onclick = action; return b;
 };
-const prefs = loadPreferences(); const state = new WorldState(); const audio = new Mixer(prefs);
+const buildRevision = import.meta.env.VITE_BUILD_REVISION || 'local';
+const prefs = loadPreferences(); const state = new WorldState(); const audio = new Mixer(prefs, () => pause());
 const restored = loadSession();
 if (restored) { state.place = prefs.activities[restored.place] ? restored.place : 'yard'; state.flowerOpen = restored.flowerOpen; }
 document.title = c.title;
@@ -29,6 +30,7 @@ const status = el('p', app, 'status', c.loading); status.id = 'status'; status.s
 const notice = el('p', app, 'notice', c.notice);
 const overlay = el('div', world, 'overlay'); overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
 let panel = el('div', overlay, 'panel');
+let screenRevision = 0;
 let screen: 'entry' | 'play' | 'pause' | 'gate' | 'settings' = 'entry';
 let previous: 'entry' | 'pause' = 'entry'; let engine: Engine | undefined; let view: ReturnType<typeof createYard> | undefined;
 let disposed = false; let elapsed = 0; let echo = 0; let echoSecond = 0; let returnFocus: HTMLElement | null = null;
@@ -38,21 +40,23 @@ const objectButtons = new Map<string, HTMLButtonElement>();
 function cancelSounds() { contacts.clear(); view?.held.clear(); audio.stop(); echo = 0; echoSecond = 0; }
 function syncSafe() { if (state.active) saveSession(state.safe()); }
 function setScreen(value: typeof screen, heading?: string) {
-  screen = value; overlay.hidden = value === 'play'; targetsLayer.inert = value !== 'play'; nav.inert = value !== 'play';
+  screenRevision++; screen = value; overlay.hidden = value === 'play'; targetsLayer.inert = value !== 'play'; nav.inert = value !== 'play';
   pauseButton.disabled = value !== 'play' || !ready; adultButton.disabled = value === 'gate' || value === 'settings';
   panel.replaceChildren(); if (heading) el('h2', panel, '', heading);
 }
 function entry() {
   state.active = false; state.paused = false; cancelSounds();
-  setScreen('entry', c.title); el('p', panel, 'intro-icon', '☀');
+  setScreen('entry', c.title); el('p', panel, 'prototype-note', c.prototype);
+  el('p', panel, 'prototype-version', c.version + ' ' + buildRevision); el('p', panel, 'intro-icon', '☀');
   const start = button(panel, '▶', c.start, () => { void startGame(); }, 'primary start'); start.disabled = !ready;
   el('p', panel, 'adult-note', c.first); button(panel, '⚙ ' + c.adults, c.adults, openGate);
 }
 async function startGame() {
   if (!ready || screen !== 'entry') return;
   state.active = true; state.paused = false; setScreen('play');
-  const ok = await audio.unlock(); if (!ok) status.textContent = c.audioUnavailable;
-  await audio.prepare(); if (!state.active || state.paused) return;
+  const revision = screenRevision;
+  const ok = await audio.unlock(); if (revision !== screenRevision) return; if (!ok) status.textContent = c.audioUnavailable;
+  await audio.prepare(); if (revision !== screenRevision || !state.active || state.paused) return;
   if (!hello) { audio.recorded('hello'); hello = true; }
   syncSafe(); updateActions(); pauseButton.focus();
 }
@@ -65,7 +69,8 @@ function pause() {
 }
 async function resume() {
   if (!ready) return;
-  const ok = await audio.unlock(); status.textContent = ok ? c.ready : c.audioUnavailable;
+  const revision = screenRevision;
+  const ok = await audio.unlock(); if (revision !== screenRevision) return; status.textContent = ok ? c.ready : c.audioUnavailable;
   state.paused = false; setScreen('play'); updateActions();
   (returnFocus?.isConnected ? returnFocus : pauseButton)?.focus();
 }
@@ -124,7 +129,7 @@ function updateActions() {
     const label = isKey ? c.notes[Number(id.slice(4))] : c.labels[id as keyof typeof c.labels];
     const b = button(targetsLayer, '', label, () => {}, 'object-target'); b.dataset.target = id;
     b.onclick = e => { if (e.detail === 0) { interact(id, -1); if (isKey) stopContact(-1); } };
-    b.onpointerdown = e => { if (screen !== 'play') return; e.preventDefault(); b.setPointerCapture(e.pointerId); interact(id, e.pointerId); };
+    b.onpointerdown = e => { if (screen !== 'play') return; e.preventDefault(); if (e.isTrusted) b.setPointerCapture(e.pointerId); interact(id, e.pointerId); };
     b.onpointerup = e => {
       const hit = document.elementFromPoint(e.clientX, e.clientY)?.closest<HTMLElement>('[data-target]')?.dataset.target;
       if (id === 'watering_can' && hit === 'flower_main') interact('flower_main', e.pointerId);
@@ -177,6 +182,7 @@ function interact(id: string, pointerId: number) {
   else if (id === 'flower_main') { if (state.selected && !state.water) { state.water = .001; state.selected = false; } }
   else if (id === 'shaker_story') audio.instrument('shaker', 'shaker');
   else if (['duck_main', 'cow_friend', 'chick_friend'].includes(id)) audio.recorded(id as RecordedId);
+  else if (id === 'rabbit_friend') audio.stopChannels(['voice', 'animals']);
   // Lolo reage silenciosamente, sem vocalização de coelho.
   layout();
 }
@@ -185,7 +191,9 @@ function layout() {
   for (const t of view.targets) {
     const b = objectButtons.get(t.id); if (!b) continue;
     const p = view.project(t); b.style.left = p.x + '%'; b.style.top = p.y + '%';
-    b.style.width = `max(${t.id.startsWith('key_') ? 44 : 64}px, ${p.width}%)`;
+    b.style.width = t.id.startsWith('key_')
+      ? `min(max(44px, ${p.width}%), ${100 / ((view.camera.orthoRight ?? 4.15) * 2)}%)`
+      : `max(64px, ${p.width}%)`;
     b.style.height = t.id.startsWith('key_') ? '96px' : `max(64px, ${Math.min(140, world.clientWidth * p.width / 100)}px)`;
     b.classList.toggle('selected', t.id === 'watering_can' && state.selected);
     if (t.id === 'watering_can') b.setAttribute('aria-pressed', String(state.selected));
@@ -199,7 +207,7 @@ entry();
 try {
   engine = new Engine(canvas, true, { stencil: true }, true); engine.setHardwareScalingLevel(Math.max(1, devicePixelRatio / 1.5));
   view = createYard(engine, state); let last = performance.now();
-  view.scene.onAfterRenderObservable.addOnce(() => { ready = true; canvas.dataset.rendered = 'true'; status.textContent = c.ready; entry(); });
+  view.scene.onAfterRenderObservable.addOnce(() => { ready = true; canvas.dataset.graphics = 'ready'; canvas.dataset.rendered = 'true'; status.textContent = c.ready; entry(); });
   const render = () => {
     if (disposed || !view) return;
     const now = performance.now(); const frameSeconds = (now - last) / 1000; const dt = Math.min(.05, frameSeconds); last = now;
@@ -218,15 +226,16 @@ try {
     view.scene.render(); layout();
   };
   view.scene.executeWhenReady(() => engine!.runRenderLoop(render));
-  const resize = () => { engine!.resize(); view!.resize(); layout(); };
-  const visibility = () => { if (document.hidden) pause(); }; const blur = () => pause();
-  window.addEventListener('resize', resize); document.addEventListener('visibilitychange', visibility); window.addEventListener('blur', blur);
+  const resize = () => { cancelSounds(); engine!.resize(); view!.resize(); layout(); };
+  const interrupt = () => { if (screen === 'play') pause(); else { cancelSounds(); audio.suspend(); } };
+  const visibility = () => { if (document.hidden) interrupt(); }; const blur = interrupt;
+  window.addEventListener('resize', resize); window.visualViewport?.addEventListener('resize', resize); document.addEventListener('visibilitychange', visibility); window.addEventListener('blur', blur);
   canvas.addEventListener('pointerdown', () => { if (state.selected) { state.selected = false; layout(); } });
-  engine.onContextLostObservable.add(() => { pause(); ready = false; pauseButton.disabled = true; status.textContent = c.unavailable; });
-  engine.onContextRestoredObservable.add(() => { ready = true; status.textContent = c.ready; });
+  engine.onContextLostObservable.add(() => { interrupt(); ready = false; canvas.dataset.graphics = 'lost'; pauseButton.disabled = true; panel.querySelector<HTMLButtonElement>('.start')?.setAttribute('disabled', ''); status.textContent = c.unavailable; });
+  engine.onContextRestoredObservable.add(() => { ready = true; canvas.dataset.graphics = 'ready'; status.textContent = c.ready; if (screen === 'entry') entry(); });
   const dispose = () => {
     if (disposed) return; disposed = true; syncSafe(); cancelSounds(); audio.dispose();
-    window.removeEventListener('resize', resize); document.removeEventListener('visibilitychange', visibility); window.removeEventListener('blur', blur); view?.scene.dispose(); engine?.dispose();
+    window.removeEventListener('resize', resize); window.visualViewport?.removeEventListener('resize', resize); document.removeEventListener('visibilitychange', visibility); window.removeEventListener('blur', blur); view?.scene.dispose(); engine?.dispose();
   };
   window.addEventListener('pagehide', event => { if (!event.persisted) dispose(); else pause(); });
   if (import.meta.hot) import.meta.hot.dispose(dispose);
