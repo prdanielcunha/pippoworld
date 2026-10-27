@@ -1,20 +1,66 @@
-:root { font-family: ui-rounded, system-ui, sans-serif; color: #293f42; background: #f6eedc; font-synthesis: none; }
-* { box-sizing: border-box; }
-body { margin: 0; }
-main { min-height: 100svh; display: flex; flex-direction: column; padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); gap: 16px; }
-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 1100px; width: 100%; margin: auto; }
-h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); margin: 0; }
-.eyebrow { margin: 0 0 4px; font-size: .85rem; }
-button { min-width: 100px; min-height: 48px; border: 2px solid #293f42; border-radius: 18px; background: #fffaf0; color: #293f42; font: inherit; padding: 10px 20px; cursor: pointer; }
-button:focus-visible { outline: 3px solid #226b9b; outline-offset: 4px; }
-button:disabled { opacity: .6; cursor: default; }
-.world { position: relative; flex: 1; min-height: 330px; height: 65svh; border-radius: 28px; overflow: hidden; background: #dcecf0; }
-canvas { display: block; width: 100%; height: 100%; min-height: 330px; touch-action: none; }
-#status { position: absolute; bottom: 12px; left: 12px; right: 12px; width: fit-content; max-width: calc(100% - 24px); margin: 0; border-radius: 12px; padding: 8px 12px; background: #fffaf0; font-size: .8rem; }
-.overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; background: #f6eedce8; }
-[hidden] { display: none !important; }
-footer { max-width: 800px; margin: auto; text-align: center; font-size: .85rem; line-height: 1.5; }
-footer p { margin: 0; }
-@media (max-width: 480px) { main { gap: 12px; } .world { border-radius: 20px; } }
-/* Cena estática sem comandos: o foco não deve desenhar uma moldura de interação. */
-canvas:focus { outline: none; }
+:root{font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:#293f42;background:#f6eedc;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0}
+button,input,select{font:inherit}
+button{border:2px solid #54716b;border-radius:22px;background:#fffaf0;color:#293f42;min-width:64px;min-height:64px;padding:12px 20px;cursor:pointer;touch-action:none;box-shadow:0 4px 0 #293f421a}
+button:hover{background:#f4e8cb}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid #226b9b;outline-offset:3px}
+button:disabled{opacity:.45;cursor:default}
+button:active{transform:translateY(2px)}
+[hidden]{display:none!important}
+main{height:100svh;min-height:480px;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));display:flex;flex-direction:column;gap:8px;max-width:1400px;margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;padding:0 8px;gap:8px}
+h1{font-size:clamp(1.2rem,3vw,2rem);margin:0;letter-spacing:-.04em}
+.eyebrow{font-size:.75rem;margin:0 0 3px;letter-spacing:.1em;text-transform:uppercase}
+.header-controls{display:flex;gap:8px}
+.header-controls button{font-size:1.5rem;padding:8px;min-height:56px;min-width:56px}
+.world{position:relative;flex:1;min-height:320px;border-radius:32px;overflow:hidden;border:1px solid #8caa9140;background:#dcecf0}
+canvas{height:100%;width:100%;display:block;touch-action:none;outline:none}
+.targets{position:absolute;inset:0;pointer-events:none}
+.object-target{position:absolute;pointer-events:auto;transform:translate(-50%,-50%);border:2px solid transparent;background:transparent;box-shadow:none;border-radius:28px;padding:0;min-width:0;min-height:0;touch-action:none}
+.object-target:hover{background:#fffaf010;border-color:#fffaf066}
+.object-target:active{transform:translate(-50%,-50%);background:#fffaf026}
+.object-target.selected{border:3px dashed #fffaf0;background:#fffaf020}
+.object-target:focus-visible{outline:4px solid #226b9b;outline-offset:0}
+.navigation{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:16px}
+.navigation button{width:84px;height:72px;font-size:2.1rem;border-color:#fffaf0;box-shadow:0 5px 0 #53695c33}
+.place-label{position:absolute;top:14px;left:18px;margin:0;font-size:.8rem;background:#fffaf0cc;padding:7px 12px;border-radius:16px;pointer-events:none}
+.overlay{position:absolute;inset:0;background:#f6eedce8;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(5px);overflow:auto}
+.panel{max-width:520px;width:100%;max-height:100%;overflow:auto;display:flex;flex-direction:column;align-items:stretch;gap:14px;text-align:center;padding:24px;border-radius:28px;background:#fffaf0;box-shadow:0 12px 50px #344f4420}
+.panel h2{font-size:1.5rem;margin:0}
+.panel h3{margin:10px 0 0}
+.panel p{line-height:1.5;margin:0;font-size:.9rem}
+.panel .intro-icon{font-size:4rem;color:#d99b39;line-height:1}
+.panel .adult-note{font-size:.8rem}
+.primary{background:#eed37c;border-color:#b69b45}
+.start{border-radius:50%;width:106px;height:106px;align-self:center;font-size:2.8rem}
+.sum{font-size:2rem!important;font-weight:bold}
+.panel input[type=text]{display:block;width:100%;padding:14px;border-radius:14px;border:2px solid #54716b;margin-top:10px}
+.setting{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;font-size:.9rem}
+.setting input[type=range]{width:45%;min-height:44px;accent-color:#527f57}
+.setting input[type=checkbox]{width:28px;height:28px;accent-color:#527f57}
+.setting select{max-width:52%;min-height:44px;border:1px solid #54716b;border-radius:10px;background:#fffaf0}
+.settings{max-width:600px;text-align:left}
+.status,.notice{margin:0;text-align:center;font-size:.7rem;line-height:1.35;color:#546c65}
+.notice{font-size:.65rem}
+.gate-error{color:#9a423b}
+@media(max-width:480px){main{gap:6px}
+.world{border-radius:24px}
+.panel{padding:20px;gap:12px}
+.navigation{bottom:14px}
+.navigation button{height:64px;width:76px}
+.header-controls button{min-height:48px;min-width:48px}
+.place-label{font-size:.7rem;top:10px;left:12px}
+}
+@media(max-height:500px){main{min-height:360px}
+header{position:absolute;z-index:3;right:20px;top:12px}
+header>div:first-child{display:none}
+.world{min-height:280px}
+.navigation{bottom:8px;left:12%;gap:8px}
+.navigation button{height:58px;min-height:58px;width:64px}
+.place-label{top:10px}
+.panel{padding:14px;gap:8px}
+.intro-icon,.adult-note{display:none}
+.start{width:74px;height:74px}
+.status,.notice{display:none}
+}
