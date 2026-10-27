@@ -1,0 +1,51 @@
+id,categoria,arquivo_planejado_ou_existente,estado,integracao,conteudo,origem,licenca
+duck_main,Modelo 3D,public/assets/models/characters/duck_main.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/duck_main.blend; rig/clipes conforme inventário,A produzir,Pendente
+cow_friend,Modelo 3D,public/assets/models/characters/cow_friend.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/cow_friend.blend; rig/clipes conforme inventário,A produzir,Pendente
+chick_friend,Modelo 3D,public/assets/models/characters/chick_friend.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/chick_friend.blend; rig/clipes conforme inventário,A produzir,Pendente
+rabbit_friend,Modelo 3D,public/assets/models/characters/rabbit_friend.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/rabbit_friend.blend; rig/clipes conforme inventário,A produzir,Pendente
+yard,Modelo 3D,public/assets/models/environments/yard.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/yard.blend; rig/clipes conforme inventário,A produzir,Pendente
+garden,Modelo 3D,public/assets/models/environments/garden.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/garden.blend; rig/clipes conforme inventário,A produzir,Pendente
+music_house,Modelo 3D,public/assets/models/environments/music_house.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/music_house.blend; rig/clipes conforme inventário,A produzir,Pendente
+ball_main,Modelo 3D,public/assets/models/objects/ball_main.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/ball_main.blend; rig/clipes conforme inventário,A produzir,Pendente
+watering_can,Modelo 3D,public/assets/models/objects/watering_can.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/watering_can.blend; rig/clipes conforme inventário,A produzir,Pendente
+flower_main,Modelo 3D,public/assets/models/objects/flower_main.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/flower_main.blend; rig/clipes conforme inventário,A produzir,Pendente
+drum_single,Modelo 3D,public/assets/models/instruments/drum_single.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/drum_single.blend; rig/clipes conforme inventário,A produzir,Pendente
+keyboard_eight,Modelo 3D,public/assets/models/instruments/keyboard_eight.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/keyboard_eight.blend; rig/clipes conforme inventário,A produzir,Pendente
+shaker_story,Modelo 3D,public/assets/models/instruments/shaker_story.glb,Pendente final,src/scene/yard.ts — substituir fábrica procedural,Fonte assets-source/models/shaker_story.blend; rig/clipes conforme inventário,A produzir,Pendente
+voice.hello.first,Voz pt-BR,public/assets/audio/pt-BR/voice_hello_first.wav,Pendente final,hello; startGame já chama recorded,Oi! Eu sou o Pippo!,A produzir,Pendente
+voice.hello.return,Voz pt-BR,public/assets/audio/pt-BR/voice_hello_return.wav,Pendente final,Novo gancho de saudação alternativa,Oi! Vamos brincar?,A produzir,Pendente
+voice.friend.cow,Voz pt-BR,public/assets/audio/pt-BR/voice_friend_cow.wav,Pendente final,cow nulo; falta agendamento,A Mimi é uma vaca.,A produzir,Pendente
+voice.friend.chick,Voz pt-BR,public/assets/audio/pt-BR/voice_friend_chick.wav,Pendente final,chick nulo; falta agendamento,O Tico é um pintinho.,A produzir,Pendente
+voice.friend.rabbit,Voz pt-BR,public/assets/audio/pt-BR/voice_friend_rabbit.wav,Pendente final,rabbit nulo; falta apresentação,O Lolo é um coelho.,A produzir,Pendente
+voice.ball.blue,Voz pt-BR,public/assets/audio/pt-BR/voice_ball_blue.wav,Pendente final,Novo gancho contextual,A bola azul!,A produzir,Pendente
+voice.garden.can,Voz pt-BR,public/assets/audio/pt-BR/voice_garden_can.wav,Pendente final,Novo gancho opcional,Olha o regador!,A produzir,Pendente
+voice.garden.flower,Voz pt-BR,public/assets/audio/pt-BR/voice_garden_flower.wav,Pendente final,flower nulo; falta disparo após confirmação,A flor abriu!,A produzir,Pendente
+voice.music.drum,Voz pt-BR,public/assets/audio/pt-BR/voice_music_drum.wav,Pendente final,Novo gancho com prioridade do toque,Um tambor!,A produzir,Pendente
+voice.music.keyboard,Voz pt-BR,public/assets/audio/pt-BR/voice_music_keyboard.wav,Pendente final,Novo gancho com prioridade do toque,Um teclado!,A produzir,Pendente
+voice.turn.mine,Voz pt-BR,public/assets/audio/pt-BR/voice_turn_mine.wav,Pendente final,Novo gancho cancelável,Agora eu!,A produzir,Pendente
+voice.turn.yours,Voz pt-BR,public/assets/audio/pt-BR/voice_turn_yours.wav,Pendente final,Novo gancho cancelável,Sua vez!,A produzir,Pendente
+voice.shared.clap,Voz pt-BR,public/assets/audio/pt-BR/voice_shared_clap.wav,Pendente final,História opcional; sem microfone,Vamos bater palmas juntos?,A produzir,Pendente
+voice.goodbye,Voz pt-BR,public/assets/audio/pt-BR/voice_goodbye.wav,Pendente final,goodbye nulo; finish ainda não toca voz,Vamos guardar? Até a próxima!,A produzir,Pendente
+animal.duck.main,Gravação natural,public/assets/audio/animals/animal_duck_main.wav,Pendente final,resources.ts duck_main; Mixer.recorded,Pato filhote; espécie/idade a aprovar,A produzir,Pendente
+animal.cow.main,Gravação natural,public/assets/audio/animals/animal_cow_main.wav,Pendente final,resources.ts cow_friend; Mixer.recorded,Bos taurus; vaca adulta; mugido real,A produzir,Pendente
+animal.chick.main,Gravação natural,public/assets/audio/animals/animal_chick_main.wav,Pendente final,resources.ts chick_friend; Mixer.recorded,Gallus gallus domesticus; pintinho; piado real,A produzir,Pendente
+animal.rabbit,Silêncio intencional,Nenhum arquivo,Intencional,interact(rabbit_friend),Não inventar som de coelho,Sem recurso,Não se aplica
+keyboard_c4,Instrumento,public/assets/audio/instruments/keyboard_c4.wav,Pendente final,Mixer.instrument(key); falta adaptador de amostras,261.625565 Hz; timbre consistente,A produzir,Pendente
+keyboard_d4,Instrumento,public/assets/audio/instruments/keyboard_d4.wav,Pendente final,Mixer.instrument(key); falta adaptador de amostras,293.664768 Hz; timbre consistente,A produzir,Pendente
+keyboard_e4,Instrumento,public/assets/audio/instruments/keyboard_e4.wav,Pendente final,Mixer.instrument(key); falta adaptador de amostras,329.627557 Hz; timbre consistente,A produzir,Pendente
+keyboard_f4,Instrumento,public/assets/audio/instruments/keyboard_f4.wav,Pendente final,Mixer.instrument(key); falta adaptador de amostras,349.228231 Hz; timbre consistente,A produzir,Pendente
+keyboard_g4,Instrumento,public/assets/audio/instruments/keyboard_g4.wav,Pendente final,Mixer.instrument(key); falta adaptador de amostras,391.995436 Hz; timbre consistente,A produzir,Pendente
+keyboard_a4,Instrumento,public/assets/audio/instruments/keyboard_a4.wav,Pendente final,Mixer.instrument(key); falta adaptador de amostras,440 Hz; timbre consistente,A produzir,Pendente
+keyboard_b4,Instrumento,public/assets/audio/instruments/keyboard_b4.wav,Pendente final,Mixer.instrument(key); falta adaptador de amostras,493.883301 Hz; timbre consistente,A produzir,Pendente
+keyboard_c5,Instrumento,public/assets/audio/instruments/keyboard_c5.wav,Pendente final,Mixer.instrument(key); falta adaptador de amostras,523.251131 Hz; timbre consistente,A produzir,Pendente
+drum_single.audio,Instrumento,public/assets/audio/instruments/drum_single.wav,Pendente final,Mixer.instrument; falta adaptador de amostras,Ataque/cauda próprios e revisão musical,A produzir,Pendente
+shaker_story.audio,Instrumento,public/assets/audio/instruments/shaker_story.wav,Pendente final,Mixer.instrument; falta adaptador de amostras,Ataque/cauda próprios e revisão musical,A produzir,Pendente
+ball_bounce,Efeito/ambiente,public/assets/audio/effects/ball_bounce.wav,Pendente final,Novo gancho de contato/canal ambience,Opcional discreto; ambiente sem competição sonora,A produzir,Pendente
+ball_receive,Efeito/ambiente,public/assets/audio/effects/ball_receive.wav,Pendente final,Novo gancho de contato/canal ambience,Opcional discreto; ambiente sem competição sonora,A produzir,Pendente
+ball_release,Efeito/ambiente,public/assets/audio/effects/ball_release.wav,Pendente final,Novo gancho de contato/canal ambience,Opcional discreto; ambiente sem competição sonora,A produzir,Pendente
+garden_water,Efeito/ambiente,public/assets/audio/effects/garden_water.wav,Pendente final,Novo gancho de contato/canal ambience,Opcional discreto; ambiente sem competição sonora,A produzir,Pendente
+yard_ambience,Efeito/ambiente,public/assets/audio/effects/yard_ambience.wav,Pendente final,Novo gancho de contato/canal ambience,Opcional discreto; ambiente sem competição sonora,A produzir,Pendente
+music_house_ambience,Efeito/ambiente,public/assets/audio/effects/music_house_ambience.wav,Pendente final,Novo gancho de contato/canal ambience,Opcional discreto; ambiente sem competição sonora,A produzir,Pendente
+procedural_visuals,Provisório existente,src/scene/yard.ts,Integrado provisório,Fábrica original,13 conjuntos de personagens/cenários/objetos,Original do repositório,Titular define licença; não CC0
+procedural_audio,Provisório existente,src/audio/mixer.ts,Integrado provisório,Mixer,"Triângulo, modos de membrana e ruído filtrado; não são gravações",Original do repositório,Titular define licença
+babylonjs,Dependência runtime,public/THIRD_PARTY_NOTICES.txt,Incorporado,Bundle Vite,@babylonjs/core 9.32.0,https://github.com/BabylonJS/Babylon.js,Apache-2.0 + NOTICE
