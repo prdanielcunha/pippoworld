@@ -1,5 +1,7 @@
 # Inventário executado e licenças — trecho B
 
+Estado posterior: [revisão mobile, WebKit e demonstração publicada](REVISAO_E_TESTE_IPHONE.md). O registro abaixo conserva a etapa anterior; o inventário de produção atual está em [INVENTARIO_PRODUCAO_WORK.md](INVENTARIO_PRODUCAO_WORK.md).
+
 26/10/2026. Nenhum arquivo de áudio animal ou voz foi encontrado na base. Não se adquiriu material de origem incerta. O trecho é uma prévia técnica com som instrumental, ainda sem aceite sonoro dos encontros. As fontes originais em `docs/fontes/` e o inventário de produção continuam preservados.
 
 | IDs / versão | Origem / autor / licença | Integração e pendência |

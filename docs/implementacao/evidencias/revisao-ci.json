@@ -1,0 +1,25 @@
+{
+  "runtimeCommit": "1e052f1606ec0646998d02e44d5cc9901315adbc",
+  "runId": 40427982714,
+  "url": "https://github.com/prdanielcunha/pippoworld/actions/runs/40427982714",
+  "jobs": [
+    {
+      "id": 121938429599,
+      "browser": "Chrome for Testing 156.0.8078.4 / Playwright v1248",
+      "os": "Ubuntu 24.04",
+      "conclusion": "success",
+      "passed": 23,
+      "skipped": 0
+    },
+    {
+      "id": 121938429815,
+      "browser": "WebKit 27.2 / Playwright v2370",
+      "os": "Ubuntu 24.04",
+      "conclusion": "success",
+      "passed": 22,
+      "skipped": 1,
+      "skipReason": "CDP só no Chromium; Pointer Events portátil executado"
+    }
+  ],
+  "physicalDevicesTested": false
+}

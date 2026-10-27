@@ -1,5 +1,7 @@
 # Primeiro trecho jogável — relatório técnico
 
+Estado posterior: [revisão mobile, WebKit e demonstração publicada](REVISAO_E_TESTE_IPHONE.md). O registro abaixo conserva a etapa anterior; o inventário de produção atual está em [INVENTARIO_PRODUCAO_WORK.md](INVENTARIO_PRODUCAO_WORK.md).
+
 26/10/2026 · branch `dev/first-playable` · base `c630116`. O commit de entrega aparece no histórico Git e no PR. Prévia técnica executável; não representa aceite final de arte, áudio, desempenho físico ou compreensão infantil.
 
 ## O que funciona

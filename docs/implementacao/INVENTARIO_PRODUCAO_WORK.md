@@ -1,6 +1,6 @@
 # Inventário para levar ao Work — trecho B
 
-Revisão: 27/10/2026. Fonte de produto: documentos originais 03, 05 e 06 em `docs/primeiro-trecho/`, F01 completo e complementos 23/24. Este documento descreve **o que produzir e como entregar**, sem afirmar que os arquivos finais já existem. A planilha portátil [inventario-producao.csv](inventario-producao.csv) lista cada arquivo. A revisão técnica/produção não equivale a aprovação educativa ou teste com crianças.
+Revisão: 27/10/2026 UTC. Fonte de produto: documentos originais 03, 05 e 06 em `docs/primeiro-trecho/`, F01 completo e complementos 23/24. Este documento descreve **o que produzir e como entregar**, sem afirmar que os arquivos finais já existem. A planilha portátil [inventario-producao.csv](inventario-producao.csv) lista cada arquivo. A revisão técnica/produção não equivale a aprovação educativa ou teste com crianças.
 
 ## Pedido de produção ao Work
 
@@ -116,6 +116,8 @@ Ducking de fundo durante voz, escuta da mixagem completa, conforto e latência p
 | TypeScript 7.0.2 (ferramenta) | https://github.com/microsoft/TypeScript | Apache-2.0; LICENSE/NOTICE no pacote |
 | Playwright Test 1.64.1 (ferramenta) | https://github.com/microsoft/playwright | Apache-2.0; LICENSE/NOTICE no pacote; Chromium/WebKit são navegadores de validação, não recursos do jogo |
 | Voz e gravações animais | **Nenhuma fonte incorporada** | **Sem licença/arquivo para aprovar**. Não preencher origem fictícia |
+
+Hashes, tamanhos e versões dos recursos realmente existentes: [recursos-incorporados.json](recursos-incorporados.json).
 
 ## Conferência de recebimento e próximos passos
 

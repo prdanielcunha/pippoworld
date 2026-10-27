@@ -1,5 +1,7 @@
 # Matriz de implementação — complemento à matriz original 09
 
+Estado posterior: [revisão mobile, WebKit e demonstração publicada](REVISAO_E_TESTE_IPHONE.md). O registro abaixo conserva a etapa anterior; o inventário de produção atual está em [INVENTARIO_PRODUCAO_WORK.md](INVENTARIO_PRODUCAO_WORK.md).
+
 Data: 26/10/2026. Estado do trecho B, sem alterar [R01–R15, E01–E24 ou etapas C/D/E](../primeiro-trecho/09_RASTREABILIDADE_REQUISITOS.md). Prioridade dos R permanece central. Evidência técnica em Chromium Linux com WebGL por software e viewports emulados; nenhuma validação física ou com famílias. Nenhum requisito global recebeu aceite final.
 
 | Requisito / origem | Estado e implementação | Evidência e pendência |
@@ -51,3 +53,16 @@ Data: 26/10/2026. Estado do trecho B, sem alterar [R01–R15, E01–E24 ou etapa
 | AC38 | Interface pt-BR, idioma único | Parcial, banco de voz ausente |
 | AC39 | Capturas e interações fora do roteiro | Provisório, sem rig final e sem aceite artístico |
 | AC40 | Execução Chromium com renderização por software | Metas físicas não medidas. FPS/latência, memória, aquecimento e bateria pendentes |
+
+## Evidência posterior da revisão mobile
+
+Commit de runtime `1e052f1`: [relatório e limites completos](REVISAO_E_TESTE_IPHONE.md). As linhas históricas acima continuam válidas como registro da primeira etapa; a cobertura técnica foi ampliada sem dar aceite global.
+
+| Requisitos/casos afetados | Nova evidência | Limite que permanece |
+| --- | --- | --- |
+| R01/R06/R07, AC01–05/16–28 | 23 testes Chromium e 22 WebKit; percursos completos, alvos disjuntos, glissando e resize; teste 375×667 e insets CSS simulados | Sem aparelho físico; largura mínima de suporte ainda não fechada |
+| R09, AC06–09/26/33 | Retomada assíncrona não contorna barreira; notas liberam em orientação, pagehide preservado, blur e perda/restauração real do contexto WebGL | App switch/bloqueio físicos e mixagem com material final ainda pendentes |
+| R05, AC23–26/30 | Web Audio e oito frequências/sinal testados também no WebKit/Linux. CDP ignorado apenas no WebKit; contatos por Pointer Events/glissando executados | Timbres são síntese provisória; sem medição de latência física nem revisão auditiva final |
+| R12/R13, AC35–37 | Demonstração privada publicada separadamente, versão/commit visíveis; archive com 29 arquivos conferidos por HTTP local e SHA-256; LICENSE/NOTICE distribuídos | Checagem HTTP do domínio externo bloqueada pelo proxy; abertura no iPhone deve ser confirmada pelo responsável |
+| R02/R03/R04/R08/R14/R15, AC11–15/36/38–39 | Inventário Work agora detalha 13 modelos, clipes por personagem, 14 falas, sons naturais/instrumentos/efeitos e integração, com CSV e hashes dos provisórios | Voz/gravações naturais, GLB/rigs e ganchos finais ausentes; nenhuma aprovação final atribuída |
+| R11, AC31/32/34/40 | Nenhuma falsa promessa adicionada | Offline, atualização de pacotes e métricas físicas continuam pendentes |
