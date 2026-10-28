@@ -1,0 +1,140 @@
+{
+  "version": 2,
+  "columns": 4,
+  "rows": 2,
+  "standingHeight": 408,
+  "frames": [
+    {
+      "x": 84,
+      "y": 14,
+      "w": 318,
+      "h": 413,
+      "sx": 0,
+      "sy": 0,
+      "sw": 443,
+      "sh": 443,
+      "seed": [
+        348,
+        235
+      ],
+      "anchorX": 153.759
+    },
+    {
+      "x": 77,
+      "y": 17,
+      "w": 324,
+      "h": 407,
+      "sx": 443,
+      "sy": 0,
+      "sw": 444,
+      "sh": 443,
+      "seed": [
+        236,
+        234
+      ],
+      "anchorX": 153.305
+    },
+    {
+      "x": 60,
+      "y": 16,
+      "w": 285,
+      "h": 409,
+      "sx": 887,
+      "sy": 0,
+      "sw": 443,
+      "sh": 443,
+      "seed": [
+        174,
+        224
+      ],
+      "anchorX": 155.357
+    },
+    {
+      "x": 61,
+      "y": 14,
+      "w": 314,
+      "h": 413,
+      "sx": 1330,
+      "sy": 0,
+      "sw": 444,
+      "sh": 443,
+      "seed": [
+        316,
+        231
+      ],
+      "anchorX": 154.016
+    },
+    {
+      "x": 83,
+      "y": 3,
+      "w": 322,
+      "h": 413,
+      "sx": 0,
+      "sy": 443,
+      "sw": 443,
+      "sh": 444,
+      "seed": [
+        161,
+        225
+      ],
+      "anchorX": 154.553
+    },
+    {
+      "x": 79,
+      "y": 4,
+      "w": 322,
+      "h": 406,
+      "sx": 443,
+      "sy": 443,
+      "sw": 444,
+      "sh": 444,
+      "seed": [
+        247,
+        218
+      ],
+      "anchorX": 156.852
+    },
+    {
+      "x": 60,
+      "y": 6,
+      "w": 287,
+      "h": 407,
+      "sx": 887,
+      "sy": 443,
+      "sw": 443,
+      "sh": 444,
+      "seed": [
+        124,
+        213
+      ],
+      "anchorX": 156.979
+    },
+    {
+      "x": 62,
+      "y": 6,
+      "w": 314,
+      "h": 407,
+      "sx": 1330,
+      "sy": 443,
+      "sw": 444,
+      "sh": 444,
+      "seed": [
+        110,
+        221
+      ],
+      "anchorX": 155.546
+    }
+  ],
+  "maxExtentRatio": 0.4184,
+  "phaseNames": [
+    "contact_near",
+    "down_near",
+    "passing_far",
+    "up_far",
+    "contact_far",
+    "down_far",
+    "passing_near",
+    "up_near"
+  ],
+  "registration": "centroid of central head band plus 0.045 body height toward tail"
+}

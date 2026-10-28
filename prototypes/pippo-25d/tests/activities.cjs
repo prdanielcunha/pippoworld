@@ -1,0 +1,23 @@
+const vm=require('node:vm'),fs=require('node:fs'),assert=require('node:assert/strict');
+class Element{
+ constructor(id,dataset={}){this.id=id;this.dataset=dataset;this.events={};this.attrs={};this.classes=new Set;this.classList={add:(...s)=>s.forEach(x=>this.classes.add(x)),remove:(...s)=>s.forEach(x=>this.classes.delete(x)),toggle:(s,on)=>on?this.classes.add(s):this.classes.delete(s)};this.hidden=false;this.value='';this.checked=false}
+ setAttribute(k,v){this.attrs[k]=v}addEventListener(k,f){this.events[k]=f}focus(){}setPointerCapture(){}click(){this.onclick?.()}
+}
+const nodes=new Map;function $(id){if(!nodes.has(id))nodes.set(id,new Element(id));return nodes.get(id)}
+const keys=Array.from({length:8},(_,i)=>new Element('key'+i,{note:String(i)})),places=['yard','music','garden'].map(place=>new Element(place,{place})),instruments=['keyboard','drum','xylophone','shaker','tambourine'].map(instrument=>new Element(instrument,{instrument})),all=[...keys,...places,...instruments];
+const events={},body=new Element('body'),storage=new Map;let paused=false,selected,reactions=0;const audioEvents=[];
+const audio={play(...args){audioEvents.push(['play',...args])},release(id){audioEvents.push(['release',id])},suspend(){audioEvents.push(['suspend'])},setVolume(){},setMuted(){}};
+const game={getState:()=>({paused,reduced:false}),setReduced(){},setActivity(v){selected=v},react(){reactions++}};
+const document={body,getElementById:$,querySelectorAll(s){if(s==='[data-note]')return keys;if(s==='[data-place]')return places;if(s==='[data-instrument]')return [...instruments,$('musicPanel')];if(s==='button[data-instrument]')return instruments;if(s==='.reply'||s==='.playing')return [...all,...nodes.values()].filter(e=>e.classes.has(s.slice(1)));throw Error(s)},querySelector(s){const m=s.match(/data-note="(\d)"/);return keys[Number(m[1])]},addEventListener(k,f){events[k]=f}};
+const window={pippoStudy:game,addEventListener(k,f){events['window:'+k]=f}};
+const context=vm.createContext({document,window,PippoAudio:{create:()=>audio},localStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},Math,JSON,Number,Boolean,Map,Set});vm.runInContext(fs.readFileSync('dist/activities.js','utf8'),context);
+const runtime=window.PippoActivities;const pointer=(el,type,id)=>el.events[type]({button:0,pointerId:id,preventDefault(){}});
+assert.equal($('musicPanel').onclick,undefined,'the panel must never become an instrument selector: child clicks bubble through it');assert.equal(selected,'yard');places[1].click();assert.equal(selected,'music');assert.equal($('musicPanel').hidden,false);assert.equal($('ball').hidden,true);
+pointer(keys[0],'pointerdown',1);pointer(keys[4],'pointerdown',2);assert.ok(keys[0].classes.has('playing')&&keys[4].classes.has('playing'),'two touches can hold separate notes');runtime.tick(5000);assert.equal(audioEvents.filter(e=>e[0]==='play').length,2,'Pippo never answers while a note is held');
+pointer(keys[0],'pointerup',1);pointer(keys[4],'pointerup',2);runtime.tick(1251);assert.equal(audioEvents.filter(e=>e[0]==='play').length,3,'reply starts only after silence');
+pointer(keys[1],'pointerdown',3);const last=audioEvents.slice(-5);assert.ok(last.some(e=>e[0]==='release'&&e[1]==='reply0'),'child touch cancels the current reply');pointer(keys[1],'pointerup',3);
+runtime.suspend(true);const count=audioEvents.filter(e=>e[0]==='play').length;runtime.tick(9000);pointer(keys[3],'pointerdown',4);assert.equal(audioEvents.filter(e=>e[0]==='play').length,count,'paused instruments neither play nor enqueue');runtime.suspend(false);runtime.tick(9000);assert.equal(audioEvents.filter(e=>e[0]==='play').length,count,'resuming never replays a stale phrase');
+places[2].click();$('water').click();runtime.tick(500);assert.ok(!$('gardenObjects').classes.has('bloom'));runtime.tick(501);assert.ok($('gardenObjects').classes.has('bloom'));places[0].click();places[2].click();assert.ok($('gardenObjects').classes.has('bloom'),'flower remains open when returning');
+$('resetGarden').click();$('water').click();runtime.tick(400);places[0].click();runtime.tick(2000);assert.ok(!$('gardenObjects').classes.has('bloom'),'leaving cancels unfinished watering');
+$('mute').onchange({target:{checked:true}});assert.equal(JSON.parse(storage.get('pippo.preferences.v1')).muted,true);$('volume').oninput({target:{value:'35'}});assert.equal(JSON.parse(storage.get('pippo.preferences.v1')).volume,.35);
+console.log('PASS: multitou ch, child priority, silent turn-taking, pause/no replay, scene exit, persistent session bloom and saved preferences'.replace('multitou ch','multitouch'));
