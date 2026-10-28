@@ -58,15 +58,15 @@ function advanceMotion(dt){
   if(state.turn){state.turn.elapsed+=dt;if(state.turn.elapsed<state.turn.duration)return;dt=state.turn.elapsed-state.turn.duration;state.turn=null}
   const before=state.actorX,result=PippoInteraction.advance(m.walk,dt);state.actorX=result.x;state.walkDistance+=Math.abs(state.actorX-before)*geometry().width;
   if(result.done){state.sideRest=true;state.motion=null;message('Pippo chegou. Toque em outro lugar ou faça carinho.')}
- }else{m.elapsed+=dt;if(m.elapsed>=m.duration){state.motion=null;message('Pippo voltou ao repouso.')}}
+ }else{m.elapsed+=dt;if(!m.persistent&&m.elapsed>=m.duration){state.motion=null;message('Pippo voltou ao repouso.')}}
 }
 function frame(t){
  const dt=Math.min(t-(state.last||t),50);state.last=t;
  if(!state.paused&&document.visibilityState==='visible'){
-  state.time+=dt;advanceBall(dt);advanceMotion(dt);state.blink=Math.max(state.petHeld&&state.petKind==='head'?220:0,state.blink-dt);state.pet=Math.max(state.petHeld?state.petDuration*.45:0,state.pet-dt);state.x+=(state.tx-state.x)*.08;state.y+=(state.ty-state.y)*.08;
+  state.time+=dt;advanceBall(dt);advanceMotion(dt);state.blink=Math.max(state.petHeld&&state.petKind==='head'?220:0,state.blink-dt);state.pet=Math.max(state.petHeld?state.petDuration*.45:0,state.pet-dt);state.x=PippoInteraction.follow(state.x,state.tx,dt);state.y=PippoInteraction.follow(state.y,state.ty,dt);
   if(state.expressionTime>0){state.expressionTime-=dt;if(state.expressionTime<=0)state.expression=null}
   window.PippoActivities?.tick(dt);
-  if(state.time>=state.nextBlink&&state.pet===0){setBlink(240);state.nextBlink=state.time+4700+Math.random()*2200}render();
+  if(state.time>=state.nextBlink&&state.pet===0&&!state.expression&&!state.motion&&!state.sideRest&&state.ballTime===null){setBlink(240);state.nextBlink=state.time+4700+Math.random()*2200}render();
  }
  requestAnimationFrame(frame);
 }
@@ -90,7 +90,7 @@ function endGesture(){
 }
 canvas.addEventListener('pointerdown',e=>{
  if(state.paused||!state.ready||state.pointer||e.button>0)return;
- const p=localPoint(e),g=geometry(),region=PippoInteraction.hit(p.x,p.y,g,state.facing);
+ const p=localPoint(e),g=geometry(),region=window.PippoCanon?.ready?window.PippoCanon.hit(p.x,p.y,g):PippoInteraction.hit(p.x,p.y,g,state.facing);
  e.preventDefault();canvas.focus({preventScroll:true});canvas.setPointerCapture(e.pointerId);
  if(region==='head'||region==='belly'){pet(region,p.x<g.cx?-1:1);state.petHeld=true}
  else if(region==='ground'&&state.activity==='yard')walkTo(p.x/g.width);
@@ -132,7 +132,7 @@ window.pippoStudy={getState:()=>({...state}),blink,pet,
  setReduced(value){state.reduced=value;$('reduced').checked=value;render()}
 };
 function startMotion(kind){
- if(!state.motionReady||state.paused)return;endGesture();state.turn=null;state.sideRest=false;state.expression=null;cancelBall();state.pet=0;state.blink=0;state.tx=state.ty=0;state.motion={kind,elapsed:0,duration:kind==='jump'?1400:kind==='crouch'?2000:kind==='rest'?7000:kind==='sit'?4500:2200};message({jump:'Pippo se prepara, pula e pousa.',crouch:'Pippo se abaixa e levanta.',sit:'Pippo sentou.',rest:'Um descanso tranquilo. Toque para acordar.',wave:'Pippo acena para você.',rise:'Pippo se levanta.',lookBack:'Pippo olha para trás.',observe:'Pippo observa a bola.',receive:'Pippo recebe a bola.',hold:'Pippo segura a bola.',return:'Pippo devolve a bola.',reach:'Pippo alcança a bola.',turnLeft:'Pippo vira à esquerda.',turnRight:'Pippo vira à direita.'}[kind]||'Pippo brinca.');render();
+ if(!state.motionReady||state.paused)return;endGesture();state.turn=null;state.sideRest=false;state.expression=null;cancelBall();state.pet=0;state.blink=0;state.tx=state.ty=0;state.motion={kind,elapsed:0,persistent:['rest','sit'].includes(kind),duration:kind==='jump'?1400:kind==='crouch'?2000:kind==='rest'?7000:kind==='sit'?4500:2200};message({jump:'Pippo se prepara, pula e pousa.',crouch:'Pippo se abaixa e levanta.',sit:'Pippo sentou. Toque nele ou escolha outra brincadeira.',rest:'Pippo descansa sem pressa. Toque nele para acordar.',wave:'Pippo acena para você.',rise:'Pippo se levanta.',lookBack:'Pippo olha para trás.',observe:'Pippo observa a bola.',receive:'Pippo recebe a bola.',hold:'Pippo segura a bola.',return:'Pippo devolve a bola.',reach:'Pippo alcança a bola.',turnLeft:'Pippo vira à esquerda.',turnRight:'Pippo vira à direita.'}[kind]||'Pippo brinca.');render();
 }
 function motionFrame(m){
  if(m.walk)return PippoInteraction.walkFrame(state.walkDistance,geometry().bodyHeight,walkMeta?walkMeta.frames.length:4);

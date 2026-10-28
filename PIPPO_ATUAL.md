@@ -2,7 +2,11 @@
 
 Backup de 28/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
 
-Versão publicada: 13. Commit original do Site: `5baf26abc9a29a368490a795e649c7c3e7cbc044`.
+Versão publicada: 14. Commit original do Site: `07e765836f19759e0c12082b57324e46b57a3ff4`.
+
+**Para continuar em outra conversa:** leia [o checkpoint e o prompt completo](prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md).
+
+Nesta entrega: toque acompanha a silhueta real, repouso/sentar sem timeout, piscadas respeitam expressões e perfil, respiração discreta sem separar partes. Não foram geradas imagens novas. A caminhada continua com quatro poses.
 
 Jogo: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 
@@ -12,9 +16,9 @@ Na pasta `prototypes/pippo-25d`, servir `dist/` com qualquer servidor HTTP está
 
 ## Recuperar todo o histórico original
 
-O pacote em duas partes `backups/pippo-25d-historico-2026-10-28.bundle.part01` e `.part02` guarda todos os commits e referências Git disponíveis do Site, além dos arquivos abertos nesta pasta. Primeiro reconstruir com `python3 backups/restaurar-historico.py` (confere SHA-256 automaticamente). Depois verificar com `git bundle verify backups/pippo-25d-historico-2026-10-28.bundle`. Recuperar com `git clone backups/pippo-25d-historico-2026-10-28.bundle pippo-restaurado`.
+O pacote em duas partes `backups/pippo-25d-historico-2026-10-28.bundle.part01` e `.part02` guarda todos os commits e referências Git do Site até a versão 13; as entregas posteriores estão nos commits da main e na pasta atual, além dos arquivos abertos nesta pasta. Primeiro reconstruir com `python3 backups/restaurar-historico.py` (confere SHA-256 automaticamente). Depois verificar com `git bundle verify backups/pippo-25d-historico-2026-10-28.bundle`. Recuperar com `git clone backups/pippo-25d-historico-2026-10-28.bundle pippo-restaurado`.
 
-`backups/pippo-25d-manifest-2026-10-28.json` registra tamanho, SHA-256 e SHA Git dos arquivos copiados.
+`backups/pippo-25d-manifest-2026-10-28.json` registra o checkpoint da versão 13. `backups/pippo-25d-manifest-atual.json` identifica os arquivos da fonte atual e seu commit.
 
 ## Limites conhecidos
 

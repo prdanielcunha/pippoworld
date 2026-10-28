@@ -26,11 +26,27 @@ const PippoInteraction=(()=>{
   if(((bx-635)/325)**2+((by-850)/260)**2<=1)return 'belly';
   return y>=g.height*.25?'ground':'empty';
  }
+ // Sample the silhouette actually drawn, with a small child-friendly edge
+ // tolerance. Ground shadows and transparent paper never count as the duck.
+ function hitRendered(x,y,g,view){
+  if(!view)return hit(x,y,g);
+  const dx=(x-view.cx)*(view.mirror?-1:1),dy=y-view.cy,c=Math.cos(view.rotate||0),s=Math.sin(view.rotate||0);
+  const px=(dx*c+dy*s)/view.scale+view.anchorX,py=(-dx*s+dy*c)/(view.scale*(view.stretch||1))+view.anchorY;
+  const radius=Math.min(10,Math.max(1,Math.ceil(6/view.scale)));
+  let nearest=Infinity,foundY=py,foundX=px;
+  for(let yy=Math.max(0,Math.floor(py-radius));yy<=Math.min(view.height-1,Math.ceil(py+radius));yy++)for(let xx=Math.max(0,Math.floor(px-radius));xx<=Math.min(view.width-1,Math.ceil(px+radius));xx++){
+   const d=(xx-px)**2+(yy-py)**2;
+   if(d<=radius*radius&&d<nearest&&view.alpha[yy*view.width+xx]>32){nearest=d;foundY=yy;foundX=xx}
+  }
+  if(Number.isFinite(nearest)){const h=view.headRegion;return (h?((foundX-h.cx)/h.rx)**2+((foundY-h.cy)/h.ry)**2<=1:foundY<view.headBottom)?'head':'belly'}
+  return y>=g.height*.25?'ground':'empty';
+ }
+ function follow(value,target,dt){return target+(value-target)*Math.exp(-Math.max(0,dt)/200)}
  function walkFrame(distance,height,count=8){
   // One full left/right stride per 0.52 body heights; avoids a rapid foot flicker.
   const stride=height*.52;
   return Math.floor(Math.max(0,distance)/stride*count)%count;
  }
- return {clamp,geometry,plan,advance,hit,walkFrame};
+ return {clamp,geometry,plan,advance,hit,hitRendered,follow,walkFrame};
 })();
 if(typeof module!=='undefined')module.exports=PippoInteraction;

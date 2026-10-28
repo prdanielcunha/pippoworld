@@ -74,3 +74,11 @@ Chromium remoto: abertura de lugares, teclado, tambor e demais seletores, pausa,
 ### Continuidade do pescoço — revisão 13
 
 O recorte anterior terminava na linha mais estreita do pescoço e deixava uma emenda horizontal durante risada/carinho. Agora cada retrato conserva até 24 linhas adicionais do colar original. A transparência começa dez linhas antes da ancoragem e progride até o fim do recorte; abaixo da ancoragem, o colar fica limitado à silhueta real do tronco. Cabeça e corpo são compostos uma vez em uma superfície única em cache, que recebe o movimento como unidade. Não houve geração nem alteração dos arquivos de imagem originais. As doze expressões foram comparadas no navegador sobre fundo de contraste; Safari em iPhone físico continua sem validação. Esta revisão corrige a montagem, sem acrescentar quadros à caminhada.
+
+### Refinamento de interação e presença — entrega posterior à revisão 13
+
+O carinho passa a consultar a silhueta do sprite realmente desenhado, com pequena tolerância na borda e inversão das transformações. A pose deitada tem área de cabeça própria. Sentar e descansar continuam até uma nova intenção, sem retorno automático após 4,5/7 segundos. Piscadas automáticas não substituem expressão escolhida, movimento ou perfil de chegada. Respiração discreta na figura inteira mantém a base no chão e respeita movimento reduzido. A resposta do olhar usa tempo, mantendo comportamento equivalente a 30/60/120 FPS em simulação; isso não mede FPS do aparelho.
+
+Não foram geradas imagens nem acrescentados quadros à caminhada. Verificação de toque transformado/transparência, persistência de repouso e prioridade de expressão foi acrescentada aos testes. O documento `CONTINUAR_EM_NOVA_CONVERSA.md` contém a passagem de contexto e os locais de código, histórico e fontes.
+
+Conferência no Chromium remoto desta entrega: pose deitada manteve-se durante a revisão; toque sobre a cabeça deitada acordou com carinho na cabeça; toque na barriga em pé acionou carinho na barriga. Não houve geração de arte adicional. Os demais limites de animação e de aparelho real permanecem.
