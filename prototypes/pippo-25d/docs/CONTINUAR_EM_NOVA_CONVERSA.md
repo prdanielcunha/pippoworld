@@ -47,7 +47,7 @@ GitHub: usar o conector conectado de `prdanielcunha`. Confirmar o SHA atual de `
 
 ## Arquitetura e invariantes
 
-Buildless HTML/JS. Ordem dos scripts: `interaction.js`, `sprite-rendering.js`, `app.js`, `canonical-art.js`, `music-audio.js`, `activities.js`, `character-controls.js`. Cache-buster da presente entrega: `presence-14`. Máscaras: `continuous-neck-7`.
+Buildless HTML/JS. Ordem dos scripts: `interaction.js`, `sprite-rendering.js`, `app.js`, `canonical-art.js`, `music-audio.js`, `activities.js`, `character-controls.js`. Cache-buster da presente entrega: `turn-continuity-15`. Máscaras: `continuous-neck-7`.
 
 `canonical-art.js` recorta folhas aprovadas em canvas e prepara/cacheia sprites. `scripts/reference-metadata.py` analisa pixels e grava somente JSON de máscaras/registro, sem alterar PNG/JPG original. `tests/canonical-art.cjs` confere os hashes das fontes.
 
@@ -72,3 +72,12 @@ Limites: sem teste em iPhone físico/Safari, sem medição real de FPS/latência
 24–36 meses, brincadeira livre, toque simples, sem precisão ou reflexo obrigatório. Proposta: companheiro de descobertas musicais no quintal; diferencial ainda é hipótese a validar, não promessa de liderança. Sem culpa, punição, pressão, anúncios, compras, conta infantil, câmera, microfone, telemetria ou API paga. Histórias opcionais. Preservar Mimi/vaca, Tico/pintinho, Belinha/ovelha, Lolo/coelho; sons naturais corretos e licenciados, sem inventar voz de coelho. Bento/urso de brinquedo é expansão posterior.
 
 Distinguir planejado, implementado, verificado e validado. Não alterar silenciosamente especificações originais. A decisão posterior de 2,5D foi aprovada apesar da proposta inicial de 3D; não reiniciar uma modelagem malsucedida por ler apenas a especificação antiga.
+
+
+### Giros a partir da vista visível — revisão 15
+
+Continuação da versão 14, sem regeneração de arte. Corrige o giro desnecessário ao retomar o mesmo sentido depois de uma chegada: o perfil direito não passa mais pelo quarto esquerdo/frente para caminhar à direita (e vice-versa). A inversão durante o giro começa na vista efetivamente exibida; mudar apenas a distância preserva o progresso do giro. O giro usa vistas adjacentes originais, 80 ms por vista, sem deslocamento durante a sequência. Perfis intermediários são preparados antes de habilitar a interação. Parar no ponto atual cancela um giro pendente.
+
+Verificação: 11 suítes Node aprovadas, incluindo `tests/turn-continuity.cjs` (dez pares vista/direção, retomada, retarget, inversão, pivô, movimento reduzido e interrupções). Sintaxe dos três JS alterados conferida. Comparação no Chromium remoto com 24 capturas determinísticas dos mesmos instantes: retomada do perfil direito, inversão aos 200 ms e caminhada/chegada à esquerda. Evidências em `evidence/pippo-giros-comparacao-v15.jpg` e `evidence/pippo-inversao-comparacao-v15.jpg`. Para repetir: `python3 scripts/review-turns.py`, abrir `/__review.html` na prévia suportada, clicar Comparar versões; depois executar `python3 scripts/review-turns.py --clean` antes de empacotar. A página de ensaio não é publicada.
+
+A caminhada conserva as quatro poses, a cadência e os recortes da versão 14. Não há interpolação de patas, sobreposição de personagens ou nova modelagem. Partida/parada e atuação entre poses continuam discretas: esta entrega melhora a coerência dos giros e comandos, não conclui a fluidez do andar. Próxima prioridade: ensaio de intermediários consistentes da caminhada, aprovado visualmente antes da integração. Safari/iPhone físico, FPS e latência reais continuam sem validação. Todo o inventário de atividades permanece vigente.

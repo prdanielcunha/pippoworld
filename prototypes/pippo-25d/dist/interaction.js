@@ -42,11 +42,23 @@ const PippoInteraction=(()=>{
   return y>=g.height*.25?'ground':'empty';
  }
  function follow(value,target,dt){return target+(value-target)*Math.exp(-Math.max(0,dt)/200)}
+ const turnViews=['left','quarterLeft','front','quarterRight','right'];
+ function turnPose(turn){
+  return turn.poses[Math.min(turn.poses.length-1,Math.floor(Math.max(0,turn.elapsed)/turn.duration*turn.poses.length))];
+ }
+ function planTurn(from,direction,reduced=false){
+  const start=turnViews.indexOf(from),end=direction===1?4:0;
+  if(start<0||start===end)return null;
+  const step=end>start?1:-1,poses=[];
+  // Begin with the view already on screen. One complete painted duck per frame.
+  for(let i=start;i!==end+step;i+=step)poses.push(turnViews[i]);
+  return {elapsed:0,duration:reduced?1:poses.length*80,poses};
+ }
  function walkFrame(distance,height,count=8){
   // One full left/right stride per 0.52 body heights; avoids a rapid foot flicker.
   const stride=height*.52;
   return Math.floor(Math.max(0,distance)/stride*count)%count;
  }
- return {clamp,geometry,plan,advance,hit,hitRendered,follow,walkFrame};
+ return {clamp,geometry,plan,advance,hit,hitRendered,follow,walkFrame,turnPose,planTurn};
 })();
 if(typeof module!=='undefined')module.exports=PippoInteraction;

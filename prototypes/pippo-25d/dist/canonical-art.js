@@ -35,7 +35,7 @@
  }
  api.draw=(ctx,g)=>{
   const st=state,m=st.motion;let pose='front',mirror=false,lift=0;
-  if(st.turn&&m?.walk){const q=Math.min(.999,st.turn.elapsed/st.turn.duration),sequence=st.turn.poses;pose=sequence[Math.floor(q*sequence.length)]}
+  if(st.turn&&m?.walk)pose=PippoInteraction.turnPose(st.turn);
   else if(m?.walk){pose='walk'+PippoInteraction.walkFrame(st.walkDistance,g.bodyHeight,4);mirror=st.facing===1}
   else if(m?.kind==='jump'){const q=m.elapsed/m.duration;pose=q<.22?'jump0':q<.34?'jump1':q<.73?'jump2':'jump3';if(!st.reduced&&q>=.34&&q<.73)lift=Math.sin(Math.PI*(q-.34)/.39)*g.bodyHeight*.18}
   else if(m?.kind==='crouch'){const q=m.elapsed/m.duration;pose=q<.12?'stand':q<.3?'down':q<.72?'crouch':q<.9?'down':'up'}
@@ -63,7 +63,7 @@
  api.loading=fetch('assets/canon/poses.json?v=continuous-neck-7',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}).then(async data=>{
   meta=data;await Promise.all(Object.entries(data.provenance).map(async([sheet,p])=>{images[sheet]=await load('assets/canon/'+p.file)}));
   // Warm the first and the profile poses; other crops are cached when first used.
-  for(const name of ['front','left','right','walk0','walk1','walk2','walk3'])sprite(name);
+  for(const name of ['front','quarterLeft','left','quarterRight','right','walk0','walk1','walk2','walk3'])sprite(name);
   canvas.dataset.artMask=meta.maskRevision;api.ready=true;state.ready=true;state.motionReady=true;for(const n of ['walk','walkRight','jump','crouch'])$(n).disabled=false;$('ball').disabled=false;$('loading')?.remove();resize();requestAnimationFrame(frame);
  }).catch(()=>{const loading=$('loading');if(loading)loading.textContent='Não foi possível carregar os desenhos originais. Recarregue para tentar novamente.'});
 })();

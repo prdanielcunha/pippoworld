@@ -2,11 +2,11 @@
 
 Backup de 28/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
 
-Versão publicada: 14. Commit original do Site: `07e765836f19759e0c12082b57324e46b57a3ff4`.
+Versão publicada: 15. Commit original do Site: `bf62b80b0b7d7cd45eb9fdd5abbc43a583d35be7`.
 
 **Para continuar em outra conversa:** leia [o checkpoint e o prompt completo](prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md).
 
-Nesta entrega: toque acompanha a silhueta real, repouso/sentar sem timeout, piscadas respeitam expressões e perfil, respiração discreta sem separar partes. Não foram geradas imagens novas. A caminhada continua com quatro poses.
+Nesta entrega: giros partem da vista realmente exibida, continuar no mesmo sentido dispensa giro e mudar a distância preserva o giro em andamento. Correções da versão 14 preservadas: toque pela silhueta, repouso persistente, piscadas e respiração. Não foram geradas imagens novas. A caminhada continua com quatro poses e não está concluída. Onze suítes Node aprovadas e comparação visual feita antes da publicação. Evidências e roteiro de reprodução na pasta atual.
 
 Jogo: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 
@@ -25,3 +25,7 @@ O pacote em duas partes `backups/pippo-25d-historico-2026-10-28.bundle.part01` e
 O protótipo é 2,5D. Caminhada usa quatro poses aprovadas; não é animação 3D contínua. Safari em iPhone físico, áudio definitivo e atividades futuras seguem pendentes conforme `docs/ESTADO_PRODUCAO.md`. Artes antigas rejeitadas são conservadas como histórico e não voltam a ser usadas automaticamente.
 
 Este backup é uma fotografia desta versão. Alterações futuras também precisam ser enviadas ao GitHub; o deploy do Site não faz essa sincronização automaticamente.
+
+## Entrega 15 — 28/10/2026
+
+Publicada no mesmo Site, com público preservado. Comparação visual com a versão 14 em 24 capturas determinísticas. Código, testes, documentos, evidências e script do ensaio copiados separadamente para este repositório. Próxima prioridade: intermediários consistentes da caminhada; giros por vistas ainda não são rotação contínua. Veja `docs/ESTADO_PRODUCAO.md` dentro do protótipo.

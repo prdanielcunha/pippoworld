@@ -75,9 +75,16 @@ function walkTo(target){
  const g=geometry(),destination=PippoInteraction.clamp(target,g.min,g.max);
  if(state.motion?.walk&&Math.abs(state.motion.walk.to-destination)*g.width<3)return;
  const route=PippoInteraction.plan(state.actorX,destination,g);
- if(!route){state.motion=null;message('Pippo já está desse lado. Experimente o outro lado do quintal.');render();return;}
- if(window.PippoCanon?.ready&&(!state.motion?.walk||state.facing!==route.direction)){
-  const left=route.direction===-1;state.turn={elapsed:0,duration:state.reduced?1:240,poses:state.sideRest||state.motion?.walk?(left?['quarterRight','front','quarterLeft','left']:['quarterLeft','front','quarterRight','right']):(left?['quarterLeft','left']:['quarterRight','right'])};
+ if(!route){state.motion=null;state.turn=null;message('Pippo já está desse lado. Experimente o outro lado do quintal.');render();return;}
+ if(window.PippoCanon?.ready){
+  const continuing=state.motion?.walk&&state.facing===route.direction;
+  // The intended direction may differ from the view visible mid-turn.
+  // Retargeting the same direction keeps that turn's progress; reversal starts
+  // at its actual displayed view, never at the previous command's destination.
+  if(!continuing){
+   const from=state.turn?PippoInteraction.turnPose(state.turn):state.sideRest||state.motion?.walk?(state.facing===1?'right':'left'):'front';
+   state.turn=PippoInteraction.planTurn(from,route.direction,state.reduced);
+  }
  }
  state.sideRest=false;state.expression=null;state.petHeld=false;cancelBall();state.pet=0;state.blink=0;state.tx=state.ty=0;if(!state.motion?.walk)state.walkDistance=0;state.facing=route.direction;state.motion={kind:'walk',walk:route};
  message(route.direction===1?'Pippo vai para a direita.':'Pippo vai para a esquerda.');render();

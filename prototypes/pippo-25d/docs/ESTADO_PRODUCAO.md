@@ -82,3 +82,12 @@ O carinho passa a consultar a silhueta do sprite realmente desenhado, com pequen
 Não foram geradas imagens nem acrescentados quadros à caminhada. Verificação de toque transformado/transparência, persistência de repouso e prioridade de expressão foi acrescentada aos testes. O documento `CONTINUAR_EM_NOVA_CONVERSA.md` contém a passagem de contexto e os locais de código, histórico e fontes.
 
 Conferência no Chromium remoto desta entrega: pose deitada manteve-se durante a revisão; toque sobre a cabeça deitada acordou com carinho na cabeça; toque na barriga em pé acionou carinho na barriga. Não houve geração de arte adicional. Os demais limites de animação e de aparelho real permanecem.
+
+
+### Giros a partir da vista visível — revisão 15
+
+Continuação da versão 14, sem regeneração de arte. Corrige o giro desnecessário ao retomar o mesmo sentido depois de uma chegada: o perfil direito não passa mais pelo quarto esquerdo/frente para caminhar à direita (e vice-versa). A inversão durante o giro começa na vista efetivamente exibida; mudar apenas a distância preserva o progresso do giro. O giro usa vistas adjacentes originais, 80 ms por vista, sem deslocamento durante a sequência. Perfis intermediários são preparados antes de habilitar a interação. Parar no ponto atual cancela um giro pendente.
+
+Verificação: 11 suítes Node aprovadas, incluindo `tests/turn-continuity.cjs` (dez pares vista/direção, retomada, retarget, inversão, pivô, movimento reduzido e interrupções). Sintaxe dos três JS alterados conferida. Comparação no Chromium remoto com 24 capturas determinísticas dos mesmos instantes: retomada do perfil direito, inversão aos 200 ms e caminhada/chegada à esquerda. Evidências em `evidence/pippo-giros-comparacao-v15.jpg` e `evidence/pippo-inversao-comparacao-v15.jpg`. Para repetir: `python3 scripts/review-turns.py`, abrir `/__review.html` na prévia suportada, clicar Comparar versões; depois executar `python3 scripts/review-turns.py --clean` antes de empacotar. A página de ensaio não é publicada.
+
+A caminhada conserva as quatro poses, a cadência e os recortes da versão 14. Não há interpolação de patas, sobreposição de personagens ou nova modelagem. Partida/parada e atuação entre poses continuam discretas: esta entrega melhora a coerência dos giros e comandos, não conclui a fluidez do andar. Próxima prioridade: ensaio de intermediários consistentes da caminhada, aprovado visualmente antes da integração. Safari/iPhone físico, FPS e latência reais continuam sem validação. Todo o inventário de atividades permanece vigente.
