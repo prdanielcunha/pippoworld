@@ -1,6 +1,6 @@
 # Mundo Pippo — continuidade de desenvolvimento
 
-**Estado atual: versão 19 — recortes transparentes v2 enviados pelo responsável; 36 poses e 12 expressões completas, sem máscara de papel em runtime. Ver registro ao final e `docs/RECORTES_V19.md` (na pasta docs: `RECORTES_V19.md`). As seções anteriores preservam o histórico.**
+**Estado atual: versão 20 — regiões apagadas das bochechas recuperadas das folhas originais; recortes v2 preservados nas demais áreas. Ver o registro ao final e ROSTO_V20.md. As seções anteriores guardam o histórico.**
 
 Checkpoint de 29/10/2026. Este documento guarda decisões e estado técnico para trocar de conversa. Não é uma transcrição literal do chat nem um aceite final do jogo. Leia a versão mais recente na branch `main` do GitHub.
 
@@ -133,3 +133,16 @@ Expressões usam as figuras completas de 400×400 enviadas, com âncora (200,390
 Verificação: 14 suítes Node, incluindo `clean-cutouts.cjs`, que confere hash dos atlas, RGBA de cada uma das 48 imagens, dimensões/âncoras e executa o carregador/renderizador para expressões, caminhada e repouso sem segunda máscara. Suítes de máscaras antigas continuam como proteção do histórico; suas métricas não medem os recortes novos. Comparação visual antes da publicação: oito pares v18/nova em mesma escala, 48 figuras renderizadas no jogo sobre azul/rosa e teste de piscadinha, pausa, caminhada, bola e troca entre quintal/música/jardim no Chromium remoto. Evidências `evidence/pippo-v19-*.jpg`. Não foi realizado teste em iPhone físico, benchmark de FPS nem revisão auditiva real.
 
 Detalhes, origem e reprodução em [RECORTES_V19.md](RECORTES_V19.md). Nenhuma atividade futura foi removida. Deploy do mesmo Site e backup GitHub continuam sendo operações separadas.
+
+
+## Recuperação das bochechas apagadas — versão 20, 29/10/2026
+
+A captura enviada mostrou parte real do rosto transparente ao lado dos olhos. O defeito vinha da máscara anterior e continuou no pacote v2; a conferência da versão 19 não o identificou corretamente. O novo tratamento recupera RGB das folhas originais somente nas regiões delimitadas de bochecha/face. Brilhos creme dentro do contorno recebem alpha opaco mesmo quando têm cor parecida com papel. Fundos e vãos são preservados por limites específicos de pose; não aplicar fechamento global da silhueta.
+
+A recuperação é feita na preparação dos atlas, por `scripts/restore-face-regions.py` e `scripts/import-clean-cutouts.py`, sem novo filtro durante os frames. Nas 12 expressões completas só os trechos recuperados do rosto são transferidos; corpo, emenda do pescoço e posição permanecem. Caminhada, penas, cauda, bola, entrada, giros e atividades mantidos. As quatro poses da caminhada são idênticas ao pacote v2, sem alteração.
+
+Verificação: 15 suítes Node; a nova `tests/face-restoration.cjs` exige alpha 255 e RGB original em amostras concretas do defeito, inclusive um brilho creme muito próximo da cor do papel; confere transparência em vãos cabeça/asa e 3.992.265 pixels protegidos idênticos à v19 (interior opaco e exterior das regiões recuperadas). Os testes de máscaras antigas seguem apenas como histórico. Comparação ampliada v19/correção no Chromium remoto e galeria das 48 figuras em fundos contrastantes. Evidências `evidence/pippo-v20-*.jpg`.
+
+Reprodução: `python3 scripts/import-clean-cutouts.py /caminho/do/zip-extraido`; depois `python3 scripts/review-face-restoration.py`, abrir `/__face-review.html` na prévia suportada, usar Ampliar o rosto apontado e Conferir todas as 48 figuras. Executar `python3 scripts/review-face-restoration.py --clean` antes de publicar. As folhas em `assets/canon/` não foram alteradas. Mais detalhes em `docs/ROSTO_V20.md` (nesta pasta docs: `ROSTO_V20.md`).
+
+Não foi feito reteste em iPhone físico nem medição de FPS. A resolução e as quatro fases de caminhada continuam limitadas; esta correção não conclui a animação. Todas as atividades previstas, os documentos e as pendências permanecem. Cache: `face-restoration-20`. Publicação e backup GitHub são operações separadas.

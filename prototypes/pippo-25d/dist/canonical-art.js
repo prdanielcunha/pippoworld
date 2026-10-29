@@ -1,5 +1,5 @@
 'use strict';
-// User-supplied clean v2 PNGs are packed pixel-exactly. Preserve their alpha;
+// User-supplied clean v2 PNGs are restored from the original sheets at erased cheek regions. Preserve their alpha;
 // never apply the old paper mask or a second neck/body composite.
 (()=>{
  const cache=new Map(),images={};let meta,clean,renderedHit;
@@ -56,8 +56,8 @@
   canvas.dataset.artSource='approved-clean-v2';canvas.dataset.pose=pose;canvas.dataset.walkFrames='4';canvas.dataset.gait='approved-poses';
  };
  api.loading=Promise.all([
-  fetch('assets/canon/poses.json?v=clean-cutouts-19',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}),
-  fetch('assets/clean-v2/sprites.json?v=clean-cutouts-19',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('clean metadata');return r.json()})
+  fetch('assets/canon/poses.json?v=face-restoration-20',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}),
+  fetch('assets/clean-v2/sprites.json?v=face-restoration-20',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('clean metadata');return r.json()})
  ]).then(async ([data,prepared])=>{
   meta=data;clean=prepared;
   await Promise.all(Object.entries(clean.atlases).map(async([name,p])=>{images[name]=await load('assets/clean-v2/'+p.file)}));

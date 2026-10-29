@@ -10,7 +10,7 @@ for(const [name,p] of Object.entries(clean.atlases)){
 for(const [name,p] of Object.entries(clean.sprites)){
  const data=Buffer.alloc(p.w*p.h*4),atlas=decoded[p.atlas];
  for(let y=0;y<p.h;y++)atlas.copy(data,y*p.w*4,((p.y+y)*2048+p.x)*4,((p.y+y)*2048+p.x+p.w)*4);
- assert.equal(crypto.createHash('sha256').update(data).digest('hex'),p.pixels_sha256,'exact uploaded RGBA: '+name);
+ assert.equal(crypto.createHash('sha256').update(data).digest('hex'),p.pixels_sha256,'registered prepared RGBA: '+name);
  assert.ok(data.some((v,i)=>i%4===3&&v===0),'transparent background: '+name);
  if(name.startsWith('assembled_'))assert.deepEqual([p.w,p.h],[400,400]);else assert.deepEqual([p.w,p.h],[meta.poses[name].w+4,meta.poses[name].h+4]);
 }
@@ -30,5 +30,5 @@ context.window.PippoCanon.loading.then(()=>{
  context.state={motion:{walk:{}},facing:1,walkDistance:100,ballTime:null,reduced:true};api.draw(ctx,g);assert.equal(actor.dataset.pose,'walk2');assert.equal(draws.at(-1)[0].width,meta.poses.walk2.w+4);
  context.state={motion:{kind:'rest'},ballTime:null,reduced:true};api.draw(ctx,g);assert.equal(actor.dataset.pose,'rest');
  assert.equal(mattingCalls,0);assert.ok(!fs.readFileSync('dist/canonical-art.js','utf8').includes('collar.data['));
- console.log('PASS: 48 exact uploaded RGBA sprites, immutable atlas hashes, native registration, 12 full-expression anchors, walking/rest loading and no second mask/composite');
+ console.log('PASS: 48 registered prepared RGBA sprites, immutable atlas hashes, native registration, 12 full-expression anchors, walking/rest loading and no second mask/composite');
 }).catch(e=>{console.error(e);process.exitCode=1});

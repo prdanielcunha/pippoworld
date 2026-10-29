@@ -2,11 +2,11 @@
 
 Backup de 29/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
 
-Versão publicada: 19. Commit original do Site: `19d16d63d7f61a400845b11a8239042b3db925e0`.
+Versão publicada: 20. Commit original do Site: `0b661a166524252b263483a793beb380a400d6e2`.
 
 **Para continuar em outra conversa:** leia [o checkpoint e o prompt completo](prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md).
 
-Nesta entrega: integração do pacote Pippo-Recortes-Limpos-v2.zip enviado por Daniel. 36 poses completas e 12 expressões com corpo, empacotadas sem mudar pixels. Variante normal nativa selecionada após comparação com borda firme e 4×. O jogo não reaplica máscara de papel nem remonta o pescoço. Quatorze suítes aprovadas e comparação visual v18/nova no Chromium remoto. Caminhada permanece com quatro poses. Veja `docs/RECORTES_V19.md` dentro do protótipo.
+Nesta entrega: recuperação localizada das bochechas apagadas e do contorno ao lado dos olhos, a partir das folhas originais. O defeito do recorte anterior permaneceu no pacote v2 e passou pela conferência da versão 19. Brilhos creme recuperados com RGB original e alpha opaco; 12 expressões completas revisadas sem remontar o pescoço. Quinze suítes aprovadas, comparação ampliada no Chromium remoto e 48 figuras conferidas. Caminhada mantém quatro poses, inalteradas. Veja `docs/ROSTO_V20.md` dentro do protótipo.
 
 Jogo: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 
@@ -46,3 +46,8 @@ O responsável identificou resíduos na própria imagem entregue. Corrigidos os 
 ## Entrega 19 — 29/10/2026
 
 Recortes v2 em dois atlas PNG, carregamento e alpha para carinho derivados dos arquivos transparentes enviados. Expressões completas preservam pescoço e bochechas sem uma segunda composição. Código, atlas, origem/hashes, importador, teste novo e cinco evidências copiados separadamente para o GitHub. Todos os documentos e atividades anteriores preservados. Originais em `assets/canon/` intactos. Arquivo ZIP completo e variantes auxiliares permanecem no anexo original; os 48 recursos usados estão integralmente nos atlas e podem ser extraídos sem perda.
+
+
+## Entrega 20 — 29/10/2026
+
+Recuperação de regiões legítimas da face que tinham ficado transparentes. Recortes v2 mantidos no restante, incluindo as quatro poses de andar. Importador, origem dos pixels, teste específico, fixtures de preservação, evidências e documentos atualizados. Publicação no mesmo Site e backup GitHub separados. Sem reteste em iPhone físico.
