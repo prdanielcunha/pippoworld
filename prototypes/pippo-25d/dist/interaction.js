@@ -8,16 +8,25 @@ const PippoInteraction=(()=>{
   const margin=Math.min(.45,(bodyHeight*289/334/2+14)/width);
   return {width,height,bodyHeight,scale:bodyHeight/1146,bottom:height*.87,min:margin,max:1-margin,cx:clamp(x,margin,1-margin)*width};
  }
- function plan(from,to,g){
+ function plan(from,to,g,velocity=0){
   to=clamp(to,g.min,g.max);from=clamp(from,g.min,g.max);
   const distance=Math.abs(to-from)*g.width;if(distance<3)return null;
-  return {from,to,elapsed:0,duration:Math.max(350,distance/(g.bodyHeight*.42)*1000+120),direction:to>from?1:-1};
+  const duration=Math.max(350,distance/(g.bodyHeight*.42)*1000+120),delta=to-from;
+  // Preserve same-direction speed when a new touch changes the destination.
+  // A nearby stop may require immediate braking; cap its entry slope so the
+  // path stays monotonic instead of overshooting or walking backwards.
+  const entrySlope=clamp(velocity*duration/delta,0,3);
+  return {from,to,elapsed:0,duration,direction:delta>0?1:-1,entrySlope,velocity:entrySlope*delta/duration};
  }
  function advance(walk,dt){
   walk.elapsed=Math.min(walk.duration,walk.elapsed+Math.max(0,dt));
   const q=walk.elapsed/walk.duration,a=Math.min(.25,120/walk.duration);
-  // Brief acceleration/braking, then cruise; no long slow start on each command.
-  const eased=q<a?q*q/(2*a*(1-a)):q>1-a?1-(1-q)**2/(2*a*(1-a)):(q-a/2)/(1-a);
+  const entry=walk.entrySlope||0,cruise=(1-a*entry/2)/(1-a);
+  // Integrate a continuous speed profile: inherited speed -> cruise -> stop.
+  // Entry zero is exactly the previous short acceleration/braking curve.
+  const eased=q<a?entry*q+(cruise-entry)*q*q/(2*a):q>1-a?1-cruise*(1-q)**2/(2*a):a*(entry+cruise)/2+(q-a)*cruise;
+  const slope=q<a?entry+(cruise-entry)*q/a:q>1-a?cruise*(1-q)/a:cruise;
+  walk.velocity=(walk.to-walk.from)*slope/walk.duration;
   return {x:walk.from+(walk.to-walk.from)*eased,done:q>=1};
  }
  function hit(x,y,g,facing=1){

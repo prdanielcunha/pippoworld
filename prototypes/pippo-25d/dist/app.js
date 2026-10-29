@@ -22,7 +22,7 @@ function resize(){
  const d=Math.min(devicePixelRatio||1,3,Math.sqrt(2400000/Math.max(1,box.width*box.height)));
  canvas.width=Math.round(box.width*d);canvas.height=Math.round(box.height*d);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
  const g=geometry();state.actorX=PippoInteraction.clamp(state.actorX,g.min,g.max);
- if(state.motion?.walk){const route=PippoInteraction.plan(state.actorX,state.motion.walk.to,g);state.motion=route?{kind:'walk',walk:route}:null}
+ if(state.motion?.walk){const route=PippoInteraction.plan(state.actorX,state.motion.walk.to,g,state.motion.walk.velocity);state.motion=route?{kind:'walk',walk:route}:null;if(!route)state.turn=null}
  render();
 }
 function eyeClip(e,scale=1){ctx.beginPath();ctx.ellipse(e.x,e.y,e.rx*scale,e.ry*scale,e.angle,0,Math.PI*2);ctx.clip()}
@@ -74,7 +74,7 @@ function walkTo(target){
  if(!state.ready||!state.motionReady||state.paused)return;
  const g=geometry(),destination=PippoInteraction.clamp(target,g.min,g.max);
  if(state.motion?.walk&&Math.abs(state.motion.walk.to-destination)*g.width<3)return;
- const route=PippoInteraction.plan(state.actorX,destination,g);
+ const route=PippoInteraction.plan(state.actorX,destination,g,state.motion?.walk?.velocity);
  if(!route){state.motion=null;state.turn=null;message('Pippo já está desse lado. Experimente o outro lado do quintal.');render();return;}
  if(window.PippoCanon?.ready){
   const continuing=state.motion?.walk&&state.facing===route.direction;

@@ -1,14 +1,14 @@
 {
-  "source_site_version": 15,
-  "source_commit": "bf62b80b0b7d7cd45eb9fdd5abbc43a583d35be7",
+  "source_site_version": 16,
+  "source_commit": "6f7cdf8cdf73571be168b33be1ebb25717222592",
   "site_id": "appgprj_6ae1365f002c819181664fab9d7beb12",
   "immutable_history_bundle_covers_through_version": 13,
   "files": [
     {
       "path": "PIPPO_ATUAL.md",
-      "sha": "c51fa7b24dd5d8ea7ba10eb11401bdfb1140477f",
-      "sha256": "9e9e473d9d4bb23ad194921c7c0cb6b9ef2af963b566333bce2c8dedfdfc968b",
-      "size": 3122
+      "sha": "d5355e672db049d4e3663c2ee32b748224335229",
+      "sha256": "d2d6eec287a7ae8447c6aaf948f9e5445f7606bdafd7ce3cafcfc0cc7d15ab92",
+      "size": 3579
     },
     {
       "path": "prototypes/pippo-25d/.openai/hosting.json",
@@ -18,9 +18,9 @@
     },
     {
       "path": "prototypes/pippo-25d/README.md",
-      "sha": "6bbc57379a4efa8c1974a9b7858ebc60a9710b47",
-      "sha256": "26542c1e208bd4575a5961bbe769cfd16071c6945553268a1a91578de51ad7d7",
-      "size": 23327
+      "sha": "89fd8090f4a0d1758682186449dbc1b1393164d7",
+      "sha256": "aab1f34570c6d5f92e537259dbd11a8a8747fd3d7fc649d37dded62470af1b00",
+      "size": 26002
     },
     {
       "path": "prototypes/pippo-25d/dist/activities.js",
@@ -30,9 +30,9 @@
     },
     {
       "path": "prototypes/pippo-25d/dist/app.js",
-      "sha": "7f46b3dbe282bb08556fe729cdc8382febb5016c",
-      "sha256": "5dc79bf293a4517763df6f01519712cea092bc514db3e82cbb6e1fecf4631d60",
-      "size": 17394
+      "sha": "619d600cf26d195f7a06b96310ef80d7bf0c2c42",
+      "sha256": "47119ce27e9ba84f44df589b879bd9a3cdaa0ee3e73feb5744280d64edb020bd",
+      "size": 17476
     },
     {
       "path": "prototypes/pippo-25d/dist/assets/canon/contact.png",
@@ -138,15 +138,15 @@
     },
     {
       "path": "prototypes/pippo-25d/dist/index.html",
-      "sha": "ddc78860c86f2a2e45b48fed8d21481291de5eed",
-      "sha256": "3271f1908704a5beeccc3720b5ca66b4ccfd6e3c0432a1beeb4002abdab796b3",
-      "size": 9318
+      "sha": "a39df1201f5b812589e202a1cf1ae55f2c413f4a",
+      "sha256": "d2fd872a46ae5afdf80f264579164f7dd63d31a85e8693b3e344c7a8f8956df7",
+      "size": 9334
     },
     {
       "path": "prototypes/pippo-25d/dist/interaction.js",
-      "sha": "60eed62273bed68059e2ffdb7170ac1e0400da8b",
-      "sha256": "52cccd6816cef511d12de99bdc1f53ad2500441cd2f7ada41482861bb191ac4f",
-      "size": 3633
+      "sha": "023aa892cde63a170e3e30a26bafa8fba09f42a2",
+      "sha256": "a62ef4967db3579f3685767389f2641afe94fdbf456e8887a9144ebb15b44a3d",
+      "size": 4299
     },
     {
       "path": "prototypes/pippo-25d/dist/music-audio.js",
@@ -186,15 +186,21 @@
     },
     {
       "path": "prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md",
-      "sha": "10617fbc770a63e9ab3fc8a524a6075d030a9613",
-      "sha256": "2e570b54f38d846b83a5c8bff8c91881d55a5ec7e35942fbd07fe017c54981bc",
-      "size": 11339
+      "sha": "17edf0fdea95d704b9979050c328bd2b2d32c4aa",
+      "sha256": "b73deeddffebe8426132706898d6cfd1bd4febd8789434a73f879acd148890ae",
+      "size": 14016
+    },
+    {
+      "path": "prototypes/pippo-25d/docs/ENSAIO_CAMINHADA_16.md",
+      "sha": "5b571164a9c7d8013f764721b6e4152c54503dbb",
+      "sha256": "5e0c43720d5a07b3306c4bccf6bff15d2e6ca31b95c3a0d0c0271dfc39b9cc35",
+      "size": 4527
     },
     {
       "path": "prototypes/pippo-25d/docs/ESTADO_PRODUCAO.md",
-      "sha": "f8a9e320cfff1577caa6c25fac42cb2a69ca8b9b",
-      "sha256": "3292940bb177605ad9f5b0a892e669be90366dee5d1ef8d2c5395b50b0c96223",
-      "size": 11712
+      "sha": "66a557687b9897846c51ed62bd67a1379b9da2bb",
+      "sha256": "72344209cba60091506a92381963cc35b3de6c3d3f119f3f3e32c250735c6716",
+      "size": 14387
     },
     {
       "path": "prototypes/pippo-25d/docs/ESTRATEGIA.md",
@@ -204,9 +210,9 @@
     },
     {
       "path": "prototypes/pippo-25d/docs/IDENTIDADE_PIPPO.md",
-      "sha": "da4ad557f6ecff09680161ded97ddc91cf5db7ce",
-      "sha256": "fa637a3671fe58bb8f5cac43cb4505295a83b273854b4476c1547826a4f49e71",
-      "size": 9408
+      "sha": "bee4279413142236712fbbdfb9b2ca9a165384d8",
+      "sha256": "a1073d3ac6441a1ca7e0e5f04e98f43b4d81a751fbba3a56314d69a0e79de9e9",
+      "size": 12083
     },
     {
       "path": "prototypes/pippo-25d/evidence/pippo-devolucao-refinada.jpg",
@@ -237,6 +243,12 @@
       "sha": "6cf0dc52efaf3ef2aabe477c60795a3c73e90a91",
       "sha256": "0933e76a68ae7f60ca29999911b2c03084f05b3f937ad29dabf8daf8babc7fd0",
       "size": 48827
+    },
+    {
+      "path": "prototypes/pippo-25d/evidence/pippo-retarget-v16.jpg",
+      "sha": "bbb4e8a40e3ebba2c6e3e66b74d8986c38814b73",
+      "sha256": "54cc29e262c9d765d43e269708ede1c24d7e33b16fc5536ef349450ae2e31603",
+      "size": 76083
     },
     {
       "path": "prototypes/pippo-25d/project_sources/01-02_WORK_CODEX_Especificacao_Mundo_Pippo.docx",
@@ -273,6 +285,12 @@
       "sha": "3a03412974435b5658c0c4ddd52b70b3ea309e98",
       "sha256": "8772e4024f05cf6e2b413c935f2e5a43d587a2699fabb70792d5e3adace17ad7",
       "size": 7073
+    },
+    {
+      "path": "prototypes/pippo-25d/scripts/review-retarget.py",
+      "sha": "89fef6541d25e42054f8b07689626944308e766c",
+      "sha256": "ed9eb363eb7c1adf49da7641eaba666641a99008793e0a9f097b01a1764600f3",
+      "size": 4301
     },
     {
       "path": "prototypes/pippo-25d/scripts/review-turns.py",
@@ -321,6 +339,12 @@
       "sha": "12899d9edea6346a6fdbf57278b873f796ef2cb2",
       "sha256": "647d5da7441c4f8cac92177a4ae3d2e95e915339bbc745935e5521fc0e4c4a1e",
       "size": 2931
+    },
+    {
+      "path": "prototypes/pippo-25d/tests/motion-continuity.cjs",
+      "sha": "6bd0e2d912e844f068d16a2a3bffb35824e15101",
+      "sha256": "fff900a69cf582807ffd269f4453e2a017468b5dd485312ab2fc0221ff019ea1",
+      "size": 4235
     },
     {
       "path": "prototypes/pippo-25d/tests/music-audio.cjs",
