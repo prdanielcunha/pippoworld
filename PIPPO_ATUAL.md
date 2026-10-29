@@ -1,12 +1,12 @@
 # Mundo Pippo — cópia completa da versão atual
 
-Backup de 28/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
+Backup de 29/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
 
-Versão publicada: 18. Commit original do Site: `84e68659abdf6c346eea2ef77b8270f14c2e8072`.
+Versão publicada: 19. Commit original do Site: `19d16d63d7f61a400845b11a8239042b3db925e0`.
 
 **Para continuar em outra conversa:** leia [o checkpoint e o prompt completo](prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md).
 
-Nesta entrega: correção geométrica do papel refletido/quente que ainda aparecia na própria evidência da versão 17. Contornos de contato e vazios explícitos em agachar, sentar, deitar e duas vistas superiores. Comparação ampliada v17/correção e novas amostras negativas/positivas nos testes. Treze suítes aprovadas; originais intactos. A versão 17 não havia resolvido integralmente os resíduos. Caminhada continua com quatro poses.
+Nesta entrega: integração do pacote Pippo-Recortes-Limpos-v2.zip enviado por Daniel. 36 poses completas e 12 expressões com corpo, empacotadas sem mudar pixels. Variante normal nativa selecionada após comparação com borda firme e 4×. O jogo não reaplica máscara de papel nem remonta o pescoço. Quatorze suítes aprovadas e comparação visual v18/nova no Chromium remoto. Caminhada permanece com quatro poses. Veja `docs/RECORTES_V19.md` dentro do protótipo.
 
 Jogo: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 
@@ -41,3 +41,8 @@ Corrige os resíduos claros da captura do responsável. Máscaras/cache: `paper-
 ## Entrega 18 — 28/10/2026
 
 O responsável identificou resíduos na própria imagem entregue. Corrigidos os limites e vazios de cinco poses por coordenadas da folha original, com preservação de olhos/face creme, bico e pés. Cache/máscara `contact-contours-18`. Evidência `evidence/pippo-residuos-comparacao-v18.jpg`; reprodução por `scripts/review-residuals.py`. Publicação no mesmo Site e backup separado no GitHub. Não usar quantidade de testes como prova de perfeição visual ou reteste físico no iPhone.
+
+
+## Entrega 19 — 29/10/2026
+
+Recortes v2 em dois atlas PNG, carregamento e alpha para carinho derivados dos arquivos transparentes enviados. Expressões completas preservam pescoço e bochechas sem uma segunda composição. Código, atlas, origem/hashes, importador, teste novo e cinco evidências copiados separadamente para o GitHub. Todos os documentos e atividades anteriores preservados. Originais em `assets/canon/` intactos. Arquivo ZIP completo e variantes auxiliares permanecem no anexo original; os 48 recursos usados estão integralmente nos atlas e podem ser extraídos sem perda.

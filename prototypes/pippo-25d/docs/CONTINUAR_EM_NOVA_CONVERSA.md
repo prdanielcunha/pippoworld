@@ -1,6 +1,8 @@
 # Mundo Pippo — continuidade de desenvolvimento
 
-Checkpoint de 28/10/2026. Este documento guarda decisões e estado técnico para trocar de conversa. Não é uma transcrição literal do chat nem um aceite final do jogo. Leia a versão mais recente na branch `main` do GitHub.
+**Estado atual: versão 19 — recortes transparentes v2 enviados pelo responsável; 36 poses e 12 expressões completas, sem máscara de papel em runtime. Ver registro ao final e `docs/RECORTES_V19.md` (na pasta docs: `RECORTES_V19.md`). As seções anteriores preservam o histórico.**
+
+Checkpoint de 29/10/2026. Este documento guarda decisões e estado técnico para trocar de conversa. Não é uma transcrição literal do chat nem um aceite final do jogo. Leia a versão mais recente na branch `main` do GitHub.
 
 ## Prompt para colar em outra conversa
 
@@ -12,7 +14,7 @@ IMPORTANTE: a raiz do repositório contém o protótipo antigo. O jogo atual est
 
 Jogo publicado: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 
-Pippo usa as imagens originais aprovadas, em 2,5D. Preserve cabeça, bochechas, olhos, bico, penas e proporções. Não volte ao Blender procedural, ao perfil gerado rejeitado ou à montagem de pés e pernas separados. Não sobreponha duas poses inteiras de caminhada: isso pode parecer três patas. Não declare a caminhada fluida: ainda tem quatro poses originais e precisa de intermediários consistentes.
+Pippo usa os recortes transparentes do pacote v2 enviado em 29/10/2026, derivados dos desenhos originais aprovados, em 2,5D. Não reaplicar máscaras de papel aos atlas em `assets/clean-v2/`. Preserve cabeça, bochechas, olhos, bico, penas e proporções. Não volte ao Blender procedural, ao perfil gerado rejeitado ou à montagem de pés e pernas separados. Não sobreponha duas poses inteiras de caminhada: isso pode parecer três patas. Não declare a caminhada fluida: ainda tem quatro poses originais e precisa de intermediários consistentes.
 
 As últimas entregas corrigiram a meia bola duplicada, resíduos claros, bochecha cortada, emenda do pescoço; depois alinharam o toque à silhueta desenhada, mantiveram sentar/descansar até outra ação, evitaram piscada automática por cima de expressões e acrescentaram respiração discreta da figura inteira. Preserve essas correções e teste suas regressões.
 
@@ -120,3 +122,14 @@ Revisão visual: regiões de contato ampliadas em fundo escuro, comparação dir
 Testes: 13 suítes Node, incluindo novas amostras negativas de papel refletido/quente em cinco poses e amostras positivas da barriga, pés, bico e região dos olhos no topo. O teste de matting geral continua cobrindo os 49 recortes. Não usar o número de suítes nem a redução de amostras claras como prova de que não existe qualquer resíduo em todos os aparelhos. A evidência visual deve ser inspecionada antes de concluir. Safari/iPhone físico ainda sem reteste desta correção.
 
 Cache e máscaras: `contact-contours-18`. Preservar bola única, bochechas, pescoço, carinho pela silhueta, velocidade e giros. Caminhada mantém quatro poses; os ensaios de animação rejeitados continuam fora do jogo. Todo o inventário de atividades permanece.
+
+
+## Recortes enviados pelo responsável — versão 19, 29/10/2026
+
+O pacote `Pippo-Recortes-Limpos-v2.zip` passa a ser a fonte de recorte do personagem. Foram comparadas as variantes normal, borda firme e 4×. Selecionada a normal na resolução nativa: elimina manchas de borda e resíduos observados, preserva melhor a suavidade das penas e não acrescenta o peso da ampliação. As 36 poses completas e 12 expressões com corpo são empacotadas em dois atlas PNG sem redimensionamento, regravação de pixels ou nova máscara. Não se aplica `prepareReferencePixels` a esses atlas. As folhas originais e suas máscaras históricas permanecem intactas para referência.
+
+Expressões usam as figuras completas de 400×400 enviadas, com âncora (200,390). Não remontar rosto e torso nem acrescentar outro colar. As poses conservam a margem de dois pixels, âncoras, escala por folha, contatos dos pés, espelhamento e alpha real para carinho. Preservados bola única, repouso persistente, prioridade das expressões, giros e continuidade de velocidade. A caminhada continua com quatro poses e não está concluída.
+
+Verificação: 14 suítes Node, incluindo `clean-cutouts.cjs`, que confere hash dos atlas, RGBA de cada uma das 48 imagens, dimensões/âncoras e executa o carregador/renderizador para expressões, caminhada e repouso sem segunda máscara. Suítes de máscaras antigas continuam como proteção do histórico; suas métricas não medem os recortes novos. Comparação visual antes da publicação: oito pares v18/nova em mesma escala, 48 figuras renderizadas no jogo sobre azul/rosa e teste de piscadinha, pausa, caminhada, bola e troca entre quintal/música/jardim no Chromium remoto. Evidências `evidence/pippo-v19-*.jpg`. Não foi realizado teste em iPhone físico, benchmark de FPS nem revisão auditiva real.
+
+Detalhes, origem e reprodução em [RECORTES_V19.md](RECORTES_V19.md). Nenhuma atividade futura foi removida. Deploy do mesmo Site e backup GitHub continuam sendo operações separadas.

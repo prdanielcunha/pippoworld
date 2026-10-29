@@ -1,17 +1,22 @@
 'use strict';
-// Approved source images are copied byte-for-byte. Only masks and placement
-// are computed: no regenerated face, detached legs or RGB repainting.
+// User-supplied clean v2 PNGs are packed pixel-exactly. Preserve their alpha;
+// never apply the old paper mask or a second neck/body composite.
 (()=>{
- const cache=new Map(),images={};let meta,renderedHit;
+ const cache=new Map(),images={};let meta,clean,renderedHit;
  const unit={movement:302,contact:296,views:323,expressions:323};
  const names=['neutral','happy','curious','surprised','laugh','affection','wink','sleepy','playful','focused','listening','calm'];
  const api=window.PippoCanon={ready:false,names,meta:()=>meta,hit:(x,y,g)=>PippoInteraction.hitRendered(x,y,g,renderedHit)};
  const alphaOf=(g,w,h)=>{const pixels=g.getImageData(0,0,w,h).data;return Uint8Array.from({length:w*h},(_,i)=>pixels[i*4+3])};
  function load(src){return new Promise((resolve,reject)=>{const i=new Image;i.onload=()=>resolve(i);i.onerror=reject;i.src=src})}
+ function cleanCanvas(name){
+  const p=clean.sprites[name];if(!p)throw Error('missing clean sprite: '+name);
+  const c=document.createElement('canvas');c.width=p.w;c.height=p.h;
+  c.getContext('2d').drawImage(images[p.atlas],p.x,p.y,p.w,p.h,0,0,p.w,p.h);return c;
+ }
  function sprite(name){
-  if(cache.has(name))return cache.get(name);const p=meta.poses[name],c=document.createElement('canvas');c.width=p.w+4;c.height=p.h+4;const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(images[p.sheet],p.sx,p.sy,p.w,p.h,2,2,p.w,p.h);
-  const frame=g.getImageData(0,0,c.width,c.height);frame.data.set(prepareReferencePixels(frame.data,c.width,c.height,p.runs,{paperRows:p.paperRows,neckFade:p.neck ? p.h-p.neck.blendStart : 0,sourceHeight:p.h}));
-  g.putImageData(frame,0,0);cache.set(name,{canvas:c,p,alpha:Uint8Array.from({length:c.width*c.height},(_,i)=>frame.data[i*4+3])});return cache.get(name);
+  if(cache.has(name))return cache.get(name);
+  const c=cleanCanvas(name),p=meta.poses[name];
+  cache.set(name,{canvas:c,p,alpha:alphaOf(c.getContext('2d'),c.width,c.height)});return cache.get(name);
  }
  function drawPose(ctx,name,g,{mirror=false,lift=0,rotate=0,shadow=true,stretch=1}={}){
   const {canvas:c,p,alpha}=sprite(name),s=g.bodyHeight/unit[p.sheet],anchor=name==='rest'||name==='sit'?p.w/2:p.anchor;const left=(mirror?p.w-anchor:anchor)*s,right=(mirror?anchor:p.w-anchor)*s,cx=Math.max(left+4,Math.min(g.width-right-4,g.cx));ctx.save();ctx.translate(cx,g.bottom-lift);if(mirror)ctx.scale(-1,1);
@@ -20,18 +25,8 @@
  }
  function expressionSprite(expression){
   const key='assembled_'+expression;if(cache.has(key))return cache.get(key);
-  const body=sprite('body_front'),head=sprite('face_'+expression),b=body.p,p=head.p;
-  const c=document.createElement('canvas');c.width=400;c.height=400;const g=c.getContext('2d'),anchor=200,bottom=390;
-  const bx=anchor-b.anchor-2,by=bottom-b.h-2;
-  g.drawImage(body.canvas,bx,by);
-  const layer=document.createElement('canvas');layer.width=c.width;layer.height=c.height;const h=layer.getContext('2d');
-  const scale=unit.views*.56/p.neck.y,joinX=anchor+b.join.x-b.anchor,joinY=bottom+b.join.y-b.h;
-  h.drawImage(head.canvas,joinX-(p.neck.x+2)*scale,joinY-(p.neck.y+2)*scale,head.canvas.width*scale,head.canvas.height*scale);
-  // Below the measured neck, the new collar may cover only the real torso.
-  const collar=h.getImageData(0,0,c.width,c.height),torso=g.getImageData(0,0,c.width,c.height);
-  for(let y=Math.ceil(joinY);y<c.height;y++)for(let x=0;x<c.width;x++){const i=(y*c.width+x)*4;collar.data[i+3]=Math.round(collar.data[i+3]*torso.data[i+3]/255)}
-  h.putImageData(collar,0,0);g.drawImage(layer,0,0);
-  const result={canvas:c,anchor,bottom,alpha:alphaOf(g,c.width,c.height)};cache.set(key,result);return result;
+  const c=cleanCanvas(key),result={canvas:c,anchor:200,bottom:390,alpha:alphaOf(c.getContext('2d'),c.width,c.height)};
+  cache.set(key,result);return result;
  }
  api.draw=(ctx,g)=>{
   const st=state,m=st.motion;let pose='front',mirror=false,lift=0;
@@ -58,12 +53,16 @@
    ctx.drawImage(assembled.canvas,-assembled.anchor*s,-assembled.bottom*s,assembled.canvas.width*s,assembled.canvas.height*s);
    ctx.restore();pose='face_'+expression;
   }else drawPose(ctx,pose,g,{mirror,lift,rotate:lean,stretch:breathing});
-  canvas.dataset.artSource='approved-original';canvas.dataset.pose=pose;canvas.dataset.walkFrames='4';canvas.dataset.gait='approved-poses';
+  canvas.dataset.artSource='approved-clean-v2';canvas.dataset.pose=pose;canvas.dataset.walkFrames='4';canvas.dataset.gait='approved-poses';
  };
- api.loading=fetch('assets/canon/poses.json?v=contact-contours-18',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}).then(async data=>{
-  meta=data;await Promise.all(Object.entries(data.provenance).map(async([sheet,p])=>{images[sheet]=await load('assets/canon/'+p.file)}));
+ api.loading=Promise.all([
+  fetch('assets/canon/poses.json?v=clean-cutouts-19',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}),
+  fetch('assets/clean-v2/sprites.json?v=clean-cutouts-19',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('clean metadata');return r.json()})
+ ]).then(async ([data,prepared])=>{
+  meta=data;clean=prepared;
+  await Promise.all(Object.entries(clean.atlases).map(async([name,p])=>{images[name]=await load('assets/clean-v2/'+p.file)}));
   // Warm the first and the profile poses; other crops are cached when first used.
   for(const name of ['front','quarterLeft','left','quarterRight','right','walk0','walk1','walk2','walk3'])sprite(name);
-  canvas.dataset.artMask=meta.maskRevision;api.ready=true;state.ready=true;state.motionReady=true;for(const n of ['walk','walkRight','jump','crouch'])$(n).disabled=false;$('ball').disabled=false;$('loading')?.remove();resize();requestAnimationFrame(frame);
+  canvas.dataset.artMask=clean.revision;api.ready=true;state.ready=true;state.motionReady=true;for(const n of ['walk','walkRight','jump','crouch'])$(n).disabled=false;$('ball').disabled=false;$('loading')?.remove();resize();requestAnimationFrame(frame);
  }).catch(()=>{const loading=$('loading');if(loading)loading.textContent='Não foi possível carregar os desenhos originais. Recarregue para tentar novamente.'});
 })();
