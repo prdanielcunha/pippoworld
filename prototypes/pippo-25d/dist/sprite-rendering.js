@@ -29,7 +29,7 @@ function prepareSpritePixels(input,width,height,seed,bounds){
 }
 if(typeof module!=='undefined')module.exports={prepareSpritePixels};
 
-function prepareReferencePixels(input,width,height,runs,{neckFade=0,sourceHeight=height-4}={}){
+function prepareReferencePixels(input,width,height,runs,{neckFade=0,sourceHeight=height-4,paperRows=null}={}){
  const out=new Uint8ClampedArray(input),mask=new Uint8Array(width*height),core=new Uint8Array(width*height);
  for(let i=0;i<runs.length;i+=3){const row=runs[i]+2,start=runs[i+1]+2;mask.fill(1,row*width+start,row*width+start+runs[i+2])}
  // Pull the matte in by one pixel before coverage filtering. This prevents
@@ -37,11 +37,37 @@ function prepareReferencePixels(input,width,height,runs,{neckFade=0,sourceHeight
  for(let y=1;y<height-1;y++)for(let x=1;x<width-1;x++){
   const n=y*width+x;let inside=true;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)if(!mask[n+dy*width+dx])inside=false;core[n]=inside?1:0;
  }
+ // Color samples must come from beyond the original antialiased paper edge.
+ // The previous nearest-core lookup could select the contaminated pixel itself.
+ let colorCore=core;
+ if(paperRows)for(let pass=0;pass<2;pass++){
+  const next=new Uint8Array(width*height);
+  for(let y=1;y<height-1;y++)for(let x=1;x<width-1;x++){
+   const n=y*width+x;let inside=true;
+   for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)if(!colorCore[n+dy*width+dx])inside=false;
+   next[n]=inside?1:0;
+  }
+  colorCore=next;
+ }
  for(let y=0;y<height;y++)for(let x=0;x<width;x++){
   const n=y*width+x;let coverage=0;
   for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&yy>=0&&xx<width&&yy<height)coverage+=core[yy*width+xx]*(dx===0?2:1)*(dy===0?2:1)}
   out[n*4+3]=Math.round(255*coverage/16);
   if(coverage>0&&coverage<16){let found=-1,best=Infinity;for(let dy=-3;dy<=3;dy++)for(let dx=-3;dx<=3;dx++){const xx=x+dx,yy=y+dy,d=dx*dx+dy*dy;if(xx>=0&&yy>=0&&xx<width&&yy<height&&core[yy*width+xx]&&d<best){found=(yy*width+xx)*4;best=d}}if(found>=0)for(let k=0;k<3;k++)out[n*4+k]=input[found+k]}
+  if(paperRows&&coverage>0&&!colorCore[n]){
+   let found=-1,best=Infinity;
+   for(let dy=-6;dy<=6;dy++)for(let dx=-6;dx<=6;dx++){
+    const xx=x+dx,yy=y+dy,d=dx*dx+dy*dy;
+    if(xx>=0&&yy>=0&&xx<width&&yy<height&&colorCore[yy*width+xx]&&d<best){found=(yy*width+xx)*4;best=d}
+   }
+   if(found>=0){
+    const row=Math.max(0,Math.min(sourceHeight-1,y-2))*3;let numerator=0,denominator=0;
+    for(let k=0;k<3;k++){const delta=input[found+k]-paperRows[row+k];numerator+=(input[n*4+k]-paperRows[row+k])*delta;denominator+=delta*delta}
+    const matte=denominator>100?Math.max(0,Math.min(1,numerator/denominator)):1;
+    out[n*4+3]=Math.round(out[n*4+3]*matte);
+    for(let k=0;k<3;k++)out[n*4+k]=input[found+k];
+   }
+  }
   if(neckFade>0){const fade=Math.max(0,Math.min(1,(sourceHeight-(y-2))/neckFade));out[n*4+3]=Math.round(out[n*4+3]*fade)}
  }
  return out;

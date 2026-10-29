@@ -16,3 +16,6 @@ assert.ok(new Set(alphas).size>=18,'the collar has a gradual multi-row transitio
 for(let n=1;n<alphas.length;n++)assert.ok(alphas[n]<=alphas[n-1]&&alphas[n]>0,'no gap or hard step inside the collar');
 assert.ok(code.includes('collar.data[i+3]*torso.data[i+3]/255'),'extended collar is constrained to the real torso silhouette');
 console.log('PASS: single ball, intact cheeks, extended original collars, gradual neck alpha and torso silhouette constraint');
+
+for(const [name,x,y] of [['crouch',846,980],['crouch',933,1001],['crouch',929,1008],['above',108,1005],['above',206,1024],['above',226,1035],['top',803,994],['top',873,1009],['top',865,1023],['top',973,983]])assert.equal(kept(name,x,y),false,'painted source floor is not duck silhouette: '+name);
+console.log('PASS: crouch and overhead paper-floor samples excluded, including enclosed wing gaps');

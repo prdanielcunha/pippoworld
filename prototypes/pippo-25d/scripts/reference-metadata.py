@@ -12,7 +12,7 @@ sheets={
  'contact':('contact.png',[(30,355),(380,683),(710,1017)],['sit','rest','rise','wave','observe','receive','hold','return','turnLeft','turnRight','lookBack','reach']),
  'views':('views.png',[(43,377),(412,735),(765,1037)],['front','quarterLeft','left','backLeft','back','backRight','right','quarterRight','above','below','top','soles']),
  'expressions':('expressions.png',[(28,356),(375,685),(710,1024)],['neutral','happy','curious','surprised','laugh','affection','wink','sleepy','playful','focused','listening','calm'])}
-result={'version':1,'maskRevision':'continuous-neck-7','provenance':{},'poses':{}}
+result={'version':1,'maskRevision':'paper-matte-17','provenance':{},'poses':{}}
 for sheet,(filename,rows,names) in sheets.items():
  path=root/filename;im=np.asarray(Image.open(path).convert('RGB')).astype(float);result['provenance'][sheet]={'file':filename,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'source':'user-approved original, byte-for-byte copy'}
  for i,name in enumerate(names):
@@ -54,10 +54,14 @@ for sheet,(filename,rows,names) in sheets.items():
    fy,fx=np.where(mask);lower=yy>fy.min()+y0+(fy.max()-fy.min())*.55
    paper_void=(filled&~closed)&(rgb[:,:,0]-rgb[:,:,2]<85)&(rgb[:,:,0]-rgb[:,:,1]<38)
    mask[lower&paper_void]=False
-  if sheet!='expressions' and name not in ['rest','sit','above','below','top','soles','crouch']:
-   fy,fx=np.where(mask);cut=int(fy.min()+(fy.max()-fy.min())*.88)
+  if sheet!='expressions' and name not in ['rest','sit','below','soles']:
+   fy,fx=np.where(mask);floor_fraction=.35 if name=='top' else .72 if name in ['crouch','above'] else .88
+   cut=int(fy.min()+(fy.max()-fy.min())*floor_fraction)
    paper_floor=(rgb[:,:,0]-rgb[:,:,2]<85)&(rgb[:,:,0]-rgb[:,:,1]<38)
    mask[cut:][paper_floor[cut:]]=False
+   # Crouching and overhead views also contain a painted ivory floor/shadow.
+   # Remove detached floor fragments after discarding that background.
+   labels,n=nd.label(mask);sizes=np.bincount(labels.ravel());sizes[0]=0;mask=labels==int(np.argmax(sizes))
   if sheet=='contact' and name in loose_balls:
    labels,n=nd.label(mask);sizes=np.bincount(labels.ravel());sizes[0]=0;mask=labels==int(np.argmax(sizes))
   neck=None
@@ -76,7 +80,10 @@ for sheet,(filename,rows,names) in sheets.items():
    for a,b in zip(starts,ends):runs.extend([yy-by,int(a),int(b-a)])
   # Head center is a stable anchor; feet/wing extensions cannot move the actor.
   headY=by+int(bh*.25);lo=max(by,headY-int(bh*.08));hi=min(by+bh,headY+int(bh*.08));hy,hx=np.where(mask[lo:hi]);anchor=float(np.median(hx))-bx
-  pose={'sheet':sheet,'sx':x0+bx,'sy':y0+by,'w':bw,'h':bh,'anchor':round(anchor,2),'runs':runs,'sourceCell':i,'contacts':[]}
+  # The original paper is not transparent. Keep its row-local color for edge
+  # unmatting; a cream cheek/white eye inside the figure is never color-keyed.
+  paper_rows=np.rint(paper[by:by+bh,0,:]).astype(int).ravel().tolist()
+  pose={'sheet':sheet,'sx':x0+bx,'sy':y0+by,'w':bw,'h':bh,'anchor':round(anchor,2),'runs':runs,'paperRows':paper_rows,'sourceCell':i,'contacts':[]}
   bottom=mask[max(by,by+bh-5):by+bh,bx:bx+bw].any(axis=0);edges=np.diff(np.r_[False,bottom,False].astype(int))
   for a,b in zip(np.where(edges==1)[0],np.where(edges==-1)[0]):
    if b-a>=3:pose['contacts'].append({'x':float((a+b)/2),'width':int(b-a)})

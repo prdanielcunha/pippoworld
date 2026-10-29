@@ -2,11 +2,11 @@
 
 Backup de 28/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
 
-Versão publicada: 16. Commit original do Site: `6f7cdf8cdf73571be168b33be1ebb25717222592`.
+Versão publicada: 17. Commit original do Site: `55f04fd949954b109ae43c0982aa80838d1fdfa7`.
 
 **Para continuar em outra conversa:** leia [o checkpoint e o prompt completo](prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md).
 
-Nesta entrega: mudar o destino no mesmo sentido preserva a velocidade e a fase dos passos. Destinos próximos freiam sem ultrapassagem. Doze suítes Node aprovadas e comparação visual com a versão 15. As correções anteriores de giros, pescoço, bochechas, contornos, bola e toque permanecem. Um ensaio de oito poses e sua revisão foram rejeitados: não integram o jogo. A caminhada ainda usa quatro poses e não está concluída.
+Nesta entrega: correção do fundo marfim nas bordas dos 49 recortes e exclusão de chão residual no agachamento/vistas superiores. Descontaminação por cor do papel de cada linha, aplicada só à borda e cacheada. Revisão no navegador em fundos escuro/rosa e 12 expressões montadas. Treze suítes Node aprovadas, originais intactos. Correções anteriores de pescoço, bochechas, bola, carinho, giros e velocidade permanecem. A caminhada ainda tem quatro poses e não está concluída.
 
 Jogo: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 
@@ -33,3 +33,7 @@ Publicada no mesmo Site, com público preservado. Comparação visual com a vers
 ## Entrega 16 — 28/10/2026
 
 Velocidade contínua ao mudar destino e no redimensionamento. Evidência e ensaio reproduzível em `prototypes/pippo-25d/`; documentação dos prompts e motivos de rejeição em `docs/ENSAIO_CAMINHADA_16.md` nessa pasta. Não repetir atlas semelhantes como se fossem animação concluída. Próxima prioridade: uma fase de passagem/avanço com apoio anatomicamente correto antes de multiplicar o ciclo. Publicação no mesmo Site e backup GitHub são operações separadas.
+
+## Entrega 17 — 28/10/2026
+
+Corrige os resíduos claros da captura do responsável. Máscaras/cache: `paper-matte-17`. Ensaio reproduzível: `python3 scripts/review-contours.py` dentro do protótipo. Evidências, teste de 49 recortes e comparação do filtro anterior preservados. Publicação no mesmo Site; backup separado no GitHub. As folhas originais continuam byte a byte idênticas. Sem afirmar reteste físico no iPhone.

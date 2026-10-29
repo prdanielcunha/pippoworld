@@ -10,7 +10,7 @@
  function load(src){return new Promise((resolve,reject)=>{const i=new Image;i.onload=()=>resolve(i);i.onerror=reject;i.src=src})}
  function sprite(name){
   if(cache.has(name))return cache.get(name);const p=meta.poses[name],c=document.createElement('canvas');c.width=p.w+4;c.height=p.h+4;const g=c.getContext('2d',{willReadFrequently:true});g.drawImage(images[p.sheet],p.sx,p.sy,p.w,p.h,2,2,p.w,p.h);
-  const frame=g.getImageData(0,0,c.width,c.height);frame.data.set(prepareReferencePixels(frame.data,c.width,c.height,p.runs,{neckFade:p.neck ? p.h-p.neck.blendStart : 0,sourceHeight:p.h}));
+  const frame=g.getImageData(0,0,c.width,c.height);frame.data.set(prepareReferencePixels(frame.data,c.width,c.height,p.runs,{paperRows:p.paperRows,neckFade:p.neck ? p.h-p.neck.blendStart : 0,sourceHeight:p.h}));
   g.putImageData(frame,0,0);cache.set(name,{canvas:c,p,alpha:Uint8Array.from({length:c.width*c.height},(_,i)=>frame.data[i*4+3])});return cache.get(name);
  }
  function drawPose(ctx,name,g,{mirror=false,lift=0,rotate=0,shadow=true,stretch=1}={}){
@@ -60,7 +60,7 @@
   }else drawPose(ctx,pose,g,{mirror,lift,rotate:lean,stretch:breathing});
   canvas.dataset.artSource='approved-original';canvas.dataset.pose=pose;canvas.dataset.walkFrames='4';canvas.dataset.gait='approved-poses';
  };
- api.loading=fetch('assets/canon/poses.json?v=continuous-neck-7',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}).then(async data=>{
+ api.loading=fetch('assets/canon/poses.json?v=paper-matte-17',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}).then(async data=>{
   meta=data;await Promise.all(Object.entries(data.provenance).map(async([sheet,p])=>{images[sheet]=await load('assets/canon/'+p.file)}));
   // Warm the first and the profile poses; other crops are cached when first used.
   for(const name of ['front','quarterLeft','left','quarterRight','right','walk0','walk1','walk2','walk3'])sprite(name);
