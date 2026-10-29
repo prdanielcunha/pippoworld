@@ -1,14 +1,14 @@
 {
-  "source_site_version": 17,
-  "source_commit": "55f04fd949954b109ae43c0982aa80838d1fdfa7",
+  "source_site_version": 18,
+  "source_commit": "84e68659abdf6c346eea2ef77b8270f14c2e8072",
   "site_id": "appgprj_6ae1365f002c819181664fab9d7beb12",
   "immutable_history_bundle_covers_through_version": 13,
   "files": [
     {
       "path": "PIPPO_ATUAL.md",
-      "sha": "8d10f6215d9b41dcae02e0160f7b4284b161d932",
-      "sha256": "1806dfa247afd845251d04e1a6d35c1385f87c7a5f8a9c92b8ffad8d37163d89",
-      "size": 4066
+      "sha": "8a12a09b993decd00fd0648f6e9ba95b1ff38d87",
+      "sha256": "761d8bd415888bc27c25dabe2dba65fb032083eb79fdbe5d543cf30a278876f9",
+      "size": 4544
     },
     {
       "path": "prototypes/pippo-25d/.openai/hosting.json",
@@ -18,9 +18,9 @@
     },
     {
       "path": "prototypes/pippo-25d/README.md",
-      "sha": "574a1d3fcb1d70a6a39a01b08a6c28398af1eb4c",
-      "sha256": "9dfffe6707dee3ce8491153027d0a5ad2db58b2f50f995d195b7fb8ca9484710",
-      "size": 28769
+      "sha": "928737d4f20de90ee373fdb99415d9b523c43d81",
+      "sha256": "95a49e74a4ba37dfad95ec1604b46d72ee3d68229aa8e7d89a9eac7fe2824abd",
+      "size": 31179
     },
     {
       "path": "prototypes/pippo-25d/dist/activities.js",
@@ -60,9 +60,9 @@
     },
     {
       "path": "prototypes/pippo-25d/dist/assets/canon/poses.json",
-      "sha": "dacf6fcfd189a15e48fcd6b87564e5e0ba13aeb5",
-      "sha256": "0745c78295c79da981efac1354bd04326f1b7e36b49df59fccf964da17eedb25",
-      "size": 353665
+      "sha": "e053670da19ab181bf19d2ec8600d517e4a6c85b",
+      "sha256": "512d61ea89e5aeb349d320237bef0cd79a3f15f1a34088675cb94cfd2a6b98ad",
+      "size": 355067
     },
     {
       "path": "prototypes/pippo-25d/dist/assets/canon/views.png",
@@ -126,9 +126,9 @@
     },
     {
       "path": "prototypes/pippo-25d/dist/canonical-art.js",
-      "sha": "325e56895eaddfd8fc6a826c600c81e430b3b701",
-      "sha256": "d4b60d2a84d7be0dca3d856b23c2a85c3d6b8645686b3bffc547f866b506c9fc",
-      "size": 7377
+      "sha": "8a5688470fe311d04005bc1abca7ef91c568825a",
+      "sha256": "7ac7501fc3e3050e085776aeb0ee14d702037c9cb3846a5a51cdb7a6995bc5c4",
+      "size": 7382
     },
     {
       "path": "prototypes/pippo-25d/dist/character-controls.js",
@@ -138,9 +138,9 @@
     },
     {
       "path": "prototypes/pippo-25d/dist/index.html",
-      "sha": "fb69389ed0852953aa31ca4d748f2971db327503",
-      "sha256": "6242aa761d15d2e9ea60dd68ec49c48b05703121d652f602f22305f1e190620d",
-      "size": 9286
+      "sha": "cc193c3b6af903516acc8b023625408101b87fed",
+      "sha256": "f4e63ac35a681fe6d4a0fe706d0de887c862ebebb85c85f6670518cb7cad6b7f",
+      "size": 9326
     },
     {
       "path": "prototypes/pippo-25d/dist/interaction.js",
@@ -186,9 +186,9 @@
     },
     {
       "path": "prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md",
-      "sha": "7b30bf6ff457f1cd5187c670a5ed3f9b6f12a602",
-      "sha256": "1271d978a250ab320e777638eab39da1eca4306fae2b1cf6eca50c642190ace4",
-      "size": 16757
+      "sha": "d56f31002c29f538979395ea8f0e16142cdc4cb1",
+      "sha256": "04077b34ee5616f3d369b6d43eaa84a5b799908aa528b077d74258d0b41ae9c1",
+      "size": 19172
     },
     {
       "path": "prototypes/pippo-25d/docs/ENSAIO_CAMINHADA_16.md",
@@ -198,9 +198,9 @@
     },
     {
       "path": "prototypes/pippo-25d/docs/ESTADO_PRODUCAO.md",
-      "sha": "45b8b98e1727f1326e0d022ea948563042c2a485",
-      "sha256": "ca4c3c437ec9bde1767579ece02126e5856bba37724d64120eada9e1ad697b03",
-      "size": 17154
+      "sha": "9dce626c2004d593a08084fb750b54e28e6e89c8",
+      "sha256": "b7673ca0ec30fee41cdfc1370e8c5284c346efcc45aca679f821e5a5832616c7",
+      "size": 19564
     },
     {
       "path": "prototypes/pippo-25d/docs/ESTRATEGIA.md",
@@ -210,9 +210,9 @@
     },
     {
       "path": "prototypes/pippo-25d/docs/IDENTIDADE_PIPPO.md",
-      "sha": "b263564a1f839972f4a369d9ce78981b6e80a13e",
-      "sha256": "d235cdc6dc3878178101ba59ce8396387a61f50db6725e069b9686367fd4e014",
-      "size": 14850
+      "sha": "c5ac2a28a88c0c41e9c2b660f089ac284294181e",
+      "sha256": "8df3a7d8189c4b61ac4117afc8ff2078c049d93e7b2b0d363a84599207252c47",
+      "size": 17260
     },
     {
       "path": "prototypes/pippo-25d/evidence/pippo-contornos-comparacao-v17.jpg",
@@ -257,6 +257,12 @@
       "size": 48827
     },
     {
+      "path": "prototypes/pippo-25d/evidence/pippo-residuos-comparacao-v18.jpg",
+      "sha": "80740d21e6f7dae7272a08df6ad3656078c3d434",
+      "sha256": "b4bf01c3fac487642aa859613a112362f9d2977455d77b5d9bb587b3755dbee8",
+      "size": 81230
+    },
+    {
       "path": "prototypes/pippo-25d/evidence/pippo-retarget-v16.jpg",
       "sha": "bbb4e8a40e3ebba2c6e3e66b74d8986c38814b73",
       "sha256": "54cc29e262c9d765d43e269708ede1c24d7e33b16fc5536ef349450ae2e31603",
@@ -294,15 +300,21 @@
     },
     {
       "path": "prototypes/pippo-25d/scripts/reference-metadata.py",
-      "sha": "363654c7e0b65807a4be558dd29b1ae8b8922c65",
-      "sha256": "a128a7abc4c92f0bcbf33d446251c7afd761872d517b9d82c496ae6866eb9e8f",
-      "size": 7648
+      "sha": "185ea4461a4dd280e80396f484f81a642e480452",
+      "sha256": "2231682814c1cb182e4e072c490ed45d23ddf3fe6a85fbd66e1c8eabe2e2977f",
+      "size": 10296
     },
     {
       "path": "prototypes/pippo-25d/scripts/review-contours.py",
       "sha": "59d46c7b98025a6db8927234986076a0944abb8e",
       "sha256": "12c33f14f770259f988a3bfb8f3070e7ce614bf89118335df17c69266c7fbb6d",
       "size": 6394
+    },
+    {
+      "path": "prototypes/pippo-25d/scripts/review-residuals.py",
+      "sha": "5fdea38fe0f3ac8ba54b34ff75bf1c8c54588463",
+      "sha256": "198a53b498831d948ceb25e54e16fc66b0c739b06c2bcc68a9c6844bd6569832",
+      "size": 3485
     },
     {
       "path": "prototypes/pippo-25d/scripts/review-retarget.py",
@@ -324,9 +336,9 @@
     },
     {
       "path": "prototypes/pippo-25d/tests/art-refinement.cjs",
-      "sha": "68cff52910ccb3d473a0c61b70e014956efd6a50",
-      "sha256": "af795067df30cab5cfc70d0e76824eccca53e08d9755361c34a1469df11ddd04",
-      "size": 2905
+      "sha": "b5ef911ba0257303e9cde02837dc0c36c860fb26",
+      "sha256": "df71549981533114cf1efe803a199d6b15043a086cb1202a9c4572564f44197f",
+      "size": 3722
     },
     {
       "path": "prototypes/pippo-25d/tests/ball-play.cjs",

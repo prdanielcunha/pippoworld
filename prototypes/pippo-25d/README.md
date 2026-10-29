@@ -165,3 +165,16 @@ Verificação: 13 suítes Node aprovadas; `tests/reference-matte.cjs` lê os ori
 Revisão visual no Chromium remoto: 49 recortes sobre fundos azul escuro/rosa, comparação ampliada do agachamento e 12 expressões montadas com corpo/pescoço. Evidências: `evidence/pippo-contornos-comparacao-v17.jpg` e `evidence/pippo-expressoes-completas-v17.jpg`. Reproduzir com `python3 scripts/review-contours.py`; abrir `/__contours.html` e `/__assembled.html` na prévia suportada. Usar `--clean` antes de empacotar; as páginas e cópias temporárias não são publicadas. Fixture anterior do filtro preservada somente em `tests/fixtures/sprite-rendering-v16.js` para comparação.
 
 Esta revisão trata recortes, não completa a animação de caminhada. Continuam quatro poses e todas as atividades/documentos anteriores. A captura enviada é evidência de uso no iPhone; esta correção foi conferida no navegador remoto, sem afirmar reteste físico no aparelho. Cache e máscara: `paper-matte-17`.
+
+
+### Correção dos resíduos ainda visíveis na evidência 17 — revisão 18
+
+O responsável apontou corretamente que a própria comparação entregue na revisão 17 ainda continha fundo no recorte. A revisão 17 não resolveu integralmente esse defeito. Sua galeria reduzida e a medição de cores claras não foram suficientes para aprovar as áreas de contato. A ampliação de quatro vezes mostrou sombras e papel com reflexo quente junto à barriga/patas em agachar, deitar, sentar e duas vistas superiores. Esses pixels não podem ser removidos de modo confiável apenas pela cor marfim.
+
+A máscara usa agora contornos de contato e vazios explícitos nas coordenadas da folha original para essas cinco poses. O preenchimento não pode voltar a fechar os espaços entre barriga, bico e patas. A vista de topo preserva a região real dos olhos/face creme e as patas laranjas; regiões de fundo sob a cabeça são tratadas separadamente. Os originais permanecem inalterados. São refinamentos de máscara, sem novas imagens, modelagem ou mudança da caminhada.
+
+Revisão visual: regiões de contato ampliadas em fundo escuro, comparação direta v17/correção na mesma escala. Evidência `evidence/pippo-residuos-comparacao-v18.jpg`. A comparação mostra os resíduos reais da v17 à esquerda e os limites corrigidos à direita, sem confundir páginas de referência opacas com o sprite final. Reprodução: `python3 scripts/review-residuals.py`; abrir `/__residuals.html`; clicar Comparar regiões de contato; executar `--clean` antes de publicar. A inspeção inicial usou ampliação de quatro vezes; a evidência comparativa usa duas vezes.
+
+Testes: 13 suítes Node, incluindo novas amostras negativas de papel refletido/quente em cinco poses e amostras positivas da barriga, pés, bico e região dos olhos no topo. O teste de matting geral continua cobrindo os 49 recortes. Não usar o número de suítes nem a redução de amostras claras como prova de que não existe qualquer resíduo em todos os aparelhos. A evidência visual deve ser inspecionada antes de concluir. Safari/iPhone físico ainda sem reteste desta correção.
+
+Cache e máscaras: `contact-contours-18`. Preservar bola única, bochechas, pescoço, carinho pela silhueta, velocidade e giros. Caminhada mantém quatro poses; os ensaios de animação rejeitados continuam fora do jogo. Todo o inventário de atividades permanece.

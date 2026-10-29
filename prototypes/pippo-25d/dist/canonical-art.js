@@ -60,7 +60,7 @@
   }else drawPose(ctx,pose,g,{mirror,lift,rotate:lean,stretch:breathing});
   canvas.dataset.artSource='approved-original';canvas.dataset.pose=pose;canvas.dataset.walkFrames='4';canvas.dataset.gait='approved-poses';
  };
- api.loading=fetch('assets/canon/poses.json?v=paper-matte-17',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}).then(async data=>{
+ api.loading=fetch('assets/canon/poses.json?v=contact-contours-18',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('reference metadata');return r.json()}).then(async data=>{
   meta=data;await Promise.all(Object.entries(data.provenance).map(async([sheet,p])=>{images[sheet]=await load('assets/canon/'+p.file)}));
   // Warm the first and the profile poses; other crops are cached when first used.
   for(const name of ['front','quarterLeft','left','quarterRight','right','walk0','walk1','walk2','walk3'])sprite(name);

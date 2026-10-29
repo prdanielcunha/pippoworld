@@ -19,3 +19,7 @@ console.log('PASS: single ball, intact cheeks, extended original collars, gradua
 
 for(const [name,x,y] of [['crouch',846,980],['crouch',933,1001],['crouch',929,1008],['above',108,1005],['above',206,1024],['above',226,1035],['top',803,994],['top',873,1009],['top',865,1023],['top',973,983]])assert.equal(kept(name,x,y),false,'painted source floor is not duck silhouette: '+name);
 console.log('PASS: crouch and overhead paper-floor samples excluded, including enclosed wing gaps');
+
+for(const [name,x,y] of [['crouch',885,985],['crouch',923,994],['above',210,1009],['above',224,1013],['top',960,945],['top',965,950],['top',866,985],['top',918,980],['rest',640,336],['rest',650,334],['sit',170,349],['sit',210,350],['sit',150,350]])assert.equal(kept(name,x,y),false,'warm reflected paper is still background: '+name+' '+x+','+y);
+for(const [name,x,y] of [['crouch',875,1000],['crouch',970,988],['above',175,1010],['above',265,1010],['top',940,945],['top',930,970],['top',866,965],['rest',620,332],['rest',660,324],['sit',140,348],['sit',200,342],['sit',265,345]])assert.equal(kept(name,x,y),true,'keep real plumage, eye surround, bill or foot: '+name+' '+x+','+y);
+console.log('PASS: residual paper samples rejected in five low poses; actual belly, orange feet, top eye surround and beak retained');

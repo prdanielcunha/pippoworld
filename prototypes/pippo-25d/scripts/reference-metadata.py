@@ -12,7 +12,24 @@ sheets={
  'contact':('contact.png',[(30,355),(380,683),(710,1017)],['sit','rest','rise','wave','observe','receive','hold','return','turnLeft','turnRight','lookBack','reach']),
  'views':('views.png',[(43,377),(412,735),(765,1037)],['front','quarterLeft','left','backLeft','back','backRight','right','quarterRight','above','below','top','soles']),
  'expressions':('expressions.png',[(28,356),(375,685),(710,1024)],['neutral','happy','curious','surprised','laugh','affection','wink','sleepy','playful','focused','listening','calm'])}
-result={'version':1,'maskRevision':'paper-matte-17','provenance':{},'poses':{}}
+# Explicit source-space boundaries for the contact shadows that overlap warm
+# plumage/feet colors. Color thresholds alone left islands of reflected paper.
+floor_contours={
+ 'crouch':[(840,999),(848,1003),(865,1006),(878,1008),(889,1007),(905,1003),(914,999),(918,993),(919,990),(929,990),(934,993),(944,996),(967,996),(983,994),(996,994),(1002,990),(1005,987)],
+ 'above':[(128,1003),(139,1011),(147,1016),(154,1025),(167,1021),(179,1020),(188,1025),(194,1022),(195,1008),(200,1003),(222,1004),(233,1001),(240,1009),(244,1020),(250,1023),(259,1018),(275,1020),(284,1012),(296,1006)],
+ 'top':[(790,970),(798,982),(811,986),(821,988),(829,998),(842,995),(856,999),(864,996),(865,985),(875,990),(890,994),(903,994),(915,993),(919,1001),(926,1000),(939,1000),(951,995),(963,998),(971,992),(982,988),(991,981)],
+ 'rest':[(440,330),(449,339),(469,343),(494,344),(519,343),(537,342),(554,345),(580,345),(610,343),(620,341),(626,338),(630,335),(636,334),(640,333),(647,330),(650,330),(658,329),(665,326),(688,325),(703,320)],
+ 'sit':[(83,315),(85,318),(95,330),(105,340),(115,347),(125,351),(135,352),(145,348),(155,344),(165,344),(180,345),(200,345),(220,345),(235,343),(245,344),(255,350),(265,350),(275,349),(285,342),(295,332),(305,321),(313,310)]}
+floor_voids={
+ 'crouch':[[(877,982),(886,985),(904,988),(928,990),(936,988),(939,993),(941,999),(929,1004),(916,1005),(916,997),(908,993),(892,988),(879,986)]],
+ 'above':[[(193,999),(206,1004),(222,1004),(232,1002),(246,994),(243,1010),(240,1026),(230,1033),(200,1033),(195,1024),(194,1011)]],
+ 'top':[[(857,967),(863,968),(866,977),(872,989),(878,997),(878,1006),(860,1008),(860,993),(859,980),(855,973)],[(922,962),(925,964),(920,973),(920,996),(917,1005),(910,1005),(912,990),(916,978),(919,966)],[(967,934),(990,934),(990,973),(973,973),(970,969),(965,964),(957,958),(950,954),(947,951),(948,945),(952,940),(966,938)]]}
+def polygon_region(xx,yy,points):
+ inside=np.zeros(xx.shape,bool)
+ for (ax,ay),(bx,by) in zip(points,points[1:]+points[:1]):
+  if ay!=by:inside^=((ay>yy)!=(by>yy))&(xx<(bx-ax)*(yy-ay)/(by-ay)+ax)
+ return inside
+result={'version':1,'maskRevision':'contact-contours-18','provenance':{},'poses':{}}
 for sheet,(filename,rows,names) in sheets.items():
  path=root/filename;im=np.asarray(Image.open(path).convert('RGB')).astype(float);result['provenance'][sheet]={'file':filename,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'source':'user-approved original, byte-for-byte copy'}
  for i,name in enumerate(names):
@@ -55,7 +72,7 @@ for sheet,(filename,rows,names) in sheets.items():
    paper_void=(filled&~closed)&(rgb[:,:,0]-rgb[:,:,2]<85)&(rgb[:,:,0]-rgb[:,:,1]<38)
    mask[lower&paper_void]=False
   if sheet!='expressions' and name not in ['rest','sit','below','soles']:
-   fy,fx=np.where(mask);floor_fraction=.35 if name=='top' else .72 if name in ['crouch','above'] else .88
+   fy,fx=np.where(mask);floor_fraction=.80 if name=='top' else .72 if name in ['crouch','above'] else .88
    cut=int(fy.min()+(fy.max()-fy.min())*floor_fraction)
    paper_floor=(rgb[:,:,0]-rgb[:,:,2]<85)&(rgb[:,:,0]-rgb[:,:,1]<38)
    mask[cut:][paper_floor[cut:]]=False
@@ -64,6 +81,15 @@ for sheet,(filename,rows,names) in sheets.items():
    labels,n=nd.label(mask);sizes=np.bincount(labels.ravel());sizes[0]=0;mask=labels==int(np.argmax(sizes))
   if sheet=='contact' and name in loose_balls:
    labels,n=nd.label(mask);sizes=np.bincount(labels.ravel());sizes[0]=0;mask=labels==int(np.argmax(sizes))
+  if name in floor_contours or name in floor_voids:
+   yy,xx=np.mgrid[y0:y1,x0:x1]
+   if name in floor_contours:
+    boundary=floor_contours[name];limit=np.interp(xx,[p[0] for p in boundary],[p[1] for p in boundary])
+    mask&=yy<=limit+1
+   for polygon in floor_voids.get(name,[]):
+    region=polygon_region(xx,yy,polygon)
+    if name=='top':region&=~((rgb[:,:,0]-rgb[:,:,1]>65)&(rgb[:,:,0]-rgb[:,:,2]>90))
+    mask[region]=False
   neck=None
   if sheet=='expressions':
    yy,xx=np.where(mask);minY,maxY=yy.min(),yy.max();candidates=[]
@@ -84,6 +110,8 @@ for sheet,(filename,rows,names) in sheets.items():
   # unmatting; a cream cheek/white eye inside the figure is never color-keyed.
   paper_rows=np.rint(paper[by:by+bh,0,:]).astype(int).ravel().tolist()
   pose={'sheet':sheet,'sx':x0+bx,'sy':y0+by,'w':bw,'h':bh,'anchor':round(anchor,2),'runs':runs,'paperRows':paper_rows,'sourceCell':i,'contacts':[]}
+  if name in floor_contours:pose['floorContour']=floor_contours[name]
+  if name in floor_voids:pose['floorVoids']=floor_voids[name]
   bottom=mask[max(by,by+bh-5):by+bh,bx:bx+bw].any(axis=0);edges=np.diff(np.r_[False,bottom,False].astype(int))
   for a,b in zip(np.where(edges==1)[0],np.where(edges==-1)[0]):
    if b-a>=3:pose['contacts'].append({'x':float((a+b)/2),'width':int(b-a)})

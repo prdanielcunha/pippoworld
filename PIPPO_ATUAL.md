@@ -2,11 +2,11 @@
 
 Backup de 28/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
 
-Versão publicada: 17. Commit original do Site: `55f04fd949954b109ae43c0982aa80838d1fdfa7`.
+Versão publicada: 18. Commit original do Site: `84e68659abdf6c346eea2ef77b8270f14c2e8072`.
 
 **Para continuar em outra conversa:** leia [o checkpoint e o prompt completo](prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md).
 
-Nesta entrega: correção do fundo marfim nas bordas dos 49 recortes e exclusão de chão residual no agachamento/vistas superiores. Descontaminação por cor do papel de cada linha, aplicada só à borda e cacheada. Revisão no navegador em fundos escuro/rosa e 12 expressões montadas. Treze suítes Node aprovadas, originais intactos. Correções anteriores de pescoço, bochechas, bola, carinho, giros e velocidade permanecem. A caminhada ainda tem quatro poses e não está concluída.
+Nesta entrega: correção geométrica do papel refletido/quente que ainda aparecia na própria evidência da versão 17. Contornos de contato e vazios explícitos em agachar, sentar, deitar e duas vistas superiores. Comparação ampliada v17/correção e novas amostras negativas/positivas nos testes. Treze suítes aprovadas; originais intactos. A versão 17 não havia resolvido integralmente os resíduos. Caminhada continua com quatro poses.
 
 Jogo: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 
@@ -37,3 +37,7 @@ Velocidade contínua ao mudar destino e no redimensionamento. Evidência e ensai
 ## Entrega 17 — 28/10/2026
 
 Corrige os resíduos claros da captura do responsável. Máscaras/cache: `paper-matte-17`. Ensaio reproduzível: `python3 scripts/review-contours.py` dentro do protótipo. Evidências, teste de 49 recortes e comparação do filtro anterior preservados. Publicação no mesmo Site; backup separado no GitHub. As folhas originais continuam byte a byte idênticas. Sem afirmar reteste físico no iPhone.
+
+## Entrega 18 — 28/10/2026
+
+O responsável identificou resíduos na própria imagem entregue. Corrigidos os limites e vazios de cinco poses por coordenadas da folha original, com preservação de olhos/face creme, bico e pés. Cache/máscara `contact-contours-18`. Evidência `evidence/pippo-residuos-comparacao-v18.jpg`; reprodução por `scripts/review-residuals.py`. Publicação no mesmo Site e backup separado no GitHub. Não usar quantidade de testes como prova de perfeição visual ou reteste físico no iPhone.
