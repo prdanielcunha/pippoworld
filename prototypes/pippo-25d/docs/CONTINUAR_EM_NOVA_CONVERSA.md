@@ -1,6 +1,6 @@
 # Mundo Pippo — continuidade de desenvolvimento
 
-**Estado atual: versão 20 — regiões apagadas das bochechas recuperadas das folhas originais; recortes v2 preservados nas demais áreas. Ver o registro ao final e ROSTO_V20.md. As seções anteriores guardam o histórico.**
+**Estado atual: versão 21 — estações musicais dentro da cena, bateria de cinco peças, 26 gravações acústicas e toques independentes. Artes v20 preservadas. Ver MUSICA_V21.md; histórico abaixo permanece válido como histórico.**
 
 Checkpoint de 29/10/2026. Este documento guarda decisões e estado técnico para trocar de conversa. Não é uma transcrição literal do chat nem um aceite final do jogo. Leia a versão mais recente na branch `main` do GitHub.
 
@@ -146,3 +146,7 @@ Verificação: 15 suítes Node; a nova `tests/face-restoration.cjs` exige alpha 
 Reprodução: `python3 scripts/import-clean-cutouts.py /caminho/do/zip-extraido`; depois `python3 scripts/review-face-restoration.py`, abrir `/__face-review.html` na prévia suportada, usar Ampliar o rosto apontado e Conferir todas as 48 figuras. Executar `python3 scripts/review-face-restoration.py --clean` antes de publicar. As folhas em `assets/canon/` não foram alteradas. Mais detalhes em `docs/ROSTO_V20.md` (nesta pasta docs: `ROSTO_V20.md`).
 
 Não foi feito reteste em iPhone físico nem medição de FPS. A resolução e as quatro fases de caminhada continuam limitadas; esta correção não conclui a animação. Todas as atividades previstas, os documentos e as pendências permanecem. Cache: `face-restoration-20`. Publicação e backup GitHub são operações separadas.
+
+## Entrega v21 — música
+
+Ver [MUSICA_V21.md](MUSICA_V21.md) para fontes, tecnologia, testes e pendências. A síntese histórica e o painel externo descritos acima foram substituídos. Jardim, preferências e demais atividades permanecem. Publicar e backup GitHub são operações separadas.

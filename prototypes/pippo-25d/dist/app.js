@@ -7,7 +7,7 @@ const eyes=[{x:577,y:425,rx:72,ry:86,angle:-.28},{x:807,y:337,rx:60,ry:81,angle:
 const ballDuration=2600;
 function image(src){return new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=src})}
 function message(s){$('status').textContent=s}
-function geometry(){return PippoInteraction.geometry(state.stageWidth||400,state.stageHeight||500,state.actorX)}
+function geometry(){const g=PippoInteraction.geometry(state.stageWidth||400,state.stageHeight||500,state.actorX);return state.activity==='music'?{...g,cx:g.width*.5,bodyHeight:Math.min(g.height*.58,g.width*.76),bottom:g.height*.70}:g}
 function setBlink(duration){state.blinkDuration=duration;state.blink=duration}
 // Keep complete painted poses: the rejected separate-leg rig is not loaded.
 function blink(){if(!state.ready||state.paused)return;endGesture();state.turn=null;state.sideRest=false;cancelBall();state.motion=null;state.pet=0;setBlink(260);message('Uma piscadinha suave.');render()}
@@ -63,7 +63,7 @@ function advanceMotion(dt){
 function frame(t){
  const dt=Math.min(t-(state.last||t),50);state.last=t;
  if(!state.paused&&document.visibilityState==='visible'){
-  state.time+=dt;advanceBall(dt);advanceMotion(dt);state.blink=Math.max(state.petHeld&&state.petKind==='head'?220:0,state.blink-dt);state.pet=Math.max(state.petHeld?state.petDuration*.45:0,state.pet-dt);state.x=PippoInteraction.follow(state.x,state.tx,dt);state.y=PippoInteraction.follow(state.y,state.ty,dt);
+  state.time+=dt;state.musicPulse=Math.max(0,(state.musicPulse||0)-dt);state.musicReply=Math.max(0,(state.musicReply||0)-dt);advanceBall(dt);advanceMotion(dt);state.blink=Math.max(state.petHeld&&state.petKind==='head'?220:0,state.blink-dt);state.pet=Math.max(state.petHeld?state.petDuration*.45:0,state.pet-dt);state.x=PippoInteraction.follow(state.x,state.tx,dt);state.y=PippoInteraction.follow(state.y,state.ty,dt);
   if(state.expressionTime>0){state.expressionTime-=dt;if(state.expressionTime<=0)state.expression=null}
   window.PippoActivities?.tick(dt);
   if(state.time>=state.nextBlink&&state.pet===0&&!state.expression&&!state.motion&&!state.sideRest&&state.ballTime===null){setBlink(240);state.nextBlink=state.time+4700+Math.random()*2200}render();
@@ -135,7 +135,8 @@ $('reference').onclick=()=>{endGesture();$('comparison').showModal();state.wasPa
 new ResizeObserver(resize).observe(canvas);
 window.pippoStudy={getState:()=>({...state}),blink,pet,
  setActivity(activity){endGesture();cancelBall();state.turn=null;state.sideRest=false;state.expression=null;state.motion=null;state.pet=0;state.blink=0;state.activity=activity;state.actorX=activity==='garden'?.35:.5;state.facing=1;state.tx=state.ty=0;resize()},
- react(){if(state.ready&&!state.paused){state.sideRest=false;state.petKind='belly';state.petDuration=650;state.pet=650;setBlink(180);render()}},
+ setInstrument(instrument){state.musicInstrument=instrument;state.musicPulse=0;state.musicReply=0;render()},
+ react(options){if(state.ready&&!state.paused){if(state.activity==='music'){state.musicPulse=200;state.musicReply=options?.automatic?420:0;render();return}state.sideRest=false;state.petKind='belly';state.petDuration=650;state.pet=650;setBlink(180);render()}},
  setReduced(value){state.reduced=value;$('reduced').checked=value;render()}
 };
 function startMotion(kind){

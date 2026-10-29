@@ -2,11 +2,11 @@
 
 Backup de 29/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
 
-Versão publicada: 20. Commit original do Site: `0b661a166524252b263483a793beb380a400d6e2`.
+Versão publicada: 21. Commit original do Site: `7d1bda5833058c76951cde859735d58d5e11cccc`.
 
 **Para continuar em outra conversa:** leia [o checkpoint e o prompt completo](prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md).
 
-Nesta entrega: recuperação localizada das bochechas apagadas e do contorno ao lado dos olhos, a partir das folhas originais. O defeito do recorte anterior permaneceu no pacote v2 e passou pela conferência da versão 19. Brilhos creme recuperados com RGB original e alpha opaco; 12 expressões completas revisadas sem remontar o pescoço. Quinze suítes aprovadas, comparação ampliada no Chromium remoto e 48 figuras conferidas. Caminhada mantém quatro poses, inalteradas. Veja `docs/ROSTO_V20.md` dentro do protótipo.
+Nesta entrega: instrumentos dentro da cena, bateria de cinco peças, teclado com acordes por toques independentes e 26 gravações acústicas locais livres. Sons reais de piano, xilofone, bateria, maraca e pandeiro brasileiro; fontes e hashes no manifesto. Ensaios no navegador de oito notas e dois tambores simultâneos, mixagem de 24 vozes com margem, 15 suítes de regressão e validação dos 26 arquivos. Artes e rosto da v20 preservados. Gestos das asas tocando, teste físico no iPhone e caminhada fluida ainda pendentes. Estratégia atualizada em `docs/MUSICA_V21.md` e `docs/ESTRATEGIA.md`.
 
 Jogo: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 

@@ -1,5 +1,10 @@
 <!-- Transcrição do adendo estratégico v1.0 anexado pelo responsável. Não substitui a especificação completa. -->
 
+## Execução atual — v21, 29/10/2026
+
+A estrutura continua: quintal como entrada livre, Casa da Música e jardim como lugares conectados, preferências comuns e retorno disponível. A etapa B agora tem instrumentos na cena e gravações acústicas livres; a bateria possui cinco peças e o teclado aceita acordes por toque independente. Consulte [MUSICA_V21.md](MUSICA_V21.md) para a implementação e o roteiro imediato. A animação das asas tocando permanece pendente. A etapa A não está encerrada: andar de quatro poses, giros e transições exigem nova entrega comparada visualmente. Amigos, cuidados, jogos de movimento/construção/água e histórias das etapas seguintes continuam no escopo original abaixo.
+
+
 # Estratégia e diferenciação do Mundo Pippo
 
 Direção de produto e critérios de qualidade

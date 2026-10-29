@@ -38,12 +38,12 @@
   else if(m&&['lookBack','observe','receive','hold','return','reach','turnLeft','turnRight'].includes(m.kind))pose=m.kind;
   else if(st.ballTime!==null){const q=st.ballTime/ballDuration;pose=q<.30?'observe':q<.46?'receive':q<.64?'hold':q<.86?'return':'front'}
   else if(st.sideRest&&st.pet<=0&&!st.expression)pose=st.facing===1?'right':'left';
-  const affection=st.pet>0,face=!m&&st.ballTime===null&&(affection||st.expression||st.blink>0||(st.look&&Math.abs(st.x)>.12));
+  const musical=st.activity==='music',affection=st.pet>0,face=!m&&st.ballTime===null&&(musical||affection||st.expression||st.blink>0||(st.look&&Math.abs(st.x)>.12));
   const elapsed=st.petDuration-st.pet,envelope=affection?Math.sin(Math.PI*elapsed/st.petDuration):0;
   const breathing=st.reduced||m?.walk||lift||st.ballTime!==null?1:1+Math.sin(st.time/(m?.kind==='rest'?1050:900))*(m?.kind==='rest'?.004:.0025);
-  const lean=st.reduced?0:affection?(st.petKind==='head'?.014*st.petSide:Math.sin(st.time/240)*.009)*envelope:0;
+  const lean=st.reduced?0:musical&&st.musicPulse>0?Math.sin(st.musicPulse/200*Math.PI)*.009:affection?(st.petKind==='head'?.014*st.petSide:Math.sin(st.time/240)*.009)*envelope:0;
   if(face){
-   const expression=affection?(st.petKind==='head'?'affection':'laugh'):st.blink>0?'affection':st.expression||(st.look?(st.x>0?'listening':'curious'):'neutral');
+   const expression=affection?(st.petKind==='head'?'affection':'laugh'):st.blink>0?'affection':st.expression||(musical?(st.musicReply>0?'listening':'focused'):st.look?(st.x>0?'listening':'curious'):'neutral');
    const assembled=expressionSprite(expression),s=g.bodyHeight/unit.views;
    // The neck and upper chest are blended once into the complete body, with
    // the body's silhouette protecting the collar. Animate this single surface.

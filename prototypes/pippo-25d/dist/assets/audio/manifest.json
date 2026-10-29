@@ -1,0 +1,583 @@
+{
+  "revision": "recorded-music-21",
+  "samples": [
+    {
+      "id": "piano-C4",
+      "file": "piano-C4.mp3",
+      "duration": 3.8,
+      "note": "C4",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "piano-C4.aiff",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Piano_Other/piano/Piano.mf.C4.aiff",
+      "source_page": "https://theremin.music.uiowa.edu/MISpiano.html",
+      "source_sha256": "1a7d8ddea94a3639fa58d79ebcc0b09b170b9c324811d2b705f97e278fdefac2",
+      "source_start": 0.3397641723356009,
+      "source_end": 4.1397641723356005,
+      "author": "Lawrence Fritts / University of Iowa; piano Jeffrey Cash",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "16b40e92ba197ed07b7c003fcf415e2f5efff7a90d65d09035ffc79ac32a3a9f",
+      "bytes": 61902
+    },
+    {
+      "id": "piano-D4",
+      "file": "piano-D4.mp3",
+      "duration": 3.8,
+      "note": "D4",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "piano-D4.aiff",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Piano_Other/piano/Piano.mf.D4.aiff",
+      "source_page": "https://theremin.music.uiowa.edu/MISpiano.html",
+      "source_sha256": "0f5264652334906338dca950f69b063f6617bcfcef725cf2734127c6cb683e19",
+      "source_start": 0.40216780045351475,
+      "source_end": 4.202167800453514,
+      "author": "Lawrence Fritts / University of Iowa; piano Jeffrey Cash",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "8c503bc703e97cd3478d9ef24657b33b56fa7bfc486c8822a28b0fbc12b9abba",
+      "bytes": 61902
+    },
+    {
+      "id": "piano-E4",
+      "file": "piano-E4.mp3",
+      "duration": 3.8,
+      "note": "E4",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "piano-E4.aiff",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Piano_Other/piano/Piano.mf.E4.aiff",
+      "source_page": "https://theremin.music.uiowa.edu/MISpiano.html",
+      "source_sha256": "3ee2ace7fd571c8868b3582b68417b1e456ef71169b136b732804d2f4eeabd9d",
+      "source_start": 0.29178231292517004,
+      "source_end": 4.09178231292517,
+      "author": "Lawrence Fritts / University of Iowa; piano Jeffrey Cash",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "4afd1bd50aa7bfdd0d42e01a79024a2ac1c8a5d6b6fcfbed5a4e10a5684714cd",
+      "bytes": 61902
+    },
+    {
+      "id": "piano-F4",
+      "file": "piano-F4.mp3",
+      "duration": 3.8,
+      "note": "F4",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "piano-F4.aiff",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Piano_Other/piano/Piano.mf.F4.aiff",
+      "source_page": "https://theremin.music.uiowa.edu/MISpiano.html",
+      "source_sha256": "588a2017e8f4e902ff9533112149c1899d2a77027a196d73778438096bedf68e",
+      "source_start": 0.45198639455782313,
+      "source_end": 4.251986394557823,
+      "author": "Lawrence Fritts / University of Iowa; piano Jeffrey Cash",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "b1b26fccd2bf4e87996c9181e400b02dea2591d5eb2596e574423cc47c90ffd6",
+      "bytes": 61902
+    },
+    {
+      "id": "piano-G4",
+      "file": "piano-G4.mp3",
+      "duration": 3.8,
+      "note": "G4",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "piano-G4.aiff",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Piano_Other/piano/Piano.mf.G4.aiff",
+      "source_page": "https://theremin.music.uiowa.edu/MISpiano.html",
+      "source_sha256": "0bf10e0279d77cec93fe3c6cc47c53c4bab6b650e342b7c4badfa9bc11b9c3e3",
+      "source_start": 0.3581768707482993,
+      "source_end": 4.158176870748299,
+      "author": "Lawrence Fritts / University of Iowa; piano Jeffrey Cash",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "69c9a2373d7168f81d983f60ecea847fe81a12f18e193342b86fec79e2e2fddd",
+      "bytes": 61902
+    },
+    {
+      "id": "piano-A4",
+      "file": "piano-A4.mp3",
+      "duration": 3.8,
+      "note": "A4",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "piano-A4.aiff",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Piano_Other/piano/Piano.mf.A4.aiff",
+      "source_page": "https://theremin.music.uiowa.edu/MISpiano.html",
+      "source_sha256": "800a6be43a44125bda75f7907aba2f6299287b4060d67e85efcf32a226757563",
+      "source_start": 0.2343219954648526,
+      "source_end": 4.034321995464852,
+      "author": "Lawrence Fritts / University of Iowa; piano Jeffrey Cash",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "b30e9f0121f27ef2cf86489d6f35fbc12b6412de0848c4476c9f9c4f62428e47",
+      "bytes": 61902
+    },
+    {
+      "id": "piano-B4",
+      "file": "piano-B4.mp3",
+      "duration": 3.8,
+      "note": "B4",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "piano-B4.aiff",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Piano_Other/piano/Piano.mf.B4.aiff",
+      "source_page": "https://theremin.music.uiowa.edu/MISpiano.html",
+      "source_sha256": "9607371977074f8c2f926d3cf6bd4ad5f5d02ae988fcb1d2f308d15967ced2ca",
+      "source_start": 0.445750566893424,
+      "source_end": 4.245750566893424,
+      "author": "Lawrence Fritts / University of Iowa; piano Jeffrey Cash",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "8782d0b94fd8267066eef82b060818b1d37517e7048d63c38935ce00e2d99287",
+      "bytes": 61902
+    },
+    {
+      "id": "piano-C5",
+      "file": "piano-C5.mp3",
+      "duration": 3.8,
+      "note": "C5",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "piano-C5.aiff",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Piano_Other/piano/Piano.mf.C5.aiff",
+      "source_page": "https://theremin.music.uiowa.edu/MISpiano.html",
+      "source_sha256": "68c231a437a0d54004427c723d136814358deea8f913516bee6095ea6c407937",
+      "source_start": 0.42384580498866214,
+      "source_end": 4.223845804988662,
+      "author": "Lawrence Fritts / University of Iowa; piano Jeffrey Cash",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "2f2675152fa2edea04660a80dfd03070ac6478d564a54e2cc7ad56353776699a",
+      "bytes": 61902
+    },
+    {
+      "id": "xylophone-C5",
+      "file": "xylophone-C5.mp3",
+      "duration": 1.35,
+      "note": "C5",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "xylophone-C5B5.aif",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Percussion/Xylophone/xylophone.rosewood.mf.C5B5.aif",
+      "source_page": "https://theremin.music.uiowa.edu/MISxylophone.html",
+      "source_sha256": "8d8c83d824b333678beff695c18edd6b05ac6cdd385d5143f98e02402fa26c38",
+      "source_start": 0.397156462585034,
+      "source_end": 1.7471564625850342,
+      "author": "Lawrence Fritts / University of Iowa; Andrew Thierauf",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "e3bdb4d926314a22589bf0b6a796ed28cadd51b64228726bbad07ce82a29a3c1",
+      "bytes": 22613
+    },
+    {
+      "id": "xylophone-D5",
+      "file": "xylophone-D5.mp3",
+      "duration": 1.35,
+      "note": "D5",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "xylophone-C5B5.aif",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Percussion/Xylophone/xylophone.rosewood.mf.C5B5.aif",
+      "source_page": "https://theremin.music.uiowa.edu/MISxylophone.html",
+      "source_sha256": "8d8c83d824b333678beff695c18edd6b05ac6cdd385d5143f98e02402fa26c38",
+      "source_start": 4.375795918367348,
+      "source_end": 5.725795918367348,
+      "author": "Lawrence Fritts / University of Iowa; Andrew Thierauf",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "cb01aa3f2d0dc6b5043e8b35a86629c42c439ac7af5647aef5447a3c37f0a1ac",
+      "bytes": 22613
+    },
+    {
+      "id": "xylophone-E5",
+      "file": "xylophone-E5.mp3",
+      "duration": 1.35,
+      "note": "E5",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "xylophone-C5B5.aif",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Percussion/Xylophone/xylophone.rosewood.mf.C5B5.aif",
+      "source_page": "https://theremin.music.uiowa.edu/MISxylophone.html",
+      "source_sha256": "8d8c83d824b333678beff695c18edd6b05ac6cdd385d5143f98e02402fa26c38",
+      "source_start": 8.176181405895692,
+      "source_end": 9.526181405895692,
+      "author": "Lawrence Fritts / University of Iowa; Andrew Thierauf",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "5a224ab385f4ccf56a9f7179c6456d8fb117d42e19b9592398d29a94d0b1af43",
+      "bytes": 22613
+    },
+    {
+      "id": "xylophone-F5",
+      "file": "xylophone-F5.mp3",
+      "duration": 1.35,
+      "note": "F5",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "xylophone-C5B5.aif",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Percussion/Xylophone/xylophone.rosewood.mf.C5B5.aif",
+      "source_page": "https://theremin.music.uiowa.edu/MISxylophone.html",
+      "source_sha256": "8d8c83d824b333678beff695c18edd6b05ac6cdd385d5143f98e02402fa26c38",
+      "source_start": 10.052462585034014,
+      "source_end": 11.402462585034014,
+      "author": "Lawrence Fritts / University of Iowa; Andrew Thierauf",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "89a39318e9588fc5573c1ffcd0c96fed7699b21e42e05f04987d11b9075ff913",
+      "bytes": 22613
+    },
+    {
+      "id": "xylophone-G5",
+      "file": "xylophone-G5.mp3",
+      "duration": 1.35,
+      "note": "G5",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "xylophone-C5B5.aif",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Percussion/Xylophone/xylophone.rosewood.mf.C5B5.aif",
+      "source_page": "https://theremin.music.uiowa.edu/MISxylophone.html",
+      "source_sha256": "8d8c83d824b333678beff695c18edd6b05ac6cdd385d5143f98e02402fa26c38",
+      "source_start": 13.904344671201814,
+      "source_end": 15.254344671201814,
+      "author": "Lawrence Fritts / University of Iowa; Andrew Thierauf",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "ecfcfd46eae043f9b377cc2fc743d4d8754ea61cf385d972f589e8743e599123",
+      "bytes": 22613
+    },
+    {
+      "id": "xylophone-A5",
+      "file": "xylophone-A5.mp3",
+      "duration": 1.35,
+      "note": "A5",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "xylophone-C5B5.aif",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Percussion/Xylophone/xylophone.rosewood.mf.C5B5.aif",
+      "source_page": "https://theremin.music.uiowa.edu/MISxylophone.html",
+      "source_sha256": "8d8c83d824b333678beff695c18edd6b05ac6cdd385d5143f98e02402fa26c38",
+      "source_start": 17.75146485260771,
+      "source_end": 19.101464852607712,
+      "author": "Lawrence Fritts / University of Iowa; Andrew Thierauf",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "836fe3bbfa243487be85670bd416a0bdfd72f818d732bad46bc753b313af57e3",
+      "bytes": 22613
+    },
+    {
+      "id": "xylophone-B5",
+      "file": "xylophone-B5.mp3",
+      "duration": 1.35,
+      "note": "B5",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "xylophone-C5B5.aif",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Percussion/Xylophone/xylophone.rosewood.mf.C5B5.aif",
+      "source_page": "https://theremin.music.uiowa.edu/MISxylophone.html",
+      "source_sha256": "8d8c83d824b333678beff695c18edd6b05ac6cdd385d5143f98e02402fa26c38",
+      "source_start": 21.411056689342406,
+      "source_end": 22.761056689342407,
+      "author": "Lawrence Fritts / University of Iowa; Andrew Thierauf",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "23c9d03f1c5814543ccd4dfc7a08e467553e94b7efcdaf42fe3146f959c40721",
+      "bytes": 22613
+    },
+    {
+      "id": "xylophone-C6",
+      "file": "xylophone-C6.mp3",
+      "duration": 1.35,
+      "note": "C6",
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "xylophone-C6B6.aif",
+      "source_url": "https://theremin.music.uiowa.edu/sound%20files/MIS/Percussion/Xylophone/xylophone.rosewood.mf.C6B6.aif",
+      "source_page": "https://theremin.music.uiowa.edu/MISxylophone.html",
+      "source_sha256": "841b579b8df997cafe667279d4413d0e296170c5f253f29979292c1ae2e3d43f",
+      "source_start": 0.169718820861678,
+      "source_end": 1.519718820861678,
+      "author": "Lawrence Fritts / University of Iowa; Andrew Thierauf",
+      "license": "Iowa MIS unrestricted use",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "e1c1940c16095288f87b53e22c3e933393a75e846457ee0bc67b8f004a2f01f5",
+      "bytes": 22613
+    },
+    {
+      "id": "kick",
+      "file": "kick.mp3",
+      "duration": 0.5624489795918367,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "kick.flac",
+      "source_url": "https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/dev/etc/samples/drum_bass_soft.flac",
+      "source_page": "https://github.com/sonic-pi-net/sonic-pi/blob/dev/etc/samples/README.md",
+      "source_sha256": "87bfb846ea7adf747515b1c59602555c2dde5da40ba4cb5a19244df06385ff23",
+      "source_start": 0,
+      "source_end": 0.5624489795918367,
+      "author": "menegass / Freesound; trimmed by Sonic Pi contributors",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "43b32fdcb44387829767fcb54add6c0df91e220164e60cc9aa7d7669d81e619b",
+      "bytes": 10075
+    },
+    {
+      "id": "snare",
+      "file": "snare.mp3",
+      "duration": 0.3147845804988662,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "snare.flac",
+      "source_url": "https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/dev/etc/samples/drum_snare_soft.flac",
+      "source_page": "https://github.com/sonic-pi-net/sonic-pi/blob/dev/etc/samples/README.md",
+      "source_sha256": "3da004f932da94c4a4ccf1066f973c08ebe314875304333c1b257dbd6725ad9e",
+      "source_start": 0,
+      "source_end": 0.3147845804988662,
+      "author": "menegass / Freesound; trimmed by Sonic Pi contributors",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "506dd240f4f3337d16f9a192c22b65b80ea748e904578a464754ee3b694017f4",
+      "bytes": 6313
+    },
+    {
+      "id": "tom",
+      "file": "tom.mp3",
+      "duration": 0.6721315192743764,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "tom.flac",
+      "source_url": "https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/dev/etc/samples/drum_tom_mid_soft.flac",
+      "source_page": "https://github.com/sonic-pi-net/sonic-pi/blob/dev/etc/samples/README.md",
+      "source_sha256": "01105a7914ae2ee5254f2ae955057a8f90246f7d30a40edb35fcbdc8c85e5119",
+      "source_start": 0,
+      "source_end": 0.6721315192743764,
+      "author": "menegass / Freesound; trimmed by Sonic Pi contributors",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "93cb8c8f3eca647a57d75955d93aca70dfa062b3893ae8757c6918f0436af54f",
+      "bytes": 11746
+    },
+    {
+      "id": "hihat",
+      "file": "hihat.mp3",
+      "duration": 0.2069387755102041,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "hihat.flac",
+      "source_url": "https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/dev/etc/samples/drum_cymbal_closed.flac",
+      "source_page": "https://github.com/sonic-pi-net/sonic-pi/blob/dev/etc/samples/README.md",
+      "source_sha256": "f3b9d6bb14f75ba06ef633baf58b1f75f0e2ea5e07edd491f0a22aedb2480d62",
+      "source_start": 0,
+      "source_end": 0.2069387755102041,
+      "author": "menegass / Freesound; trimmed by Sonic Pi contributors",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "19b2e79313793c74b47911f8c42ef9648289db43785380b505f8f9a11ec3e0e3",
+      "bytes": 4223
+    },
+    {
+      "id": "cymbal",
+      "file": "cymbal.mp3",
+      "duration": 0.9497278911564626,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "cymbal.flac",
+      "source_url": "https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/dev/etc/samples/drum_cymbal_soft.flac",
+      "source_page": "https://github.com/sonic-pi-net/sonic-pi/blob/dev/etc/samples/README.md",
+      "source_sha256": "ab4cee3de9beaf99bf658f2ad54e1e9a8e5befbe96958133bdb818dfe348b0dd",
+      "source_start": 0,
+      "source_end": 0.9497278911564626,
+      "author": "menegass / Freesound; trimmed by Sonic Pi contributors",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "20cf3425ad2dca648fd02f219ba1e5f912b31a7023002f3a11e7adf74985775c",
+      "bytes": 16344
+    },
+    {
+      "id": "maraca-1",
+      "file": "maraca-1.mp3",
+      "duration": 0.5238775510204081,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "maraca1.wav",
+      "source_url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/VSCO%201%20Percussion/varWood/maraca1.wav",
+      "source_page": "https://github.com/sgossner/VSCO-2-CE",
+      "source_sha256": "330d01743fa4069a4544b2665bd87f5d468d4d4c55572880b9c744cd1dc12fbc",
+      "source_start": 0.005682539682539683,
+      "source_end": 0.5295691609977324,
+      "author": "Sam Gossner / Versilian Studios",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "07661573dab33134982cd68aba2f360fd3334cb00765743caefd26cbf0a580cd",
+      "bytes": 9657
+    },
+    {
+      "id": "maraca-2",
+      "file": "maraca-2.mp3",
+      "duration": 0.3733106575963719,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "maraca2.wav",
+      "source_url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/VSCO%201%20Percussion/varWood/maraca2.wav",
+      "source_page": "https://github.com/sgossner/VSCO-2-CE",
+      "source_sha256": "119afc8f463f49e544f1ba98be5fd7c46030c87f1f4910136a97901711826bb2",
+      "source_start": 0.0004897959183673469,
+      "source_end": 0.3738095238095238,
+      "author": "Sam Gossner / Versilian Studios",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "346726f69e33866d5eb11d8462349850dc160b16323afa7a6591c065a8b94df7",
+      "bytes": 7149
+    },
+    {
+      "id": "maraca-3",
+      "file": "maraca-3.mp3",
+      "duration": 0.3219047619047619,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "maraca3.wav",
+      "source_url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/master/VSCO%201%20Percussion/varWood/maraca3.wav",
+      "source_page": "https://github.com/sgossner/VSCO-2-CE",
+      "source_sha256": "7cec5e05b9497b8d2e8deff02a8d984059e2b005eaa9863047beed08c309537b",
+      "source_start": 0,
+      "source_end": 0.3219047619047619,
+      "author": "Sam Gossner / Versilian Studios",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "ac5158e072289648ff076d34b35ac8eaf4527b7fabc02bbc4e2fdd99b2142d0e",
+      "bytes": 6313
+    },
+    {
+      "id": "pandeiro-1",
+      "file": "pandeiro-1.mp3",
+      "duration": 1.45,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "pandeiro-collection.mp3",
+      "source_url": "https://cdn.freesound.org/previews/844/844751_10956972-hq.mp3",
+      "source_page": "https://freesound.org/people/MeanRaccoon/sounds/844751/",
+      "source_sha256": "aaa4dfc4920f0d98c7497ca17011ff285e138bfb7f2a7921e486cfba4027feae",
+      "source_start": 0.9268163265306123,
+      "source_end": 2.376816326530612,
+      "author": "MeanRaccoon; recorded Zoom H2",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "e7a23a3a766892d2ee9c62384ad74f93d72c71890fdde3a98a916df1f6ee3c2c",
+      "bytes": 24285
+    },
+    {
+      "id": "pandeiro-2",
+      "file": "pandeiro-2.mp3",
+      "duration": 1.45,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "pandeiro-collection.mp3",
+      "source_url": "https://cdn.freesound.org/previews/844/844751_10956972-hq.mp3",
+      "source_page": "https://freesound.org/people/MeanRaccoon/sounds/844751/",
+      "source_sha256": "aaa4dfc4920f0d98c7497ca17011ff285e138bfb7f2a7921e486cfba4027feae",
+      "source_start": 3.8250249433106576,
+      "source_end": 5.275024943310657,
+      "author": "MeanRaccoon; recorded Zoom H2",
+      "license": "CC0-1.0",
+      "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "93c6555f14d032a8fc702737a3fa38c36a645cfb07e72d6cacf2de18224baf9c",
+      "bytes": 24285
+    }
+  ],
+  "instruments": {
+    "keyboard": [
+      [
+        "piano-C4"
+      ],
+      [
+        "piano-D4"
+      ],
+      [
+        "piano-E4"
+      ],
+      [
+        "piano-F4"
+      ],
+      [
+        "piano-G4"
+      ],
+      [
+        "piano-A4"
+      ],
+      [
+        "piano-B4"
+      ],
+      [
+        "piano-C5"
+      ]
+    ],
+    "xylophone": [
+      [
+        "xylophone-C5"
+      ],
+      [
+        "xylophone-D5"
+      ],
+      [
+        "xylophone-E5"
+      ],
+      [
+        "xylophone-F5"
+      ],
+      [
+        "xylophone-G5"
+      ],
+      [
+        "xylophone-A5"
+      ],
+      [
+        "xylophone-B5"
+      ],
+      [
+        "xylophone-C6"
+      ]
+    ],
+    "drum": [
+      [
+        "kick"
+      ],
+      [
+        "snare"
+      ],
+      [
+        "tom"
+      ],
+      [
+        "hihat"
+      ],
+      [
+        "cymbal"
+      ]
+    ],
+    "shaker": [
+      [
+        "maraca-1",
+        "maraca-2",
+        "maraca-3"
+      ]
+    ],
+    "tambourine": [
+      [
+        "pandeiro-1",
+        "pandeiro-2"
+      ]
+    ]
+  }
+}

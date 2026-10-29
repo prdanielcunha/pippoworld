@@ -1,15 +1,16 @@
 const vm=require('node:vm'),fs=require('node:fs'),assert=require('node:assert/strict');
 class Element{
  constructor(id,dataset={}){this.id=id;this.dataset=dataset;this.events={};this.attrs={};this.classes=new Set;this.classList={add:(...s)=>s.forEach(x=>this.classes.add(x)),remove:(...s)=>s.forEach(x=>this.classes.delete(x)),toggle:(s,on)=>on?this.classes.add(s):this.classes.delete(s)};this.hidden=false;this.value='';this.checked=false}
- setAttribute(k,v){this.attrs[k]=v}addEventListener(k,f){this.events[k]=f}focus(){}setPointerCapture(){}click(){this.onclick?.()}
+ setAttribute(k,v){this.attrs[k]=v}addEventListener(k,f){this.events[k]=f}focus(){}setPointerCapture(){}closest(){return this}contains(el){return el.id?.startsWith("key")||el.id?.startsWith("drum")||el.id==="percussion"}click(){this.onclick?.()}
 }
 const nodes=new Map;function $(id){if(!nodes.has(id))nodes.set(id,new Element(id));return nodes.get(id)}
 const keys=Array.from({length:8},(_,i)=>new Element('key'+i,{note:String(i)})),places=['yard','music','garden'].map(place=>new Element(place,{place})),instruments=['keyboard','drum','xylophone','shaker','tambourine'].map(instrument=>new Element(instrument,{instrument})),all=[...keys,...places,...instruments];
+const drums=Array.from({length:5},(_,i)=>new Element('drum'+i,{piece:String(i)}));all.push(...drums);
 const events={},body=new Element('body'),storage=new Map;let paused=false,selected,reactions=0;const audioEvents=[];
 const audio={play(...args){audioEvents.push(['play',...args])},release(id){audioEvents.push(['release',id])},suspend(){audioEvents.push(['suspend'])},setVolume(){},setMuted(){}};
 const game={getState:()=>({paused,reduced:false}),setReduced(){},setActivity(v){selected=v},react(){reactions++}};
-const document={body,getElementById:$,querySelectorAll(s){if(s==='[data-note]')return keys;if(s==='[data-place]')return places;if(s==='[data-instrument]')return [...instruments,$('musicPanel')];if(s==='button[data-instrument]')return instruments;if(s==='.reply'||s==='.playing')return [...all,...nodes.values()].filter(e=>e.classes.has(s.slice(1)));throw Error(s)},querySelector(s){const m=s.match(/data-note="(\d)"/);return keys[Number(m[1])]},addEventListener(k,f){events[k]=f}};
-const window={pippoStudy:game,addEventListener(k,f){events['window:'+k]=f}};
+const document={body,getElementById:$,querySelectorAll(s){if(s==='[data-note]')return keys;if(s==='[data-piece]')return drums;if(s==='[data-place]')return places;if(s==='[data-instrument]')return [...instruments,$('musicPanel')];if(s==='button[data-instrument]')return instruments;if(s==='.reply'||s==='.playing')return [...all,...nodes.values()].filter(e=>e.classes.has(s.slice(1)));throw Error(s)},querySelector(s){const m=s.match(/data-note="(\d)"/);return keys[Number(m[1])]},addEventListener(k,f){events[k]=f}};
+const window={TouchEvent:class{},pippoStudy:game,addEventListener(k,f){events['window:'+k]=f}};
 const context=vm.createContext({document,window,PippoAudio:{create:()=>audio},localStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},Math,JSON,Number,Boolean,Map,Set});vm.runInContext(fs.readFileSync('dist/activities.js','utf8'),context);
 const runtime=window.PippoActivities;const pointer=(el,type,id)=>el.events[type]({button:0,pointerId:id,preventDefault(){}});
 assert.equal($('musicPanel').onclick,undefined,'the panel must never become an instrument selector: child clicks bubble through it');assert.equal(selected,'yard');places[1].click();assert.equal(selected,'music');assert.equal($('musicPanel').hidden,false);assert.equal($('ball').hidden,true);
@@ -21,3 +22,11 @@ places[2].click();$('water').click();runtime.tick(500);assert.ok(!$('gardenObjec
 $('resetGarden').click();$('water').click();runtime.tick(400);places[0].click();runtime.tick(2000);assert.ok(!$('gardenObjects').classes.has('bloom'),'leaving cancels unfinished watering');
 $('mute').onchange({target:{checked:true}});assert.equal(JSON.parse(storage.get('pippo.preferences.v1')).muted,true);$('volume').oninput({target:{value:'35'}});assert.equal(JSON.parse(storage.get('pippo.preferences.v1')).volume,.35);
 console.log('PASS: multitou ch, child priority, silent turn-taking, pause/no replay, scene exit, persistent session bloom and saved preferences'.replace('multitou ch','multitouch'));
+
+places[1].click();instruments[0].click();
+const te=(type,touches)=>$('musicPanel').events[type]({changedTouches:touches,preventDefault(){}}),t=(id,element)=>({identifier:id,target:element});
+te('touchstart',[t(40,keys[0]),t(41,keys[4])]);assert.ok(keys[0].classes.has('playing')&&keys[4].classes.has('playing'),'two real touch identifiers play separate keys');
+const before=audioEvents.filter(e=>e[0]==='play').length;keys[0].events.pointerdown({button:0,pointerType:'touch',pointerId:40,preventDefault(){}});assert.equal(audioEvents.filter(e=>e[0]==='play').length,before,'paired pointer event must not duplicate a touch');
+te('touchend',[t(40,keys[0])]);assert.ok(!keys[0].classes.has('playing')&&keys[4].classes.has('playing'),'one release does not clear the other finger');te('touchmove',[t(41,keys[5])]);assert.ok(!keys[4].classes.has('playing')&&keys[5].classes.has('playing'),'one-finger glissando keeps its ownership');te('touchcancel',[t(41,keys[5])]);assert.equal($('musicPanel').dataset.held,'0');
+instruments[1].click();assert.equal($('drumKit').hidden,false);assert.equal($('percussion').hidden,true);te('touchstart',[t(50,drums[0]),t(51,drums[1])]);const both=audioEvents.filter(e=>e[0]==='play').slice(-2);assert.deepEqual(both.map(e=>[e[2],e[3]]),[['drum',0],['drum',1]],'two drum pieces have independent real sample mappings');te('touchend',[t(50,drums[0]),t(51,drums[1])]);places[0].click();assert.equal($('instrumentNav').hidden,true);assert.equal($('musicPanel').hidden,true);assert.equal($('musicPanel').dataset.held,'0');
+console.log('PASS: multi-finger TouchEvents, no pointer duplication, independent release, glissando/cancel, two distinct drums, hidden selectors and clean scene exit');

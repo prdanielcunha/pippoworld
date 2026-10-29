@@ -204,3 +204,7 @@ Verificação: 15 suítes Node; a nova `tests/face-restoration.cjs` exige alpha 
 Reprodução: `python3 scripts/import-clean-cutouts.py /caminho/do/zip-extraido`; depois `python3 scripts/review-face-restoration.py`, abrir `/__face-review.html` na prévia suportada, usar Ampliar o rosto apontado e Conferir todas as 48 figuras. Executar `python3 scripts/review-face-restoration.py --clean` antes de publicar. As folhas em `assets/canon/` não foram alteradas. Mais detalhes em `docs/ROSTO_V20.md` (nesta pasta docs: `ROSTO_V20.md`).
 
 Não foi feito reteste em iPhone físico nem medição de FPS. A resolução e as quatro fases de caminhada continuam limitadas; esta correção não conclui a animação. Todas as atividades previstas, os documentos e as pendências permanecem. Cache: `face-restoration-20`. Publicação e backup GitHub são operações separadas.
+
+## Versão 21
+
+Instrumentos dentro da cena, bateria de cinco peças e 26 gravações acústicas locais licenciadas. Multitouch independente, com ensaios de oito notas no navegador. Estratégia e fontes: [docs/MUSICA_V21.md](docs/MUSICA_V21.md). Ainda pendem gestos anatômicos de tocar, testes físicos no iPhone e melhoria do andar.
