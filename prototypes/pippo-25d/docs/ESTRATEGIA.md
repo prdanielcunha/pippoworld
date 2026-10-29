@@ -1,8 +1,8 @@
 <!-- Transcrição do adendo estratégico v1.0 anexado pelo responsável. Não substitui a especificação completa. -->
 
-## Execução atual — v21, 29/10/2026
+## Execução atual — v22, 29/10/2026
 
-A estrutura continua: quintal como entrada livre, Casa da Música e jardim como lugares conectados, preferências comuns e retorno disponível. A etapa B agora tem instrumentos na cena e gravações acústicas livres; a bateria possui cinco peças e o teclado aceita acordes por toque independente. Consulte [MUSICA_V21.md](MUSICA_V21.md) para a implementação e o roteiro imediato. A animação das asas tocando permanece pendente. A etapa A não está encerrada: andar de quatro poses, giros e transições exigem nova entrega comparada visualmente. Amigos, cuidados, jogos de movimento/construção/água e histórias das etapas seguintes continuam no escopo original abaixo.
+A entrada continua livre no quintal, com Casa da Música e jardim conectados. Etapa B: gravações reais e multitoque da v21 preservados; v22 acrescenta kit refinado e primeiras poses completas com baquetas, malhetas, teclado e percussão nas asas. Etapa C: regador segurado pelo Pippo, água até a terra e flor gradual/persistente. Ver [POLIMENTO_V22.md](POLIMENTO_V22.md). Próximo acabamento: intermediários e contato mais preciso nos gestos, aproximação/sentada e transições; revisar no aparelho real. A etapa A segue aberta com apenas quatro poses de caminhada. Todas as atividades D/E, elenco, cuidados e ideias originais abaixo permanecem no escopo.
 
 
 # Estratégia e diferenciação do Mundo Pippo

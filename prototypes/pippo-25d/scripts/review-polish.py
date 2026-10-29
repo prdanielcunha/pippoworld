@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+from pathlib import Path
+import sys
+r=Path(__file__).resolve().parents[1];p=r/'dist/__polish-review.html'
+if '--clean' in sys.argv:p.unlink(missing_ok=True);raise SystemExit
+p.write_text('''<!doctype html><html lang="pt-BR"><meta charset="utf-8"><title>Conferência de atuação v22</title><style>body{font:16px system-ui;background:#f5f1e5;color:#344b37;margin:18px}button{padding:14px;margin:4px}iframe{border:1px solid #c6cfbc;border-radius:20px;display:block;width:390px;height:830px}#result{position:absolute;left:440px;top:180px;max-width:700px;white-space:pre-wrap}</style><h2>Atuação e jardim — prévia de 390 px</h2><button id="pour">Pausar no meio da rega</button><button id="drums">Ver golpe na caixa</button><button id="keys">Ver asas no teclado</button><button id="maraca">Ver maraca na asa</button><button id="pandeiro">Ver pandeiro nas asas</button><button id="xylo">Ver malhetas</button><button id="finish">Concluir rega</button><iframe src="index.html" id="game"></iframe><pre id="result">Escolha um ensaio.</pre><script>
+const f=document.getElementById('game'),out=document.getElementById('result'),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function scene(place,kind){const w=f.contentWindow,d=w.document;if(d.querySelector('#pause').getAttribute('aria-pressed')==='true')d.querySelector('#pause').click();d.querySelector('[data-place="'+place+'"]').click();if(kind)d.querySelector('button[data-instrument="'+kind+'"]').click();for(let i=0;i<80&&(!w.PippoActivityArt.ready(kind||'garden')||!w.pippoStudy.getState().ready);i++)await sleep(50);return {w,d}}
+async function music(kind,selector){const {w,d}=await scene('music',kind);for(let i=0;i<80&&!w.PippoActivities.getMusicState().audio.ready;i++)await sleep(50);d.querySelector(selector).click();await sleep(80);d.querySelector('#pause').click();out.textContent='Pose: '+d.querySelector('#pippo').dataset.pose+'\\n'+JSON.stringify(w.PippoActivities.getMusicState(),null,2)}
+document.getElementById('drums').onclick=()=>music('drum','[data-piece="1"]');document.getElementById('keys').onclick=()=>music('keyboard','[data-note="1"]');document.getElementById('maraca').onclick=()=>music('shaker','#percussion');document.getElementById('pandeiro').onclick=()=>music('tambourine','#percussion');document.getElementById('xylo').onclick=()=>music('xylophone','[data-note="1"]');
+document.getElementById('pour').onclick=async()=>{const {w,d}=await scene('garden');d.querySelector('#water').click();w.PippoActivities.tick(1500);d.querySelector('#pause').click();out.textContent='Pose: '+d.querySelector('#pippo').dataset.pose+'\\nProgress: '+w.pippoStudy.getState().waterProgress+'\\nPouring: '+w.pippoStudy.getState().watering};
+document.getElementById('finish').onclick=async()=>{const {d}=await scene('garden');d.querySelector('#water').click();await sleep(3400);out.textContent=d.querySelector('#flower').getAttribute('aria-label')};
+</script></html>''')
+print(p)

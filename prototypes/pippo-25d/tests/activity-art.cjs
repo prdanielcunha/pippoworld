@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const manifest=JSON.parse(fs.readFileSync('dist/assets/activity-v22/manifest.json')),loaded=[],panel={dataset:{}},body={classList:{add(){}}};
+const makeCanvas=()=>({width:0,height:0,getContext(){return {drawImage(){},getImageData:(x,y,w,h)=>({data:new Uint8ClampedArray(w*h*4).fill(255)})}}});
+class Image{set src(v){loaded.push(v);queueMicrotask(()=>this.onload())}}
+const window={},state={activity:'yard'},ctx={save(){},restore(){},translate(){},rotate(){},drawImage(){},beginPath(){},ellipse(){},fill(){},arc(){},stroke(){}};
+const sandbox={window,state,Image,queueMicrotask,Uint8Array,Map,Set,Math,document:{body,getElementById:()=>panel,createElement:makeCanvas},fetch:async()=>({ok:true,json:async()=>manifest})};
+vm.runInNewContext(fs.readFileSync('dist/activity-art.js','utf8'),sandbox);
+(async()=>{const api=window.PippoActivityArt;await api.loading;assert.equal(loaded.length,0,'yard must not preload activity sheets');assert.equal(api.pose(state),null);
+for(const [index,kind,frame] of [[0,'drum',3],[1,'drumNear',1],[2,'drumNear',0],[3,'drum',2],[4,'drum',1]]){const p=api.pose({activity:'music',musicInstrument:'drum',musicPulse:100,musicIndex:index});assert.equal(p.kind,kind);assert.equal(p.frame,frame,'audience-facing stroke mapping')}
+api.prepare('drum');await new Promise(setImmediate);assert.equal(loaded.length,2);const dr=api.draw(ctx,{width:350,height:500},{activity:'music',musicInstrument:'drum',musicPulse:200,musicIndex:1,time:0});assert.equal(dr.pose,'activity_drumNear_1');assert.ok(dr.hit.scale*335<175,'stick reach fits a narrow scene');
+api.prepare('garden');await new Promise(setImmediate);const g={width:350,height:500},s={activity:'garden',watering:true,time:700,reduced:true};const poured=api.draw(ctx,g,s);assert.equal(poured.pose,'activity_garden_1');const {cx,cy,scale,anchorX,anchorY}=poured.hit;const x=cx+(500-anchorX)*scale,y=cy+(650-anchorY)*scale;assert.ok(api.objectHit(x,y),'watering can itself is a target');assert.ok(!api.objectHit(cx,cy-400*scale),'face must not become a watering target');api.draw(ctx,g,{activity:'yard'});assert.ok(!api.objectHit(x,y),'leaving clears object target');
+console.log('PASS: lazy activity loading, five drum stroke mappings, narrow reach, whole-figure frames and transformed watering-can target');})().catch(e=>{console.error(e);process.exitCode=1});

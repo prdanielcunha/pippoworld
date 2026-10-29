@@ -1,0 +1,229 @@
+{
+  "revision": "activity-polish-22",
+  "source_reference": "assets/canon/model.png",
+  "art": {
+    "drum": {
+      "file": "drum.webp",
+      "width": 1254,
+      "height": 1254,
+      "unit": 615,
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 627,
+          "h": 627,
+          "anchorX": 355,
+          "anchorY": 615
+        },
+        {
+          "x": 627,
+          "y": 0,
+          "w": 627,
+          "h": 627,
+          "anchorX": 353,
+          "anchorY": 615
+        },
+        {
+          "x": 0,
+          "y": 627,
+          "w": 750,
+          "h": 627,
+          "anchorX": 355,
+          "anchorY": 615
+        },
+        {
+          "x": 750,
+          "y": 627,
+          "w": 504,
+          "h": 627,
+          "anchorX": 230,
+          "anchorY": 615
+        }
+      ],
+      "source_sha256": "8a086cc89e7eb6e0fd5a791116aaafedaeff9561698fec1538a1ed1974e9b8fe",
+      "sha256": "cc2fc0c06e4757b06004a88325e5aa080058ca0795d984940039a4132ab04c61",
+      "source": "Built-in image generation, derived from original Pippo model reference; whole figures, no separated legs or neck composite",
+      "bytes": 764182,
+      "rgba_sha256": "b7879efe31b44937397aba01c3c07e4c9f14eb45119401b7d3e05c06594bd3b0"
+    },
+    "keyboard": {
+      "file": "keyboard.webp",
+      "width": 1536,
+      "height": 1024,
+      "unit": 980,
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "anchorX": 415,
+          "anchorY": 980
+        },
+        {
+          "x": 768,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "anchorX": 378,
+          "anchorY": 980
+        }
+      ],
+      "source_sha256": "2b5c662ab4b11146b12367a0bfabb78a06c6ed8e6c5aaf800fab8a18f8205320",
+      "sha256": "8b5e8080e5cf5534744ce10491f594608b3389643e49eebba65a7925ce8473fc",
+      "source": "Built-in image generation, derived from original Pippo model reference; whole figures, no separated legs or neck composite",
+      "bytes": 1222246,
+      "rgba_sha256": "fc240053731fa8a3a4516a75f75cc40cba8b28e872866b8f00536dc929d2d7ad"
+    },
+    "garden": {
+      "file": "garden.webp",
+      "width": 1536,
+      "height": 1024,
+      "unit": 950,
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 800,
+          "h": 1024,
+          "anchorX": 425,
+          "anchorY": 950
+        },
+        {
+          "x": 800,
+          "y": 0,
+          "w": 736,
+          "h": 1024,
+          "anchorX": 310,
+          "anchorY": 950
+        }
+      ],
+      "source_sha256": "d41a4805a46f93acfa7d2360f3717a06502a28c2bf28e00086e3078440420947",
+      "sha256": "39af860762aaec0e8bd6ae19a3e5c544ab4ec90ad833777cde2658ae855a0d93",
+      "source": "Built-in image generation, derived from original Pippo model reference; whole figures, no separated legs or neck composite",
+      "bytes": 1248080,
+      "nozzle": [
+        664,
+        755
+      ],
+      "rgba_sha256": "9341ebfb352b443d6a67f0bbae4ddebf3595758421237df6abe015143adf66f7"
+    },
+    "shaker": {
+      "file": "shaker.webp",
+      "width": 1536,
+      "height": 1024,
+      "unit": 945,
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "anchorX": 385,
+          "anchorY": 945
+        },
+        {
+          "x": 768,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "anchorX": 323,
+          "anchorY": 945
+        }
+      ],
+      "source_sha256": "2456879ba3b4d67445d10039672ae92f5126d416561ec7feaa458c5f0a05c859",
+      "sha256": "337c3dc65cd440a1ea162c6b32cfd23ddab6c783e717c365a15dbd9b821c9417",
+      "source": "Built-in image generation, derived from original Pippo model reference; whole figures, no separated legs or neck composite",
+      "bytes": 1285084,
+      "rgba_sha256": "b4b975538a9b5eb185219d53a02966401ffdd181e455ae7001e2dbbb12f9b30e"
+    },
+    "tambourine": {
+      "file": "tambourine.webp",
+      "width": 1536,
+      "height": 1024,
+      "unit": 956,
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "anchorX": 430,
+          "anchorY": 956
+        },
+        {
+          "x": 768,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "anchorX": 366,
+          "anchorY": 956
+        }
+      ],
+      "source_sha256": "48ba2834f633532e18ae3d5b84dc6ad6ff279104cc15f5fab584c18092a3c3d3",
+      "sha256": "1b1447282f2ed41dfce35528b10298acc531666e44d276146c427890f60fd38a",
+      "source": "Built-in image generation, derived from original Pippo model reference; whole figures, no separated legs or neck composite",
+      "bytes": 1221862,
+      "rgba_sha256": "c9b3d80063fc2843117e735396e8b85daa974ccdf14b766155d7e1528a0d7328"
+    },
+    "xylophone": {
+      "file": "xylophone.webp",
+      "width": 1536,
+      "height": 1024,
+      "unit": 970,
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "anchorX": 420,
+          "anchorY": 970
+        },
+        {
+          "x": 768,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "anchorX": 425,
+          "anchorY": 970
+        }
+      ],
+      "source_sha256": "6f553662a99e7a7b75c1b7cc8a28b0a13fa7a696951a0c4822900a977b199346",
+      "sha256": "1564d4bb25a4270d327db777241f45f6bdfb8e206efeaea595ea28180aebcc86",
+      "source": "Built-in image generation, derived from original Pippo model reference; whole figures, no separated legs or neck composite",
+      "bytes": 1204912,
+      "rgba_sha256": "9b5b2d241c82ed5603cf14f34ce2f6870dde3e4137c1f0920f2a2537397a0aec"
+    },
+    "drumNear": {
+      "file": "drum-near.webp",
+      "width": 1774,
+      "height": 887,
+      "unit": 840,
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 887,
+          "h": 887,
+          "anchorX": 490,
+          "anchorY": 840
+        },
+        {
+          "x": 887,
+          "y": 0,
+          "w": 887,
+          "h": 887,
+          "anchorX": 413,
+          "anchorY": 840
+        }
+      ],
+      "source_sha256": "bc8f76ddcc3c231b85c18488d2db1923498301667f85c065f360c52bf8ae39d9",
+      "sha256": "36fd3b106a9513f68da3d100593f672477ce321cbad25b3e28b30b328768f403",
+      "source": "Built-in image generation, derived from original Pippo model and seated drummer reference",
+      "bytes": 617650,
+      "rgba_sha256": "2654ef742766efee632a70060ec562015622652462c1a331adfefe7f51ff2bd3"
+    }
+  }
+}

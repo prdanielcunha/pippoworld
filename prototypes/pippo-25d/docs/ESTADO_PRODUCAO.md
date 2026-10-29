@@ -1,6 +1,6 @@
 # Mundo Pippo — estado da produção
 
-**Estado atual: versão 21 — estações musicais dentro da cena, bateria de cinco peças, 26 gravações acústicas e toques independentes. Artes v20 preservadas. Ver MUSICA_V21.md; histórico abaixo permanece válido como histórico.**
+**Estado atual: versão 22 — bateria com disposição refinada, novas poses completas de tocar e regar, água até a terra e abertura gradual da flor. Arte e som anteriores preservados. Ver POLIMENTO_V22.md. Novas poses ainda aguardam avaliação do responsável.**
 
 28 de outubro de 2026. Este registro complementa, sem substituir, a especificação 1.1 e a estratégia aprovada. Uma funcionalidade parcial não representa aceite final nem teste com crianças.
 
@@ -160,3 +160,7 @@ Não foi feito reteste em iPhone físico nem medição de FPS. A resolução e a
 ## Entrega v21 — música
 
 Ver [MUSICA_V21.md](MUSICA_V21.md) para fontes, tecnologia, testes e pendências. A síntese histórica e o painel externo descritos acima foram substituídos. Jardim, preferências e demais atividades permanecem. Publicar e backup GitHub são operações separadas.
+
+## Etapa de polimento v22
+
+Ver [POLIMENTO_V22.md](POLIMENTO_V22.md). Novas poses completas derivadas da referência, sem alterar atlas aprovados da v20. Kit refinado, gestos musicais, regador nas asas e ciclo de três segundos no jardim. Não declarar animação contínua nem teste físico. Todos os requisitos futuros permanecem.

@@ -29,7 +29,10 @@
   cache.set(key,result);return result;
  }
  api.draw=(ctx,g)=>{
-  const st=state,m=st.motion;let pose='front',mirror=false,lift=0;
+  const st=state,m=st.motion;
+  const activityArt=window.PippoActivityArt?.draw(ctx,g,st);
+  if(activityArt){renderedHit=activityArt.hit;canvas.dataset.artSource='reference-derived-activity-v22';canvas.dataset.pose=activityArt.pose;canvas.dataset.walkFrames='4';canvas.dataset.gait='approved-poses';return}
+  if(st.activity==='music')document.getElementById('musicPanel').dataset.artReady='false';let pose='front',mirror=false,lift=0;
   if(st.turn&&m?.walk)pose=PippoInteraction.turnPose(st.turn);
   else if(m?.walk){pose='walk'+PippoInteraction.walkFrame(st.walkDistance,g.bodyHeight,4);mirror=st.facing===1}
   else if(m?.kind==='jump'){const q=m.elapsed/m.duration;pose=q<.22?'jump0':q<.34?'jump1':q<.73?'jump2':'jump3';if(!st.reduced&&q>=.34&&q<.73)lift=Math.sin(Math.PI*(q-.34)/.39)*g.bodyHeight*.18}

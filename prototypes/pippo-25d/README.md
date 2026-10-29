@@ -208,3 +208,7 @@ Não foi feito reteste em iPhone físico nem medição de FPS. A resolução e a
 ## Versão 21
 
 Instrumentos dentro da cena, bateria de cinco peças e 26 gravações acústicas locais licenciadas. Multitouch independente, com ensaios de oito notas no navegador. Estratégia e fontes: [docs/MUSICA_V21.md](docs/MUSICA_V21.md). Ainda pendem gestos anatômicos de tocar, testes físicos no iPhone e melhoria do andar.
+
+## Versão 22
+
+Bateria refinada, primeiras poses completas de tocar os instrumentos e rega com regador nas asas/água na terra/flor gradual. Fontes, testes e limites em [docs/POLIMENTO_V22.md](docs/POLIMENTO_V22.md). Sons reais e atlas aprovados preservados.

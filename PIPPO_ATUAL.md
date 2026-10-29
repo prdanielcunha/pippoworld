@@ -2,11 +2,11 @@
 
 Backup de 29/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.
 
-Versão publicada: 21. Commit original do Site: `7d1bda5833058c76951cde859735d58d5e11cccc`.
+Versão publicada: 22. Commit original do Site: `9c9419430ebc835657f67757c3142892f8e1e88b`.
 
 **Para continuar em outra conversa:** leia [o checkpoint e o prompt completo](prototypes/pippo-25d/docs/CONTINUAR_EM_NOVA_CONVERSA.md).
 
-Nesta entrega: instrumentos dentro da cena, bateria de cinco peças, teclado com acordes por toques independentes e 26 gravações acústicas locais livres. Sons reais de piano, xilofone, bateria, maraca e pandeiro brasileiro; fontes e hashes no manifesto. Ensaios no navegador de oito notas e dois tambores simultâneos, mixagem de 24 vozes com margem, 15 suítes de regressão e validação dos 26 arquivos. Artes e rosto da v20 preservados. Gestos das asas tocando, teste físico no iPhone e caminhada fluida ainda pendentes. Estratégia atualizada em `docs/MUSICA_V21.md` e `docs/ESTRATEGIA.md`.
+Nesta entrega: bateria compacta com posições/hardware refinados, Pippo sentado com baquetas, poses completas de tocar teclado, xilofone, maraca e pandeiro; regador nas asas, água até a terra e flor gradual. Sete folhas novas com 16 poses derivadas da referência, WebP sem perdas e RGBA integral preservado. Atlas aprovados do quintal e 26 sons reais da v21 mantidos. Corrigida rolagem interna do cenário ao focar peças; rega usa tempo ativo para não atrasar com poucos quadros. Dezesseis suítes, duas validações de recursos e ensaios no navegador aprovados. Movimento ainda por poses-chave; sentada/gestos contínuos, quatro poses de caminhada e teste físico de Safari/iPhone seguem pendentes. Ver `docs/POLIMENTO_V22.md` e `docs/ESTRATEGIA.md`.
 
 Jogo: https://pippo-prova-25d-20261027.balmythyme13.chatgpt.site/
 
@@ -51,3 +51,7 @@ Recortes v2 em dois atlas PNG, carregamento e alpha para carinho derivados dos a
 ## Entrega 20 — 29/10/2026
 
 Recuperação de regiões legítimas da face que tinham ficado transparentes. Recortes v2 mantidos no restante, incluindo as quatro poses de andar. Importador, origem dos pixels, teste específico, fixtures de preservação, evidências e documentos atualizados. Publicação no mesmo Site e backup GitHub separados. Sem reteste em iPhone físico.
+
+## Entrega 22 — 29/10/2026
+
+Polimento de instrumentos, atuação e jardim. Arte e áudio preservados, novas folhas e prompts salvos, estratégia integral mantida. Publicação e cópia no GitHub feitas separadamente. Novas poses aguardam avaliação visual do responsável; não declarar animação contínua ou aceite final.

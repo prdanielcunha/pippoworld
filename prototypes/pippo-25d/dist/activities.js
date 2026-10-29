@@ -14,7 +14,7 @@
  function clearHeld(){held.clear();keyboardHeld.clear();$('musicPanel').dataset.held='0';for(const e of document.querySelectorAll('.playing'))e.classList.remove('playing')}
  function halt(){clearReply();clearHeld();phrase=[];audio.suspend()}
  function setActivity(next){
-  if(!titles[next])return;halt();waterTime=null;$('gardenObjects').classList.remove('watering');activity=next;document.body.dataset.activity=next;
+  if(!titles[next])return;halt();waterTime=null;$('gardenObjects').classList.remove('watering');$('gardenObjects').dataset.pouring='false';$('gardenObjects').style?.setProperty('--pour',bloom?'1':'0');game.setGarden?.(bloom?1:0,false);activity=next;document.body.dataset.activity=next;
   $('musicPanel').hidden=next!=='music';$('instrumentNav').hidden=next!=='music';$('gardenObjects').hidden=next!=='garden';$('ball').hidden=next!=='yard';$('directions').hidden=next!=='yard';$('gestures').hidden=next!=='yard';
   for(const b of document.querySelectorAll('[data-place]'))b.setAttribute('aria-pressed',String(b.dataset.place===next));
   $('sceneTitle').textContent=titles[next];$('hint').textContent=next==='yard'?'Toque ao lado para andar. Deslize na cabeça ou barriga para carinho.':next==='music'?'Pippo está aqui para ouvir você.':'Toque no regador para abrir a flor.';
@@ -60,8 +60,8 @@
  function touchMove(e){
   if(activity!=='music')return;e.preventDefault();
   for(const touch of e.changedTouches){const id='touch'+touch.identifier,el=touchTarget(touch),old=held.get(id);
-   if(old?.element===el)continue;if(old)end(id,false,true);
-   if(el)start(id,Number(el.dataset.note??el.dataset.piece??0),el);
+   if(old?.element===el){if(instrument==='shaker'&&Math.hypot(touch.clientX-(old.x??touch.clientX),touch.clientY-(old.y??touch.clientY))>18){audio.play(id,instrument,0);game.react({music:true,instrument,index:0,automatic:false});old.x=touch.clientX;old.y=touch.clientY}continue;}if(old)end(id,false,true);
+   if(el){start(id,Number(el.dataset.note??el.dataset.piece??0),el);const h=held.get(id);if(h){h.x=touch.clientX;h.y=touch.clientY}}
   }
  }
  $('musicPanel').addEventListener('touchstart',touchMove,{passive:false});$('musicPanel').addEventListener('touchmove',touchMove,{passive:false});
@@ -74,10 +74,10 @@
  for(const b of document.querySelectorAll('[data-place]'))b.onclick=()=>setActivity(b.dataset.place);
  for(const b of document.querySelectorAll('button[data-instrument]'))b.onclick=()=>selectInstrument(b.dataset.instrument);
  $('water').onclick=()=>{
-  if(blocked||game.getState().paused||waterTime!==null)return;waterTime=0;$('gardenObjects').classList.add('watering');$('status').textContent='A água cai na flor.';
+  if(blocked||game.getState().paused||waterTime!==null)return;game.beginGarden?.();waterTime=0;$('gardenObjects').classList.add('watering');$('gardenObjects').dataset.pouring='false';$('status').textContent='Pippo pega o regador. Vamos cuidar da flor.';
  };
  $('flower').onclick=()=>$('water').click();
- $('resetGarden').onclick=()=>{bloom=false;waterTime=null;$('gardenObjects').classList.remove('bloom','watering');$('flower').setAttribute('aria-label','Flor fechada. Toque para regar');$('status').textContent='A flor está pronta para outra brincadeira.'};
+ $('resetGarden').onclick=()=>{bloom=false;waterTime=null;$('gardenObjects').classList.remove('bloom','watering');$('gardenObjects').dataset.pouring='false';$('gardenObjects').style?.setProperty('--pour','0');game.setGarden?.(0,false);$('flower').setAttribute('aria-label','Flor fechada. Toque para regar');$('status').textContent='A flor está pronta para outra brincadeira.'};
  $('volume').value=String(prefs.volume*100);$('mute').checked=prefs.muted;$('replies').checked=prefs.replies;
  $('volume').oninput=e=>{prefs.volume=Number(e.target.value)/100;audio.setVolume(prefs.volume);save()};
  $('mute').onchange=e=>{prefs.muted=e.target.checked;audio.setMuted(prefs.muted);clearReply();save();status(prefs.muted?'Som desligado.':'Som ligado. Toque em um instrumento.')};
@@ -86,9 +86,9 @@
  window.PippoActivities={
   getMusicState:()=>({activity,instrument,held:held.size,audio:audio.getState?.()}),
   suspend(value){blocked=Boolean(value);halt();document.body.classList.toggle('world-paused',blocked)},
-  tick(dt){
+  tick(dt,elapsed=dt){
    if(blocked)return;
-   if(waterTime!==null){waterTime+=dt;if(waterTime>=1000){waterTime=null;bloom=true;$('gardenObjects').classList.remove('watering');$('gardenObjects').classList.add('bloom');$('flower').setAttribute('aria-label','Flor aberta. Toque para regar outra vez');$('status').textContent='A flor abriu!';game.react()}}
+   if(waterTime!==null){waterTime+=elapsed;const pouring=waterTime>=350&&waterTime<2500,progress=bloom?1:Math.max(0,Math.min(1,(waterTime-900)/2100));$('gardenObjects').dataset.pouring=String(pouring);$('gardenObjects').style?.setProperty('--pour',String(progress));game.setGarden?.(progress,pouring);if(waterTime>=3000){waterTime=null;bloom=true;game.setGarden?.(1,false);$('gardenObjects').dataset.pouring='false';$('gardenObjects').style?.setProperty('--pour','1');$('gardenObjects').classList.remove('watering');$('gardenObjects').classList.add('bloom');$('flower').setAttribute('aria-label','Flor aberta. Toque para regar outra vez');$('status').textContent='A flor abriu!';game.react({garden:true})}}
    if(activity!=='music'||blocked||held.size)return;
    if(flashClock>0){flashClock-=dt;if(flashClock<=0)for(const e of document.querySelectorAll('.reply'))e.classList.remove('reply')}
    if(replyWait!==null){replyWait-=dt;if(replyWait<=0){replyWait=null;if(prefs.replies&&!prefs.muted&&phrase.length){replyCursor=0;replyClock=0;status('Pippo responde. Você pode tocar quando quiser.')}else phrase=[]}}

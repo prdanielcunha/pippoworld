@@ -61,11 +61,11 @@ function advanceMotion(dt){
  }else{m.elapsed+=dt;if(!m.persistent&&m.elapsed>=m.duration){state.motion=null;message('Pippo voltou ao repouso.')}}
 }
 function frame(t){
- const dt=Math.min(t-(state.last||t),50);state.last=t;
+ const elapsed=t-(state.last||t),dt=Math.min(elapsed,50);state.last=t;
  if(!state.paused&&document.visibilityState==='visible'){
   state.time+=dt;state.musicPulse=Math.max(0,(state.musicPulse||0)-dt);state.musicReply=Math.max(0,(state.musicReply||0)-dt);advanceBall(dt);advanceMotion(dt);state.blink=Math.max(state.petHeld&&state.petKind==='head'?220:0,state.blink-dt);state.pet=Math.max(state.petHeld?state.petDuration*.45:0,state.pet-dt);state.x=PippoInteraction.follow(state.x,state.tx,dt);state.y=PippoInteraction.follow(state.y,state.ty,dt);
   if(state.expressionTime>0){state.expressionTime-=dt;if(state.expressionTime<=0)state.expression=null}
-  window.PippoActivities?.tick(dt);
+  const activityElapsed=state.gardenSkipElapsed?0:elapsed;state.gardenSkipElapsed=false;window.PippoActivities?.tick(dt,activityElapsed);
   if(state.time>=state.nextBlink&&state.pet===0&&!state.expression&&!state.motion&&!state.sideRest&&state.ballTime===null){setBlink(240);state.nextBlink=state.time+4700+Math.random()*2200}render();
  }
  requestAnimationFrame(frame);
@@ -98,7 +98,7 @@ function endGesture(){
 canvas.addEventListener('pointerdown',e=>{
  if(state.paused||!state.ready||state.pointer||e.button>0)return;
  const p=localPoint(e),g=geometry(),region=window.PippoCanon?.ready?window.PippoCanon.hit(p.x,p.y,g):PippoInteraction.hit(p.x,p.y,g,state.facing);
- e.preventDefault();canvas.focus({preventScroll:true});canvas.setPointerCapture(e.pointerId);
+ e.preventDefault();if(state.activity==='garden'&&window.PippoActivityArt?.objectHit(p.x,p.y)){$('water').click();return}canvas.focus({preventScroll:true});canvas.setPointerCapture(e.pointerId);
  if(region==='head'||region==='belly'){pet(region,p.x<g.cx?-1:1);state.petHeld=true}
  else if(region==='ground'&&state.activity==='yard')walkTo(p.x/g.width);
  state.pointer={...p,lastX:p.x,lastY:p.y,id:e.pointerId,region,lastTarget:p.x};point(e);render();
@@ -128,15 +128,17 @@ $('walk').onclick=()=>{endGesture();walkTo(0)};$('walkRight').onclick=()=>{endGe
 for(const name of ['jump','crouch'])$(name).onclick=()=>startMotion(name);
 $('blink').onclick=blink;$('pet').onclick=()=>{endGesture();pet('head')};$('belly').onclick=()=>{endGesture();pet('belly')};
 $('look').onclick=()=>{state.look=!state.look;$('look').setAttribute('aria-pressed',state.look);state.tx=state.ty=0;message(state.look?'Pippo demonstra curiosidade ao seu toque.':'Toque no Pippo para fazer carinho, ou no chão para andar.')};
-$('pause').onclick=()=>{endGesture();state.paused=!state.paused;window.PippoActivities?.suspend(state.paused);$('pause').textContent=state.paused?'Continuar':'Pausar';$('pause').setAttribute('aria-pressed',state.paused);message(state.paused?'Encontro pausado.':'Podemos continuar, com calma.');renderBall()};
+$('pause').onclick=()=>{endGesture();state.paused=!state.paused;state.gardenSkipElapsed=true;window.PippoActivities?.suspend(state.paused);$('pause').textContent=state.paused?'Continuar':'Pausar';$('pause').setAttribute('aria-pressed',state.paused);message(state.paused?'Encontro pausado.':'Podemos continuar, com calma.');renderBall()};
 $('reduced').onchange=e=>{state.reduced=e.target.checked;render()};
 $('reference').onclick=()=>{endGesture();$('comparison').showModal();state.wasPaused=state.paused;state.paused=true;window.PippoActivities?.suspend(true)};$('close').onclick=()=>$('comparison').close();$('comparison').addEventListener('close',()=>{state.paused=state.wasPaused;window.PippoActivities?.suspend(state.paused);state.last=0});
  document.addEventListener('visibilitychange',()=>{endGesture();window.PippoActivities?.suspend(state.paused||document.visibilityState!=='visible');state.last=0;state.tx=state.ty=0});
 new ResizeObserver(resize).observe(canvas);
 window.pippoStudy={getState:()=>({...state}),blink,pet,
- setActivity(activity){endGesture();cancelBall();state.turn=null;state.sideRest=false;state.expression=null;state.motion=null;state.pet=0;state.blink=0;state.activity=activity;state.actorX=activity==='garden'?.35:.5;state.facing=1;state.tx=state.ty=0;resize()},
- setInstrument(instrument){state.musicInstrument=instrument;state.musicPulse=0;state.musicReply=0;render()},
- react(options){if(state.ready&&!state.paused){if(state.activity==='music'){state.musicPulse=200;state.musicReply=options?.automatic?420:0;render();return}state.sideRest=false;state.petKind='belly';state.petDuration=650;state.pet=650;setBlink(180);render()}},
+ setActivity(activity){endGesture();cancelBall();state.turn=null;state.sideRest=false;state.expression=null;state.motion=null;state.pet=0;state.blink=0;state.activity=activity;state.gardenSkipElapsed=true;state.watering=false;if(activity==='garden')window.PippoActivityArt?.prepare('garden');state.actorX=activity==='garden'?.35:.5;state.facing=1;state.tx=state.ty=0;resize()},
+ beginGarden(){state.gardenSkipElapsed=true},
+ setGarden(progress,pouring){state.waterProgress=progress;state.watering=pouring;render()},
+ setInstrument(instrument){window.PippoActivityArt?.prepare(instrument);state.musicInstrument=instrument;state.musicPulse=0;state.musicReply=0;render()},
+ react(options){if(state.ready&&!state.paused){if(options?.garden){render();return}if(state.activity==='music'){state.musicPulse=300;state.musicIndex=options?.index??0;state.musicReply=options?.automatic?420:0;render();return}state.sideRest=false;state.petKind='belly';state.petDuration=650;state.pet=650;setBlink(180);render()}},
  setReduced(value){state.reduced=value;$('reduced').checked=value;render()}
 };
 function startMotion(kind){
