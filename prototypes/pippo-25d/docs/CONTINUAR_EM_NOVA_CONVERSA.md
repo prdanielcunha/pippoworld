@@ -1,3 +1,7 @@
+## Atualização prioritária — mãos aprovadas, revisão 27, 30/10/2026
+
+A v26 foi rejeitada visualmente pelo responsável: desenhava mãos geométricas em vez de usar a imagem aprovada. A v27 integra **a própria folha PNG reenviada**, preservada byte a byte, em `dist/assets/hands-approved-v27/`: abertas para teclado/pandeiro e fechadas para baquetas/malhetas/chocalho. Não substituir por curvas amarelas nem restaurar o renderer rejeitado. Decisão, origem, implementação e limites em `docs/MAOS_APROVADAS_V27.md` dentro do protótipo. Destino desta tarefa: `https://pippoworld-preview.vercel.app/`; antigo Site separado. Sem teste físico no iPhone ou aceite final do responsável.
+
 ## Checkpoint atual — versão 25, 30/10/2026
 
 Esta seção prevalece sobre os registros históricos abaixo. Base v24 preservada; retorno musical até repouso, soltura silenciosa e recuperação de notas sustentadas em acordes. Ver [RETORNO_MUSICAL_V25.md](RETORNO_MUSICAL_V25.md) e [CORRECAO_MUSICA_V24.md](CORRECAO_MUSICA_V24.md). Perna do pedal, anatomia final e iPhone físico seguem pendentes. Site e GitHub são sincronizados separadamente.

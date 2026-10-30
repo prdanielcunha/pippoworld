@@ -2,10 +2,18 @@
 // Music-only rig: complete head/neck/torso, independently registered wings.
 // Instrument contacts are measured from their live DOM surfaces after layout.
 (()=>{
- const performance=PippoPerformance.create();const bodyAlpha=[];let image,loading,overlay,oc,lastHit=null,expression=0,previous=0,blend=1,layout=null,dirty=true;
+ const performance=PippoPerformance.create();const bodyAlpha=[];let image,handsImage,loading,overlay,oc,lastHit=null,expression=0,layout=null,dirty=true;
  const bodyFrames=[[150,0,340,680],[600,0,340,680],[1080,0,340,680]];
- const arms={open:[[60,680,208,300,120,34,155,272],[294,680,208,300,76,35,56,270]],grip:[[575,680,185,280,115,42,127,215],[790,680,185,280,60,35,52,215]]};
- function prepare(){if(loading)return loading;api.failed=false;loading=new Promise(resolve=>{const i=new Image;i.onload=()=>{image=i;for(const rect of bodyFrames){const c=document.createElement('canvas');c.width=rect[2];c.height=rect[3];const t=c.getContext('2d');t.drawImage(i,...rect,0,0,c.width,c.height);const rgba=t.getImageData(0,0,c.width,c.height).data;bodyAlpha.push(Uint8Array.from({length:c.width*c.height},(_,n)=>rgba[n*4+3]))}api.ready=true;dirty=true;resolve(true)};i.onerror=()=>{loading=null;api.failed=true;resolve(false)};i.src='assets/music-rig-v23/rig.webp'});return loading}
+
+ function prepare(){
+  if(loading)return loading;api.failed=false;
+  const load=src=>new Promise((resolve,reject)=>{const i=new Image;i.onload=()=>resolve(i);i.onerror=reject;i.src=src});
+  loading=Promise.all([load('assets/music-rig-v23/rig.webp'),load('assets/hands-approved-v27/hands.png')]).then(([body,hands])=>{
+   image=body;handsImage=hands;prepareHandArt();bodyAlpha.length=0;
+   for(const rect of bodyFrames){const c=document.createElement('canvas');c.width=rect[2];c.height=rect[3];const t=c.getContext('2d');t.drawImage(image,...rect,0,0,c.width,c.height);const rgba=t.getImageData(0,0,c.width,c.height).data;bodyAlpha.push(Uint8Array.from({length:c.width*c.height},(_,n)=>rgba[n*4+3]))}
+   api.ready=true;dirty=true;return true;
+  }).catch(()=>{loading=null;api.failed=true;return false});return loading;
+ }
  function clear(){if(overlay){oc.clearRect(0,0,overlay.width,overlay.height);overlay.hidden=true}lastHit=null}
  function surface(el,scene,kind,index){if(!el)return null;return PippoPerformance.contact(el.getBoundingClientRect(),scene,kind,index)}
  function measure(g,kind){
@@ -17,22 +25,40 @@
   if(!overlay){overlay=document.createElement('canvas');overlay.id='musicHands';overlay.setAttribute('aria-hidden','true');document.getElementById('stage').append(overlay);oc=overlay.getContext('2d');new ResizeObserver(()=>{dirty=true}).observe(document.getElementById('stage'));window.addEventListener('resize',()=>{dirty=true})}
   overlay.hidden=false;const ratio=Math.min(window.devicePixelRatio||1,2);if(overlay.width!==Math.round(g.width*ratio)||overlay.height!==Math.round(g.height*ratio)){overlay.width=Math.round(g.width*ratio);overlay.height=Math.round(g.height*ratio);dirty=true}oc.setTransform(overlay.width/g.width,0,0,overlay.height/g.height,0,0);oc.clearRect(0,0,g.width,g.height);oc.imageSmoothingEnabled=true;
  }
- function wing(ctx,shoulder,hand,s,gripping=false){
-  // A gently bent broad duck wing, not an image stretched between joints.
-  // The round feathered paw always has the same size regardless of the target.
-  const r=PippoMusicAnatomy.pawRadius(s),dx=hand.x-shoulder.x,dy=hand.y-shoulder.y;
-  const bendX=shoulder.x+dx*.38-(dx>=0?1:-1)*r*.28,bendY=shoulder.y+dy*.58-r*.26;
-  ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
-  ctx.beginPath();ctx.moveTo(shoulder.x,shoulder.y);ctx.quadraticCurveTo(bendX,bendY,hand.x,hand.y);
-  ctx.strokeStyle='#d3a340';ctx.lineWidth=r*2.2;ctx.stroke();
-  ctx.strokeStyle='#f4cc53';ctx.lineWidth=r*1.95;ctx.stroke();
-  ctx.translate(hand.x,hand.y);
-  const a=Math.atan2(dy,dx);ctx.rotate(a);
-  ctx.fillStyle='#f7d260';ctx.strokeStyle='#c9973b';ctx.lineWidth=Math.max(1.3,s*2);
-  ctx.beginPath();ctx.ellipse(0,0,r*1.1,r*.87,0,0,Math.PI*2);ctx.fill();ctx.stroke();
-  // Three soft feather tips read as a little hand without human fingers.
-  for(let i=-1;i<=1;i++){ctx.beginPath();ctx.ellipse(r*.67,i*r*.47,r*.43,r*.3,i*.12,0,Math.PI*2);ctx.fill();ctx.stroke()}
-  if(gripping){ctx.strokeStyle='#e6b953';ctx.lineWidth=Math.max(1,s*1.5);ctx.beginPath();ctx.arc(r*.24,r*.1,r*.34,-.7,1.2);ctx.stroke()}
+ // The user's exact approved transparent sheet, never a procedural substitute.
+ // Crops are sampled at draw time; the source file remains byte-for-byte intact.
+ const handArt={
+  open:[{x:158,y:275,w:374,h:290,px:309,py:489,ax:309,ay:310},
+        {x:719,y:275,w:374,h:290,px:942,py:489,ax:942,ay:310}],
+  grip:[{x:169,y:887,w:354,h:260,px:335,py:1000,ax:309,ay:923},
+        {x:730,y:887,w:354,h:260,px:918,py:1000,ax:944,ay:923}]
+ };
+ let forearmArt;
+ function featheredCrop(x,y,w,h,fade){
+  const c=document.createElement('canvas');c.width=w;c.height=h;const t=c.getContext('2d');
+  t.drawImage(handsImage,x,y,w,h,0,0,w,h);
+  t.globalCompositeOperation='destination-in';
+  const g=t.createLinearGradient(0,0,0,fade);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,1)');
+  t.fillStyle=g;t.fillRect(0,0,w,h);return c;
+ }
+ function prepareHandArt(){
+  forearmArt=featheredCrop(208,70,218,255,35);
+  for(const pose of Object.values(handArt))for(const art of pose)art.canvas=featheredCrop(art.x,art.y,art.w,art.h,38);
+ }
+ function wing(ctx,shoulder,hand,s,gripping=false,side=0){
+  const art=handArt[gripping?'grip':'open'][side],k=s*.175;
+  // Rotate around the key/handle contact. Hands have uniform, fixed scale.
+  const dx=hand.x-shoulder.x,dy=hand.y-shoulder.y;
+  const angle=Math.max(-.50,Math.min(.50,-Math.atan2(dx,Math.max(1,dy))*.55));
+  const wx=(art.ax-art.px)*k,wy=(art.ay-art.py)*k;
+  const wrist={x:hand.x+wx*Math.cos(angle)-wy*Math.sin(angle),y:hand.y+wx*Math.sin(angle)+wy*Math.cos(angle)};
+  const length=Math.hypot(wrist.x-shoulder.x,wrist.y-shoulder.y);
+  // Sample the furry forearm from the same sheet, under the wrist overlap.
+  // Only the forearm length responds to joint placement; the palm never stretches.
+  ctx.save();ctx.translate(shoulder.x,shoulder.y);ctx.rotate(Math.atan2(wrist.y-shoulder.y,wrist.x-shoulder.x)-Math.PI/2);
+  ctx.drawImage(forearmArt,-20*s,-9*s,40*s,length+19*s);ctx.restore();
+  ctx.save();ctx.translate(hand.x,hand.y);ctx.rotate(angle);
+  ctx.drawImage(art.canvas,(art.x-art.px)*k,(art.y-art.py)*k,art.w*k,art.h*k);
   ctx.restore();
  }
  function stick(ctx,hand,tip,mallet,unit){
@@ -46,7 +72,7 @@
   ctx.save();ctx.translate(hand.x,hand.y);ctx.rotate(angle);ctx.lineCap='round';ctx.lineWidth=9*s;ctx.strokeStyle='#8a5b30';ctx.beginPath();ctx.moveTo(0,12*s);ctx.lineTo(0,-58*s);ctx.stroke();const g=ctx.createRadialGradient(-10*s,-65*s,1,0,-64*s,29*s);g.addColorStop(0,'#e6bd77');g.addColorStop(1,'#a26c35');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(0,-66*s,27*s,34*s,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#815128';ctx.lineWidth=3*s;ctx.beginPath();ctx.moveTo(-24*s,-66*s);for(let i=0;i<6;i++)ctx.lineTo((-24+i*9)*s,(-66+(i%2?6:-6))*s);ctx.stroke();ctx.restore();
  }
  const api=window.PippoMusicRig={ready:false,performance,prepare,clear,inspect:()=>lastHit,draw(ctx,g,st){
-  if(!image)return null;ensure(g);const kind=st.musicInstrument||'keyboard',model=performance.snapshot(),h=Math.min(g.height*.77,g.width*1.28);const musicPanel=document.getElementById('musicPanel');musicPanel.style.setProperty('--rig-height',h+'px');if(musicPanel.dataset.rig!=='contact-23'){musicPanel.dataset.rig='contact-23';musicPanel.dataset.hands='compact-26';dirty=true}
+  if(!image)return null;ensure(g);const kind=st.musicInstrument||'keyboard',model=performance.snapshot(),h=Math.min(g.height*.77,g.width*1.28);const musicPanel=document.getElementById('musicPanel');musicPanel.style.setProperty('--rig-height',h+'px');if(musicPanel.dataset.rig!=='contact-23'){musicPanel.dataset.rig='contact-23';musicPanel.dataset.hands='approved-art-27';dirty=true}
   if(dirty||!layout||layout.kind!==kind){layout=measure(g,kind);dirty=false}
   const s=h/650,cx=g.width*.5,cy=g.height*(kind==='drum'?.83:.89);
   const active=model.hands.some(h=>h?.active)||model.foot?.active;
@@ -63,19 +89,19 @@
    if(kind==='keyboard'||kind==='xylophone'){
     const index=hit?.index??(kind==='xylophone'?(arm?7:0):(arm?6:1));target=targets[index];if(!target)continue;const held=kind==='keyboard'&&hit?.held,rest=Math.min(12,amplitude*.3);const elevation=held?0:(hit?lift*amplitude+rest*hit.settle:rest);
     tip={x:target.x,y:target.y-elevation};
-    if(kind==='keyboard'){hand=tip;wing(oc,shoulders[arm],hand,s)}
-    else{hand=PippoMusicAnatomy.reach(shoulders[arm],{x:tip.x+(arm?1:-1)*g.width*.045,y:tip.y-Math.min(g.width*.12,h*.16)},Math.min(g.width*.24,h*.30));const contact=stick(oc,hand,tip,true,s);wing(oc,shoulders[arm],hand,s,true);contacts.push({arm,index,tip:contact,target,contact:hit?.contact||false})}
+    if(kind==='keyboard'){hand=tip;wing(oc,shoulders[arm],hand,s,false,arm)}
+    else{hand=PippoMusicAnatomy.reach(shoulders[arm],{x:tip.x+(arm?1:-1)*g.width*.045,y:tip.y-Math.min(g.width*.12,h*.16)},Math.min(g.width*.24,h*.30));const contact=stick(oc,hand,tip,true,s);wing(oc,shoulders[arm],hand,s,true,arm);contacts.push({arm,index,tip:contact,target,contact:hit?.contact||false})}
     if(kind==='keyboard')contacts.push({arm,index,tip:hand,target,contact:hit?.held||hit?.contact||false});
    }else if(kind==='drum'){
     const index=hit?.index??(arm?3:2);target=targets[index];if(!target)continue;
     tip={x:target.x+(index>=3?(index===3?-.22:.22)*g.width*.12:0),y:target.y-(hit?lift*amplitude+Math.min(18,amplitude*.4)*hit.settle:Math.min(18,amplitude*.4))};
     // The surface point stays on the cymbal bow, away from its mounting post.
-    target={x:tip.x,y:target.y};hand=PippoMusicAnatomy.reach(shoulders[arm],{x:tip.x*.72+shoulders[arm].x*.28,y:Math.max(shoulders[arm].y+g.height*.04,tip.y-Math.min(g.width*.12,h*.15))},Math.min(g.width*.24,h*.31));const contact=stick(oc,hand,tip,false,s);wing(oc,shoulders[arm],hand,s,true);contacts.push({arm,index,tip:contact,target,contact:hit?.contact||false});
+    target={x:tip.x,y:target.y};hand=PippoMusicAnatomy.reach(shoulders[arm],{x:tip.x*.72+shoulders[arm].x*.28,y:Math.max(shoulders[arm].y+g.height*.04,tip.y-Math.min(g.width*.12,h*.15))},Math.min(g.width*.24,h*.31));const contact=stick(oc,hand,tip,false,s);wing(oc,shoulders[arm],hand,s,true,arm);contacts.push({arm,index,tip:contact,target,contact:hit?.contact||false});
    }else if(kind==='tambourine'){
-    target=arm?{x:cx+singleRadius*.25,y:g.height*.68}:{x:cx-singleRadius*.96,y:g.height*.70};hand={...target,y:target.y-(arm?(hit?lift+hit.settle*.35:.35)*amplitude:0)};wing(oc,shoulders[arm],hand,s);contacts.push({arm,index:0,tip:hand,target,contact:arm===1&&hit?.contact||false});
+    target=arm?{x:cx+singleRadius*.25,y:g.height*.68}:{x:cx-singleRadius*.96,y:g.height*.70};hand={...target,y:target.y-(arm?(hit?lift+hit.settle*.35:.35)*amplitude:0)};wing(oc,shoulders[arm],hand,s,false,arm);contacts.push({arm,index:0,tip:hand,target,contact:arm===1&&hit?.contact||false});
    }else if(kind==='shaker'){
     const swing=arm===1&&hit&&!reduced?Math.sin(hit.q*Math.PI*2)*amplitude:0;
-    hand={x:cx+(arm?1:-1)*wingReach,y:g.height*.72+swing};if(arm)shaker(oc,hand,.35+(swing/amplitude)*.35,s*1.4);wing(oc,shoulders[arm],hand,s,arm===1);contacts.push({arm,index:0,tip:hand,target:hand,contact:arm===1&&hit?.contact||false});
+    hand={x:cx+(arm?1:-1)*wingReach,y:g.height*.72+swing};if(arm)shaker(oc,hand,.35+(swing/amplitude)*.35,s*1.4);wing(oc,shoulders[arm],hand,s,arm===1,arm);contacts.push({arm,index:0,tip:hand,target:hand,contact:arm===1&&hit?.contact||false});
    }
   }
   if(kind==='drum'){
@@ -103,7 +129,7 @@
     contacts.push({foot:true,index:0,contact:model.foot?.contact||false,pedal:p});
    }
   }
-  const panel=document.getElementById('musicPanel');panel.dataset.artReady='true';panel.dataset.rig='contact-23';panel.dataset.hands='compact-26';panel.dataset.pace=model.pace;panel.dataset.expression=['attentive','focused','delighted'][expression];panel.dataset.stroke=String(model.serial);
+  const panel=document.getElementById('musicPanel');panel.dataset.artReady='true';panel.dataset.rig='contact-23';panel.dataset.hands='approved-art-27';panel.dataset.pace=model.pace;panel.dataset.expression=['attentive','focused','delighted'][expression];panel.dataset.stroke=String(model.serial);
   lastHit={kind,serial:model.serial,pace:model.pace,expression:panel.dataset.expression,contacts,stage:{width:g.width,height:g.height}};
   return {pose:'music_rig_'+kind+'_'+model.serial,hit:{alpha:bodyAlpha[expression],width:340,height:680,cx,cy,scale:s,stretch:1,anchorX:170,anchorY:650,headBottom:330}};
  }};

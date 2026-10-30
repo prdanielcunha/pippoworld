@@ -1,3 +1,7 @@
+## Atualização prioritária — mãos aprovadas, revisão 27, 30/10/2026
+
+A v26 foi rejeitada visualmente pelo responsável: desenhava mãos geométricas em vez de usar a imagem aprovada. A v27 integra **a própria folha PNG reenviada**, preservada byte a byte, em `dist/assets/hands-approved-v27/`: abertas para teclado/pandeiro e fechadas para baquetas/malhetas/chocalho. Não substituir por curvas amarelas nem restaurar o renderer rejeitado. Decisão, origem, implementação e limites em `docs/MAOS_APROVADAS_V27.md` dentro do protótipo. Destino desta tarefa: `https://pippoworld-preview.vercel.app/`; antigo Site separado. Sem teste físico no iPhone ou aceite final do responsável.
+
 ## Atualização anatômica — revisão 26, 30/10/2026
 
 A partir da v25, nova construção de mãozinhas compactas, sem deformar as asas pela distância ao alvo, alcance limitado para pegada de baquetas e malhetas, pandeiro com mãos pequenas e pé conectado ao pedal lateral do bumbo. Arquivos: `dist/music-anatomy.js`, `dist/music-rig.js`, `tests/music-anatomy.cjs`, `docs/ANATOMIA_E_BATERIA_V26.md`. Esta revisão registra implementação no GitHub, mas não equivale a aceite visual do jogo, teste em iPhone físico ou publicação do Site. Ver critérios pendentes no documento v26.

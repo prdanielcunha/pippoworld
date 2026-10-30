@@ -1,3 +1,7 @@
+## Atualização prioritária — mãos aprovadas, revisão 27, 30/10/2026
+
+A v26 foi rejeitada visualmente pelo responsável: desenhava mãos geométricas em vez de usar a imagem aprovada. A v27 integra **a própria folha PNG reenviada**, preservada byte a byte, em `dist/assets/hands-approved-v27/`: abertas para teclado/pandeiro e fechadas para baquetas/malhetas/chocalho. Não substituir por curvas amarelas nem restaurar o renderer rejeitado. Decisão, origem, implementação e limites em `docs/MAOS_APROVADAS_V27.md` dentro do protótipo. Destino desta tarefa: `https://pippoworld-preview.vercel.app/`; antigo Site separado. Sem teste físico no iPhone ou aceite final do responsável.
+
 # Pippo — identidade e arte aprovada
 
 **Estado atual: versão 22 — bateria com disposição refinada, novas poses completas de tocar e regar, água até a terra e abertura gradual da flor. Arte e som anteriores preservados. Ver POLIMENTO_V22.md. Novas poses ainda aguardam avaliação do responsável.**

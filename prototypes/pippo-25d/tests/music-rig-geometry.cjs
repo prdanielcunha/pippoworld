@@ -8,7 +8,7 @@ class Canvas {
   const gradient={addColorStop(){}};
   return new Proxy({
    getImageData:()=>({data:new Uint8ClampedArray(this.width*this.height*4)}),
-   createRadialGradient:()=>gradient
+   createRadialGradient:()=>gradient,createLinearGradient:()=>gradient
   },{get:(target,key)=>key in target?target[key]:(...args)=>undefined,
      set:(target,key,value)=>{target[key]=value;return true}});
  }
@@ -56,7 +56,7 @@ const rig=window.PippoMusicRig;
     rig.performance.strike({instrument:kind,index,id:'touch'+index});
     const result=rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
     assert.ok(result?.hit?.width===340,'complete Pippo body remains the original source width');
-    assert.equal(panel.dataset.hands,'compact-26');
+    assert.equal(panel.dataset.hands,'approved-art-27');
     const inspected=rig.inspect();
     assert.equal(inspected.kind,kind);
     for(const contact of inspected.contacts.filter(c=>c.contact&&!c.foot&&c.tip&&c.target)){
