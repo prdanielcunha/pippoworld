@@ -20,3 +20,7 @@ O código de geometria está separado em `dist/music-anatomy.js`; testes de alca
 4. Pandeiro e chocalho: gesto acompanha 4–8 toques rápidos sem ficar atrasado, mantendo anatomia pequena.
 5. Pausa, troca de instrumento, movimento reduzido, rotação de tela e retomada sem fantasmas, mãos presas ou áudio antigo.
 6. Safari físico, julgamento de fidelidade pelo responsável, FPS/latência no dispositivo e atividades restantes do universo seguem pendentes. Não declarar jogo completo.
+
+## Ensaio adicional reprodutível
+
+`node tests/music-rig-geometry.cjs`: 69 cenários simulados nas larguras 320/390/940, verificando contatos ativos e o pedal. É uma simulação da API de Canvas/DOM, sem carregar os pixels reais; não substitui inspeção visual em navegador ou iPhone.
