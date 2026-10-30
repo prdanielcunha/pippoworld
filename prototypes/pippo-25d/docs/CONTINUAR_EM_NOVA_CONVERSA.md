@@ -1,3 +1,7 @@
+## Prioridade vigente — revisão 31
+
+O usuário rejeitou a v30 por mão cortada/flutuando em capturas reais. Ler [PULSOS_LIGADOS_AO_CORPO_V31.md](PULSOS_LIGADOS_AO_CORPO_V31.md). Não voltar ao pivô nos dedos nem alegar aceite visual. Pulso registrado no corpo durante todo o golpe. Arte original preservada; destino https://pippoworld-preview.vercel.app/ .
+
 ## Prioridade vigente — revisão 30, 30/10/2026
 
 V29 também rejeitada pelo responsável durante esta tarefa. Ler [PEGADAS_REDESENHADAS_V30.md](PEGADAS_REDESENHADAS_V30.md) e a seção v30 do `PIPPO_ATUAL.md`. Nova arte de pegadas, pulso curto e mãos com proporção ampliada. Não restaurar v28/v29 nem alegar aceite visual. Link desta revisão: https://pippoworld-preview.vercel.app/ .

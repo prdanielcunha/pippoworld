@@ -17,8 +17,8 @@ for(const scale of [.4,.65,1,1.4]){
 }
 const rig=fs.readFileSync('dist/music-rig.js','utf8'),html=fs.readFileSync('dist/index.html','utf8');
 assert.ok(!rig.includes('ctx.scale(stretch'),'the painted duck wing must never be stretched by target distance');
-assert.ok(rig.includes('PippoMusicAnatomy.compact('),'all instruments use bounded rigid hands');
-assert.ok(rig.includes("dataset.hands='relaxed-grip-30'"),'compact hands are identifiable in runtime evidence');
+assert.ok(rig.includes('PippoMusicAnatomy.anchored('),'all instruments use bounded rigid hands');
+assert.ok(rig.includes("dataset.hands='anchored-wrist-31'"),'compact hands are identifiable in runtime evidence');
 assert.ok(html.indexOf('music-anatomy.js')<html.indexOf('music-rig.js'),'anatomy loads before rig');
 console.log('PASS: fixed compact paws, bounded instrument grips, side pedal with animated connected foot, dependency order');
 

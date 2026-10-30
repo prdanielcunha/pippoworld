@@ -14,6 +14,19 @@ const PippoMusicAnatomy=(()=>{
   const maximum=112*scale,bounded={x:clamp(desired.x,shoulder.x-30*scale,shoulder.x+30*scale),y:clamp(desired.y,shoulder.y+45*scale,shoulder.y+112*scale)},contact=reach(shoulder,bounded,maximum);
   return {shoulder,contact,maximum,reachable:Math.hypot(contact.x-desired.x,contact.y-desired.y)<1};
  }
+ // A rigid hand pivots at its anatomical wrist embedded in the painted body.
+ // Solve shaft direction from that joint, never rotate around detached fingers.
+ function anchored(wrist,offset,target,axis=0,rotation=0){
+  let angle=rotation;
+  if(target){
+   const dx=target.x-wrist.x,dy=target.y-wrist.y,d=Math.hypot(dx,dy);
+   const perpendicular=-Math.sin(axis)*offset.x+Math.cos(axis)*offset.y;
+   angle=Math.atan2(dy,dx)-axis-Math.asin(clamp(perpendicular/Math.max(d,1e-6),-.98,.98));
+  }
+  const co=Math.cos(angle),si=Math.sin(angle);
+  const contact={x:wrist.x+offset.x*co-offset.y*si,y:wrist.y+offset.x*si+offset.y*co};
+  return {wrist:{...wrist},shoulder:{...wrist},contact,angle,maximum:Math.hypot(offset.x,offset.y),attachmentError:0};
+ }
  function pedal(kick,scene,cx,cy,s,press=0){
   // Register under the original painted right foot, not the front drum head.
   const motion=clamp(press,0,1),x=cx+64*s,y=cy+5*s;
@@ -21,6 +34,6 @@ const PippoMusicAnatomy=(()=>{
    heel:{x:x-12*s,y:y-16*s},toe:{x:x+10*s,y:y-(9-4*motion)*s},
    beater:{x:kick.right-scene.left+2*s,y:cy-46*s}};
  }
- return {clamp,pawRadius,reach,compact,pedal};
+ return {clamp,pawRadius,reach,compact,anchored,pedal};
 })();
 if(typeof module!=='undefined')module.exports=PippoMusicAnatomy;

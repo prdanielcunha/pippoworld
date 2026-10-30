@@ -34,3 +34,7 @@ Núcleo sem cadastro infantil, câmera, microfone, anúncios, rastreadores, diag
 Mantenha a base simples; não crie módulos vazios para simular funcionalidades. Ao implementar atividades, separe entrada, intenção, estado, apresentação e áudio. Saída cancela tarefas; interrupção recupera apenas estado seguro, sem notas presas ou falas antigas. Persistência será local e versionada. Não adicione serviços ou dependências sem necessidade.
 
 Atualize decisões, inventário/licenças, requisitos e casos de aceite afetados em conjunto. Diferencie planejado, implementado, verificado tecnicamente e validado em uso. Metas de 30 FPS e retorno visual até 100 ms são metas em aparelho real, não resultados desta base. Testes em Chromium/emulação não substituem Safari iPhone/iPad, Android, revisão educativa/sonora e observação com famílias. Preserve conteúdos C/D/E mesmo ao produzir apenas B.
+
+## Prioridade anatômica 31 — substitui v28–v30
+
+Capturas reais do responsável rejeitaram a mão flutuante da v30. A fonte do pulso (`W`) precisa permanecer presa a pixels opacos do corpo durante todo o golpe, não só em repouso. Não restaurar rotação em torno da pegada com pulso solto. Leia `prototypes/pippo-25d/docs/PULSOS_LIGADOS_AO_CORPO_V31.md`; usar os testes de registro de pixels e de 483 quadros, além do contato das pontas. Arte preservada; não inferir aprovação visual ou teste físico.

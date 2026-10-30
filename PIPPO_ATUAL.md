@@ -1,3 +1,7 @@
+## Estado vigente — revisão 31, pulso preso ao corpo
+
+V30 rejeitada por capturas reais de iPhone: mão recortada/flutuando. Registro anatômico de pulso agora fixo na arte do corpo; a mão gira a partir dele, preservando braço curto e alcance pelas baquetas. Sem novas imagens. Critérios e evidências em `prototypes/pippo-25d/docs/PULSOS_LIGADOS_AO_CORPO_V31.md`. 483 quadros geométricos amostrados, oito registros de mão e 18 regiões de corpo verificados. Inspeção remota em 390 × 844; aceite em iPhone físico pendente. Link: https://pippoworld-preview.vercel.app/ .
+
 ## Estado vigente — revisão 30, pegadas redesenhadas
 
 30/10/2026. O responsável rejeitou a tentativa v29 durante a inspeção. Nova arte de pegadas específicas em `dist/assets/grips-v30/hands.png`, integrada em bateria, xilofone e chocalho. Mãos abertas maiores em teclado/pandeiro, pulso curto, sem cotovelo e sem esticar membros. Alcance das peças ajustado pelas baquetas. V29 não foi publicada; manter seu registro apenas como tentativa. Documento atual: `prototypes/pippo-25d/docs/PEGADAS_REDESENHADAS_V30.md`. Destino: https://pippoworld-preview.vercel.app/ . Teste físico e aceite visual seguem pendentes.

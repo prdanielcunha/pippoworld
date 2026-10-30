@@ -45,7 +45,7 @@ const rig=window.PippoMusicRig;
 (async()=>{
  await rig.prepare();
  assert.ok(rig.ready,'rig should prepare before drawing');
- let scenarios=0,contacts=0,pedals=0;
+ let scenarios=0,contacts=0,pedals=0,registeredFrames=0;
  for(const w of [320,390,940]){
   width=w;height=w===940?630:w===320?480:520;
   const drawing=new Canvas().getContext();
@@ -56,7 +56,7 @@ const rig=window.PippoMusicRig;
     rig.performance.strike({instrument:kind,index,id:'touch'+index});
     const result=rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
     assert.ok(result?.hit?.width===340,'complete Pippo body remains the original source width');
-    assert.equal(panel.dataset.hands,'relaxed-grip-30');
+    assert.equal(panel.dataset.hands,'anchored-wrist-31');
     const inspected=rig.inspect();
     assert.equal(inspected.kind,kind);
     for(const a of inspected.arms){
@@ -74,6 +74,16 @@ const rig=window.PippoMusicRig;
      assert.ok(kick.pedal.x>0&&kick.pedal.x<width,'pedal stays within the stage');
      pedals++;
     }
+    // Sample preparation, attack, lift and settle, not just the static grip.
+    for(const delta of [0,17,33,50,80,120,220]){
+     rig.performance.advance(delta);
+     rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
+     for(const a of rig.inspect().arms){
+      assert.ok(Math.hypot(a.mappedWrist.x-a.wrist.x,a.mappedWrist.y-a.wrist.y)<1e-7,'rendered source wrist must remain attached through the entire stroke');
+      assert.ok(a.attachmentError<1e-7,'no independent finger-centred rotation may detach the wrist');
+     }
+     registeredFrames++;
+    }
     scenarios++;
     rig.performance.advance(33);
     rig.performance.release('touch'+index);
@@ -83,5 +93,6 @@ const rig=window.PippoMusicRig;
  assert.equal(scenarios,69);
  assert.equal(pedals,3);
  assert.ok(contacts>=30,'tool tips still reach all pieces and bars');
- console.log('PASS: '+scenarios+' geometry scenarios, '+contacts+' precise active contacts, '+pedals+' pedal checks across 320/390/940 widths');
+ assert.equal(registeredFrames,483);
+ console.log('PASS: '+registeredFrames+' registered stroke frames; '+scenarios+' geometry scenarios, '+contacts+' precise active contacts, '+pedals+' pedal checks across 320/390/940 widths');
 })().catch(error=>{console.error(error);process.exitCode=1});
