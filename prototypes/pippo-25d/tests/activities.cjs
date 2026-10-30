@@ -34,3 +34,9 @@ places[2].click();$('resetGarden').click();$('water').click();runtime.tick(1200)
 console.log('PASS: watering pauses without completion, resumes its remaining time and finishes with the water off');
 $('resetGarden').click();$('water').click();runtime.tick(16,3000);assert.ok($('gardenObjects').classes.has('bloom'),'watering duration follows active elapsed time even with a slow render frame');
 console.log('PASS: slow rendering does not stretch a three-second pour into many seconds');
+// Pippo repeats the child's actual onset intervals, including an uneven phrase.
+$('mute').onchange({target:{checked:false}});$('replies').onchange({target:{checked:true}});places[1].click();instruments[0].click();
+const hits=()=>audioEvents.filter(e=>e[0]==='play').length;
+pointer(keys[0],'pointerdown',901);pointer(keys[0],'pointerup',901);runtime.tick(120);pointer(keys[2],'pointerdown',902);pointer(keys[2],'pointerup',902);runtime.tick(210);pointer(keys[4],'pointerdown',903);pointer(keys[4],'pointerup',903);
+let n=hits();runtime.tick(1251);assert.equal(hits(),n+1);runtime.tick(119);assert.equal(hits(),n+1);runtime.tick(1);assert.equal(hits(),n+2);runtime.tick(209);assert.equal(hits(),n+2);runtime.tick(1);assert.equal(hits(),n+3);
+console.log('PASS: uneven 120/210 ms phrase is answered with its original rhythm instead of fixed 340 ms notes');

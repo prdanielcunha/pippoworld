@@ -1,3 +1,7 @@
+## Checkpoint mais recente — versão 23, 29/10/2026
+
+Esta seção prevalece sobre os checkpoints históricos abaixo. Contatos musicais articulados por ataque; entrada no banco interrompível; expressões completas; fases de passagem e malha limitada da caminhada com parada gradual. Ver [POLIMENTO_V23.md](docs/POLIMENTO_V23.md), os prompts e o roteiro de teste físico. As 19 suítes e as validações de recursos passaram; 69 contatos passaram no Chromium remoto em três larguras. Não houve teste em iPhone físico nem aceite visual final. O jogo continua em 2,5D e as atividades futuras permanecem na estratégia integral.
+
 # Pippo — prova visual em 2,5D
 
 **Estado atual: versão 20 — regiões apagadas das bochechas recuperadas das folhas originais; recortes v2 preservados nas demais áreas. Ver o registro ao final e ROSTO_V20.md. As seções anteriores guardam o histórico.**
@@ -212,3 +216,7 @@ Instrumentos dentro da cena, bateria de cinco peças e 26 gravações acústicas
 ## Versão 22
 
 Bateria refinada, primeiras poses completas de tocar os instrumentos e rega com regador nas asas/água na terra/flor gradual. Fontes, testes e limites em [docs/POLIMENTO_V22.md](docs/POLIMENTO_V22.md). Sons reais e atlas aprovados preservados.
+
+## Versão 24
+
+Correção do pé sobreposto, distribuição das asas na bateria, pega das baquetas, alcance do teclado/xilofone e chocalho fora do rosto. Revisão dos cinco instrumentos e 69 contatos verificados no navegador. Detalhes e limites: [docs/CORRECAO_MUSICA_V24.md](docs/CORRECAO_MUSICA_V24.md). Ainda sem reteste em iPhone físico ou aceite visual final.

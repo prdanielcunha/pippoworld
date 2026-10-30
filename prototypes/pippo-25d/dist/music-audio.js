@@ -3,7 +3,7 @@
 // No oscillator/noise fallback may pretend to be an acoustic instrument.
 const PippoAudio=(()=>{
  const notes=[261.625565,293.664768,329.627557,349.228231,391.995436,440,493.883301,523.251131];
- function create({AudioContext=globalThis.AudioContext||globalThis.webkitAudioContext,fetcher=globalThis.fetch,onError=()=>{},onReady=()=>{}}={}){
+ function create({AudioContext=globalThis.AudioContext||globalThis.webkitAudioContext,fetcher=globalThis.fetch,onError=()=>{},onReady=()=>{},onAttack=()=>{}}={}){
   let context,master,childBus,replyBus,manifest,loading,muted=false,volume=.45,epoch=0,serial=0;const voices=new Map(),pending=new Map(),buffers=new Map(),rounds=new Map();
   function init(){
    if(context)return context;if(!AudioContext)throw Error('audio-unavailable');
@@ -32,7 +32,7 @@ const PippoAudio=(()=>{
    while(voices.size>=24){const v=[...voices.values()].find(v=>v.automatic)||voices.values().next().value;finish(v,true)}
    const t=context.currentTime,gain=context.createGain(),source=context.createBufferSource(),key=++serial;
    source.buffer=buffer;source.connect(gain);gain.connect(automatic?replyBus:childBus);gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.48,t+.002);
-   const v={key,id,kind,gain,source,automatic};voices.set(key,v);source.onended=()=>{voices.delete(key);source.disconnect();gain.disconnect()};source.start(t);source.stop(t+buffer.duration+.02);return true;
+   const v={key,id,kind,gain,source,automatic};voices.set(key,v);source.onended=()=>{voices.delete(key);source.disconnect();gain.disconnect()};source.start(t);source.stop(t+buffer.duration+.02);onAttack({id,instrument:kind,index,automatic,audioTime:t});return true;
   }
   function play(id,kind='keyboard',index=0,{automatic=false}={}){
    if(muted||!['keyboard','xylophone','drum','shaker','tambourine'].includes(kind)||!Number.isInteger(index)||index<0||index>7)return false;
@@ -46,7 +46,7 @@ const PippoAudio=(()=>{
     context.resume().then(()=>{if(!muted&&pending.get(id)===ticket&&ticket.epoch===epoch){pending.delete(id);sound(id,kind,index,automatic)}}).catch(()=>{pending.delete(id);onError('unlock')});return true;
    }catch{onError('unavailable');return false}
   }
-  return {load,play,release,stopAll,suspend(){stopAll();if(context&&context.state==='running')context.suspend().catch(()=>{})},setMuted(v){muted=Boolean(v);if(muted)stopAll();if(master)master.gain.setTargetAtTime(muted?0:volume,context.currentTime,.015)},setVolume(v){volume=Math.max(0,Math.min(.8,Number(v)||0));if(master)master.gain.setTargetAtTime(muted?0:volume,context.currentTime,.015)},getState(){return {voices:voices.size,pending:pending.size,loaded:buffers.size,ready:Boolean(manifest&&buffers.size===manifest.samples.length),muted,volume,state:context?.state||'idle'}}};
+  return {attackEvents:true,load,play,release,stopAll,suspend(){stopAll();if(context&&context.state==='running')context.suspend().catch(()=>{})},setMuted(v){muted=Boolean(v);if(muted)stopAll();if(master)master.gain.setTargetAtTime(muted?0:volume,context.currentTime,.015)},setVolume(v){volume=Math.max(0,Math.min(.8,Number(v)||0));if(master)master.gain.setTargetAtTime(muted?0:volume,context.currentTime,.015)},getState(){return {voices:voices.size,pending:pending.size,loaded:buffers.size,ready:Boolean(manifest&&buffers.size===manifest.samples.length),muted,volume,state:context?.state||'idle'}}};
  }
  return {notes,create};
 })();

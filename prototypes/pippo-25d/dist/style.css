@@ -149,3 +149,24 @@ body[data-activity=garden] .far{background:#9fbe8e;bottom:25%;height:30%;opacity
 /* A scene clips artwork but must never become a scrollable focus container. */
 #stage{overflow:clip}
 #drumKit .tom .piece-name{text-align:left;padding-left:12%}
+/* v23: textured wings and tool tips above the playable surfaces. */
+#musicHands{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:12}
+#musicHands[hidden]{display:none}
+#musicPanel[data-rig=contact-23] .bass-pedal{visibility:hidden}
+#musicPanel[data-rig=contact-23] #percussion{left:25%;width:50%;bottom:14%;height:34%;transform:none;background:transparent}
+#musicPanel[data-rig=contact-23] .music-key.playing,#musicPanel[data-rig=contact-23] .music-key.reply{transform:none}
+#musicPanel[data-rig=contact-23] #drumKit .snare{left:53%;width:24%;top:64%;bottom:auto}
+#musicPanel[data-rig=contact-23] #drumKit .tom{left:23%;width:26%;top:64%;height:15%;bottom:auto}
+#musicPanel[data-rig=contact-23] #drumKit .hihat,#musicPanel[data-rig=contact-23] #drumKit .cymbal{top:58%}
+#musicPanel[data-rig=contact-23] #drumKit .hihat.playing,#musicPanel[data-rig=contact-23] #drumKit .hihat.reply,#musicPanel[data-rig=contact-23] #drumKit .cymbal.playing,#musicPanel[data-rig=contact-23] #drumKit .cymbal.reply{rotate:0deg}
+/* Instrument reach follows Pippo's body size on wide displays. */
+#musicPanel[data-rig=contact-23] #keys{left:50%;width:min(94%,calc(var(--rig-height,500px)*1.16));transform:translateX(-50%)}
+#musicPanel[data-rig=contact-23][data-instrument=xylophone] #keys{left:50%;width:min(90%,calc(var(--rig-height,500px)*1.16))}
+#musicPanel[data-rig=contact-23] #drumKit{left:50%;right:auto;width:min(100%,calc(var(--rig-height,500px)*1.1));transform:translateX(-50%)}
+#musicPanel[data-rig=contact-23] #drumKit .kick{width:clamp(110px,32%,175px)}
+#musicPanel[data-rig=contact-23] #percussion{left:50%;width:min(50%,calc(var(--rig-height,500px)*.6));transform:translateX(-50%)}
+
+/* v24: the keyboard sits within a fixed anatomical reach. */
+#musicPanel[data-rig=contact-23] #keys{width:min(94%,calc(var(--rig-height,500px)*.78));bottom:14%}
+#musicPanel[data-rig=contact-23][data-instrument=xylophone] #keys{width:min(90%,calc(var(--rig-height,500px)*.98));bottom:15%}
+@media(max-width:500px){body[data-activity=music] #stage{height:min(64svh,calc((100vw - 40px)*1.45));min-height:400px;max-height:580px}}

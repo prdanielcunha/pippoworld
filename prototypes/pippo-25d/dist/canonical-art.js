@@ -18,8 +18,8 @@
   const c=cleanCanvas(name),p=meta.poses[name];
   cache.set(name,{canvas:c,p,alpha:alphaOf(c.getContext('2d'),c.width,c.height)});return cache.get(name);
  }
- function drawPose(ctx,name,g,{mirror=false,lift=0,rotate=0,shadow=true,stretch=1}={}){
-  const {canvas:c,p,alpha}=sprite(name),s=g.bodyHeight/unit[p.sheet],anchor=name==='rest'||name==='sit'?p.w/2:p.anchor;const left=(mirror?p.w-anchor:anchor)*s,right=(mirror?anchor:p.w-anchor)*s,cx=Math.max(left+4,Math.min(g.width-right-4,g.cx));ctx.save();ctx.translate(cx,g.bottom-lift);if(mirror)ctx.scale(-1,1);
+ function drawPose(ctx,name,g,{mirror=false,lift=0,rotate=0,shadow=true,stretch=1,unclamped=false}={}){
+  const {canvas:c,p,alpha}=sprite(name),s=g.bodyHeight/unit[p.sheet],anchor=name==='rest'||name==='sit'?p.w/2:p.anchor;const left=(mirror?p.w-anchor:anchor)*s,right=(mirror?anchor:p.w-anchor)*s,cx=unclamped?g.cx:Math.max(left+4,Math.min(g.width-right-4,g.cx));ctx.save();ctx.translate(cx,g.bottom-lift);if(mirror)ctx.scale(-1,1);
   if(shadow){drawGroundShadow(0,lift,g.bodyHeight*.48,g.bodyHeight*.03,lift?.08:.14);if(!lift)for(const foot of p.contacts)drawGroundShadow((foot.x-anchor)*s,0,Math.max(10,foot.width*s),Math.max(3,g.bodyHeight*.012),.2)}
   ctx.rotate(rotate);ctx.scale(1,stretch);renderedHit={alpha,width:c.width,height:c.height,cx,cy:g.bottom-lift,mirror,rotate,scale:s,stretch,anchorX:anchor+2,anchorY:p.h+2,headBottom:2+p.h*.60,headRegion:name==='rest'?{cx:p.anchor+2,cy:p.h*.48+2,rx:p.h*.5,ry:p.h*.5}:null};ctx.drawImage(c,(-anchor-2)*s,(-p.h-2)*s,c.width*s,c.height*s);ctx.restore();return p;
  }
@@ -28,10 +28,13 @@
   const c=cleanCanvas(key),result={canvas:c,anchor:200,bottom:390,alpha:alphaOf(c.getContext('2d'),c.width,c.height)};
   cache.set(key,result);return result;
  }
+ api.walkSource=i=>sprite('walk'+i);api.drawRegistered=(ctx,name,g,options={})=>{drawPose(ctx,name,g,{...options,unclamped:true});return {pose:name,hit:renderedHit}};
  api.draw=(ctx,g)=>{
   const st=state,m=st.motion;
+  if(st.sideRest&&!m&&st.pet<=0&&!st.expression){const resting=window.PippoGait?.drawSettle(ctx,g);if(resting){renderedHit=resting.hit;canvas.dataset.artSource='whole-figure-gait-v23';canvas.dataset.pose=resting.pose;canvas.dataset.walkFrames='32';canvas.dataset.gait='whole-figure-mesh';return}}
+  if(m?.walk&&!st.turn&&window.PippoGait){window.PippoGait.prepare();const gait=window.PippoGait.draw(ctx,g,st);if(gait){renderedHit=gait.hit;canvas.dataset.artSource='whole-figure-gait-v23';canvas.dataset.pose=gait.pose;canvas.dataset.walkFrames='32';canvas.dataset.gait='whole-figure-mesh';return}}
   const activityArt=window.PippoActivityArt?.draw(ctx,g,st);
-  if(activityArt){renderedHit=activityArt.hit;canvas.dataset.artSource='reference-derived-activity-v22';canvas.dataset.pose=activityArt.pose;canvas.dataset.walkFrames='4';canvas.dataset.gait='approved-poses';return}
+  if(activityArt){renderedHit=activityArt.hit;canvas.dataset.artSource=activityArt.pose.startsWith('music_rig')||activityArt.pose.startsWith('station_')?'articulated-music-v23':'reference-derived-activity-v22';canvas.dataset.pose=activityArt.pose;canvas.dataset.walkFrames='4';canvas.dataset.gait='approved-poses';return}
   if(st.activity==='music')document.getElementById('musicPanel').dataset.artReady='false';let pose='front',mirror=false,lift=0;
   if(st.turn&&m?.walk)pose=PippoInteraction.turnPose(st.turn);
   else if(m?.walk){pose='walk'+PippoInteraction.walkFrame(st.walkDistance,g.bodyHeight,4);mirror=st.facing===1}

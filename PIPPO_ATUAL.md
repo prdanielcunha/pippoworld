@@ -1,3 +1,9 @@
+## Estado atual — versão 25, 30/10/2026
+
+Esta seção prevalece sobre o histórico abaixo. Fonte do Site: `3b3ae2028677012c2534986e3b24190403a31a87`. Publicação confirmada em https://pippo-prova-25d-20261027.ocasalcunha.chatgpt.site .
+
+Versões 23 e 24 recuperadas integralmente na pasta atual, incluindo rig, fases de caminhada, fontes e evidências que faltavam no backup. V25 melhora retorno das asas até repouso, soltura silenciosa e recuperação de teclas sustentadas em acordes. Código, artes, fontes, testes e documentos atuais sincronizados com hashes Git conferidos. Leia `prototypes/pippo-25d/docs/RETORNO_MUSICAL_V25.md` e o checkpoint de continuidade. Perna acionando pedal, anatomia final das asas e teste físico no iPhone continuam pendentes. Sem aceite final do jogo.
+
 # Mundo Pippo — cópia completa da versão atual
 
 Backup de 29/10/2026. O protótipo atual está em `prototypes/pippo-25d/`, com código, desenhos originais, máscaras, scripts, testes, documentação, fontes DOCX e evidências visuais. O código anterior na raiz foi preservado.

@@ -29,6 +29,8 @@
   ctx.restore();
  }
  const api=window.PippoActivityArt={objectHit(x,y){if(!lastObject)return false;const {rect,scale,origin}=lastObject,sx=(x-origin.x)/scale,sy=(y-origin.y)/scale;return sx>=rect[0]&&sx<=rect[2]&&sy>=rect[1]&&sy<=rect[3]},pose,prepare:request,ready:kind=>bank.has(kind),draw(ctx,g,st){
+  if(st.activity==='music'&&window.PippoStation){const arrival=window.PippoStation.draw(ctx,g,st);if(arrival)return arrival}
+  if(st.activity==='music'&&window.PippoMusicRig){if(window.PippoMusicRig.ready)return window.PippoMusicRig.draw(ctx,g,st);if(!window.PippoMusicRig.failed){window.PippoMusicRig.prepare();return null}}window.PippoMusicRig?.clear();
   const selected=pose(st);if(!selected){lastObject=null;return null}request(selected.kind);const art=bank.get(selected.kind);if(!art)return null;
   const f=art.frames[selected.frame],garden=selected.kind==='garden';
   // A shared unit and measured head registration prevent per-pose resizing.

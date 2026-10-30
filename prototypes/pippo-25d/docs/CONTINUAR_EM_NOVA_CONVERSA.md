@@ -1,3 +1,11 @@
+## Checkpoint atual — versão 25, 30/10/2026
+
+Esta seção prevalece sobre os registros históricos abaixo. Base v24 preservada; retorno musical até repouso, soltura silenciosa e recuperação de notas sustentadas em acordes. Ver [RETORNO_MUSICAL_V25.md](RETORNO_MUSICAL_V25.md) e [CORRECAO_MUSICA_V24.md](CORRECAO_MUSICA_V24.md). Perna do pedal, anatomia final e iPhone físico seguem pendentes. Site e GitHub são sincronizados separadamente.
+
+## Checkpoint mais recente — versão 23, 29/10/2026
+
+Esta seção prevalece sobre os checkpoints históricos abaixo. Contatos musicais articulados por ataque; entrada no banco interrompível; expressões completas; fases de passagem e malha limitada da caminhada com parada gradual. Ver [POLIMENTO_V23.md](POLIMENTO_V23.md), os prompts e o roteiro de teste físico. As 19 suítes e as validações de recursos passaram; 69 contatos passaram no Chromium remoto em três larguras. Não houve teste em iPhone físico nem aceite visual final. O jogo continua em 2,5D e as atividades futuras permanecem na estratégia integral.
+
 # Mundo Pippo — continuidade de desenvolvimento
 
 **Estado atual: versão 22 — bateria com disposição refinada, novas poses completas de tocar e regar, água até a terra e abertura gradual da flor. Arte e som anteriores preservados. Ver POLIMENTO_V22.md. Novas poses ainda aguardam avaliação do responsável.**
@@ -154,3 +162,6 @@ Ver [MUSICA_V21.md](MUSICA_V21.md) para fontes, tecnologia, testes e pendências
 ## Etapa de polimento v22
 
 Ver [POLIMENTO_V22.md](POLIMENTO_V22.md). Novas poses completas derivadas da referência, sem alterar atlas aprovados da v20. Kit refinado, gestos musicais, regador nas asas e ciclo de três segundos no jardim. Não declarar animação contínua nem teste físico. Todos os requisitos futuros permanecem.
+
+## Atualização v24
+Retomar `docs/CORRECAO_MUSICA_V24.md`. A captura rejeitada era da v23: pé solto vinha de um sprite adicional em primeiro plano e as asas de repouso estavam cruzadas. V24 remove esse pé, corrige mãos/baquetas e enquadramento. Auditoria de 69 contatos passou, mas não é certificação de anatomia/fluidez. Ainda falta perna real acionando o pedal. Não restaurar o pé separado nem a experiência rejeitada de dividir a asa em segmentos. Preservar som imediato, multitoque, pausa e modo livre.

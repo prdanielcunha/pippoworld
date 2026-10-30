@@ -1,0 +1,90 @@
+{
+  "revision": "music-contact-23",
+  "tool": "Built-in image generation; original Pippo references",
+  "images": [
+    {
+      "source": "sources/v23/music-rig.png",
+      "file": "dist/assets/music-rig-v23/rig.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 1285810,
+      "source_sha256": "5b7944472e0c50d203a774e8d09581ed755bd64301dc8e8f9bbb331af6327dfa",
+      "sha256": "d700e6ec0ce6ff7316cb944618815da4b219c00a266c6cad48f8d1dc087c35fc",
+      "rgba_sha256": "b0d8ee6ad1bed8f14969aa135a320ff5294fbb7f97dbba07659abfb0becd532e"
+    },
+    {
+      "source": "sources/v23/sit-transition.png",
+      "file": "dist/assets/music-rig-v23/sit.webp",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 1471116,
+      "source_sha256": "922f03472c8972a5ea28b7ae3e365bd6dac2855dbd21a0ff805a5882ca09d428",
+      "sha256": "c39e3046e1d514e9b91771ebd36625f698ae48be661ed569188af134f22a0d9d",
+      "rgba_sha256": "5d94a7b902953b9147ac614b8065226ca4ba3e07efcd4442aedf32ee896578c3"
+    },
+    {
+      "source": "sources/v23/passing-near.png",
+      "file": "dist/assets/gait-v23/passing-near.webp",
+      "size": [
+        1774,
+        887
+      ],
+      "bytes": 523624,
+      "source_sha256": "fd42f65d73f8fc2244738145cdbaa41f392226d0fe440ffb140088c321527413",
+      "sha256": "4d2697d8b180336b7b9d328dda1a769f8e15b4e7fd7d95472e396143798d01e1",
+      "rgba_sha256": "81464878943fbb4b57bcea1d7812f3a1d2f0e029a8c850dd198470c34cdd0d2b"
+    },
+    {
+      "source": "sources/v23/passing-far.png",
+      "file": "dist/assets/gait-v23/passing-far.webp",
+      "size": [
+        1774,
+        887
+      ],
+      "bytes": 516612,
+      "source_sha256": "6df0e6a0e83d56ca8bacbdd442feb1e883d7835e053d9279406f6eba37cf35df",
+      "sha256": "cdaf377c02632f840d1b5c2194eb1d7e35a50ca5e33569c5a76b13ef0446d725",
+      "rgba_sha256": "cfdb766273f4e07b16a44fae3a4b3289df0407567f8f5e94c99b63c12e819d9b"
+    }
+  ],
+  "source_immutability": "Approved v20 atlases and canonical originals unchanged; existing face-restoration and clean-cutouts tests enforce this.",
+  "musical_wing_landmarks": [
+    [
+      215,
+      952
+    ],
+    [
+      350,
+      950
+    ],
+    [
+      689,
+      875
+    ],
+    [
+      860,
+      875
+    ],
+    [
+      180,
+      714
+    ],
+    [
+      370,
+      715
+    ],
+    [
+      690,
+      722
+    ],
+    [
+      850,
+      715
+    ]
+  ],
+  "runtime": "One complete head/neck/torso; registered wing sprites; tools and contacts drawn in canvas. Whole-figure gait mesh only; no detached leg sprites."
+}

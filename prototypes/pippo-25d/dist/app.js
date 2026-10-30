@@ -57,13 +57,13 @@ function advanceMotion(dt){
  if(m.walk){
   if(state.turn){state.turn.elapsed+=dt;if(state.turn.elapsed<state.turn.duration)return;dt=state.turn.elapsed-state.turn.duration;state.turn=null}
   const before=state.actorX,result=PippoInteraction.advance(m.walk,dt);state.actorX=result.x;state.walkDistance+=Math.abs(state.actorX-before)*geometry().width;
-  if(result.done){state.sideRest=true;state.motion=null;message('Pippo chegou. Toque em outro lugar ou faça carinho.')}
+  if(result.done){window.PippoGait?.beginSettle(state.walkDistance,geometry().bodyHeight,state.facing===1);state.sideRest=true;state.motion=null;message('Pippo chegou. Toque em outro lugar ou faça carinho.')}
  }else{m.elapsed+=dt;if(!m.persistent&&m.elapsed>=m.duration){state.motion=null;message('Pippo voltou ao repouso.')}}
 }
 function frame(t){
  const elapsed=t-(state.last||t),dt=Math.min(elapsed,50);state.last=t;
  if(!state.paused&&document.visibilityState==='visible'){
-  state.time+=dt;state.musicPulse=Math.max(0,(state.musicPulse||0)-dt);state.musicReply=Math.max(0,(state.musicReply||0)-dt);advanceBall(dt);advanceMotion(dt);state.blink=Math.max(state.petHeld&&state.petKind==='head'?220:0,state.blink-dt);state.pet=Math.max(state.petHeld?state.petDuration*.45:0,state.pet-dt);state.x=PippoInteraction.follow(state.x,state.tx,dt);state.y=PippoInteraction.follow(state.y,state.ty,dt);
+  window.PippoGait?.advance(dt);window.PippoStation?.advance(elapsed);window.PippoMusicRig?.performance.advance(elapsed);state.time+=dt;state.musicPulse=Math.max(0,(state.musicPulse||0)-dt);state.musicReply=Math.max(0,(state.musicReply||0)-dt);advanceBall(dt);advanceMotion(dt);state.blink=Math.max(state.petHeld&&state.petKind==='head'?220:0,state.blink-dt);state.pet=Math.max(state.petHeld?state.petDuration*.45:0,state.pet-dt);state.x=PippoInteraction.follow(state.x,state.tx,dt);state.y=PippoInteraction.follow(state.y,state.ty,dt);
   if(state.expressionTime>0){state.expressionTime-=dt;if(state.expressionTime<=0)state.expression=null}
   const activityElapsed=state.gardenSkipElapsed?0:elapsed;state.gardenSkipElapsed=false;window.PippoActivities?.tick(dt,activityElapsed);
   if(state.time>=state.nextBlink&&state.pet===0&&!state.expression&&!state.motion&&!state.sideRest&&state.ballTime===null){setBlink(240);state.nextBlink=state.time+4700+Math.random()*2200}render();
@@ -72,7 +72,7 @@ function frame(t){
 }
 function walkTo(target){
  if(!state.ready||!state.motionReady||state.paused)return;
- const g=geometry(),destination=PippoInteraction.clamp(target,g.min,g.max);
+ window.PippoGait?.cancelSettle();const g=geometry(),destination=PippoInteraction.clamp(target,g.min,g.max);
  if(state.motion?.walk&&Math.abs(state.motion.walk.to-destination)*g.width<3)return;
  const route=PippoInteraction.plan(state.actorX,destination,g,state.motion?.walk?.velocity);
  if(!route){state.motion=null;state.turn=null;message('Pippo já está desse lado. Experimente o outro lado do quintal.');render();return;}
@@ -134,11 +134,11 @@ $('reference').onclick=()=>{endGesture();$('comparison').showModal();state.wasPa
  document.addEventListener('visibilitychange',()=>{endGesture();window.PippoActivities?.suspend(state.paused||document.visibilityState!=='visible');state.last=0;state.tx=state.ty=0});
 new ResizeObserver(resize).observe(canvas);
 window.pippoStudy={getState:()=>({...state}),blink,pet,
- setActivity(activity){endGesture();cancelBall();state.turn=null;state.sideRest=false;state.expression=null;state.motion=null;state.pet=0;state.blink=0;state.activity=activity;state.gardenSkipElapsed=true;state.watering=false;if(activity==='garden')window.PippoActivityArt?.prepare('garden');state.actorX=activity==='garden'?.35:.5;state.facing=1;state.tx=state.ty=0;resize()},
+ setActivity(activity){endGesture();cancelBall();state.turn=null;state.sideRest=false;state.expression=null;state.motion=null;state.pet=0;state.blink=0;state.activity=activity;if(activity==='music')window.PippoStation?.enter(state.reduced);else window.PippoStation?.cancel();state.gardenSkipElapsed=true;state.watering=false;if(activity==='garden')window.PippoActivityArt?.prepare('garden');state.actorX=activity==='garden'?.35:.5;state.facing=1;state.tx=state.ty=0;resize()},
  beginGarden(){state.gardenSkipElapsed=true},
  setGarden(progress,pouring){state.waterProgress=progress;state.watering=pouring;render()},
- setInstrument(instrument){window.PippoActivityArt?.prepare(instrument);state.musicInstrument=instrument;state.musicPulse=0;state.musicReply=0;render()},
- react(options){if(state.ready&&!state.paused){if(options?.garden){render();return}if(state.activity==='music'){state.musicPulse=300;state.musicIndex=options?.index??0;state.musicReply=options?.automatic?420:0;render();return}state.sideRest=false;state.petKind='belly';state.petDuration=650;state.pet=650;setBlink(180);render()}},
+ setInstrument(instrument){if(state.activity==='music')window.PippoMusicRig?.prepare();window.PippoMusicRig?.performance.reset(instrument);if(!window.PippoMusicRig)window.PippoActivityArt?.prepare(instrument);state.musicInstrument=instrument;state.musicPulse=0;state.musicReply=0;render()},
+ react(options){if(state.ready&&!state.paused){if(options?.garden){render();return}if(state.activity==='music'){window.PippoStation?.interrupt();window.PippoMusicRig?.performance.strike(options);state.musicPulse=300;state.musicIndex=options?.index??0;state.musicReply=options?.automatic?420:0;render();return}state.sideRest=false;state.petKind='belly';state.petDuration=650;state.pet=650;setBlink(180);render()}},
  setReduced(value){state.reduced=value;$('reduced').checked=value;render()}
 };
 function startMotion(kind){

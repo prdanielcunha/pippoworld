@@ -1,3 +1,11 @@
+## Checkpoint atual — versão 25, 30/10/2026
+
+Esta seção prevalece sobre os registros históricos abaixo. Base v24 preservada; retorno musical até repouso, soltura silenciosa e recuperação de notas sustentadas em acordes. Ver [RETORNO_MUSICAL_V25.md](RETORNO_MUSICAL_V25.md) e [CORRECAO_MUSICA_V24.md](CORRECAO_MUSICA_V24.md). Perna do pedal, anatomia final e iPhone físico seguem pendentes. Site e GitHub são sincronizados separadamente.
+
+## Checkpoint mais recente — versão 23, 29/10/2026
+
+Esta seção prevalece sobre os checkpoints históricos abaixo. Contatos musicais articulados por ataque; entrada no banco interrompível; expressões completas; fases de passagem e malha limitada da caminhada com parada gradual. Ver [POLIMENTO_V23.md](POLIMENTO_V23.md), os prompts e o roteiro de teste físico. As 19 suítes e as validações de recursos passaram; 69 contatos passaram no Chromium remoto em três larguras. Não houve teste em iPhone físico nem aceite visual final. O jogo continua em 2,5D e as atividades futuras permanecem na estratégia integral.
+
 # Mundo Pippo — estado da produção
 
 **Estado atual: versão 22 — bateria com disposição refinada, novas poses completas de tocar e regar, água até a terra e abertura gradual da flor. Arte e som anteriores preservados. Ver POLIMENTO_V22.md. Novas poses ainda aguardam avaliação do responsável.**
