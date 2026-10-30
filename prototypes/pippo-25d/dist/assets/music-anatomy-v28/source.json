@@ -1,0 +1,17 @@
+{
+  "revision": 28,
+  "date": "2026-10-30",
+  "approval": "Proposta visual do teclado aprovada explicitamente pelo responsável nesta conversa: braços curtos, volumosos e dobrados; aplicar nos instrumentos e revisar pés da bateria.",
+  "files": {
+    "bent-arms.png": {
+      "sha256": "ee052511425d6d501e3de355227538a3723b006418b8d458d37c15a1956b2495"
+    },
+    "approved-keyboard-reference.png": {
+      "sha256": "30699490f53dfc99e73744960c64498ae73bba1680dcc591fb7b02d9020a92a8"
+    }
+  },
+  "generation": "Atlas derivado por geração de imagem, usando a proposta aprovada e a folha de mãos fornecida pelo responsável como referências. PNGs originais conservados sem regravar.",
+  "prompt": "Quatro braços completos, curtos e fofos de Pippo, com cotovelo dobrado e volume contínuo. Grade 2x2: mãos abertas esquerda/direita; mãos fechadas esquerda/direita. Mesma identidade, textura dourada, proporções e luz da imagem aprovada. Fundo transparente real, sem corpo, cabeça, objetos, legendas ou marcas.",
+  "runtime": "Recorte por célula; suavização de alpha somente no encaixe do ombro; malha com ossos de comprimento fixo e palma rígida. Cache das duas poses atuais em Canvas; sem serviços externos.",
+  "feet": "Pé e tornozelo originais extraídos em runtime da folha music-rig-v23; pixels correspondentes removidos somente da composição da bateria e desenhados na camada atrás das peças. Nenhuma nova perna laranja procedural."
+}

@@ -8,7 +8,7 @@ class Canvas {
   const gradient={addColorStop(){}};
   return new Proxy({
    getImageData:()=>({data:new Uint8ClampedArray(this.width*this.height*4)}),
-   createRadialGradient:()=>gradient,createLinearGradient:()=>gradient
+   createRadialGradient:()=>gradient,createLinearGradient:()=>gradient,createImageData:(w,h)=>({data:new Uint8ClampedArray(w*h*4)})
   },{get:(target,key)=>key in target?target[key]:(...args)=>undefined,
      set:(target,key,value)=>{target[key]=value;return true}});
  }
@@ -31,8 +31,8 @@ const document={
    return {getBoundingClientRect:()=>({left:x*width,top:y*height,width:w*width,height:h*height,
     right:(x+w)*width,bottom:(y+h)*height})};
   }
-  const keyWidth=width*.78/8;
-  return {getBoundingClientRect:()=>({left:width*.11+index*keyWidth,top:height*.72,
+  const h=Math.min(height*.77,width*1.28),keyboardWidth=Math.min(width*.92,h*(panel.dataset.instrument==='xylophone'?.92:.62)),keyWidth=keyboardWidth/8;
+  return {getBoundingClientRect:()=>({left:(width-keyboardWidth)/2+index*keyWidth,top:height*.64,
    width:keyWidth,height:height*.18})};
  }
 };
@@ -50,15 +50,19 @@ const rig=window.PippoMusicRig;
   width=w;height=w===940?630:w===320?480:520;
   const drawing=new Canvas().getContext();
   for(const kind of ['keyboard','xylophone','drum','tambourine','shaker']){
-   rig.performance.reset(kind);
+   rig.performance.reset(kind);panel.dataset.instrument=kind;
    const count=kind==='drum'?5:kind==='keyboard'||kind==='xylophone'?8:1;
    for(let index=0;index<count;index++){
     rig.performance.strike({instrument:kind,index,id:'touch'+index});
     const result=rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
     assert.ok(result?.hit?.width===340,'complete Pippo body remains the original source width');
-    assert.equal(panel.dataset.hands,'approved-art-27');
+    assert.equal(panel.dataset.hands,'bent-art-28');
     const inspected=rig.inspect();
     assert.equal(inspected.kind,kind);
+    for(const a of inspected.arms){
+     assert.ok(Math.abs(Math.hypot(a.elbow.x-a.shoulder.x,a.elbow.y-a.shoulder.y)-a.upper)<1e-6,'upper arm must retain its fixed length');
+     assert.ok(Math.abs(Math.hypot(a.wrist.x-a.elbow.x,a.wrist.y-a.elbow.y)-a.lower)<1e-6,'forearm must retain its fixed length');
+    }
     for(const contact of inspected.contacts.filter(c=>c.contact&&!c.foot&&c.tip&&c.target)){
      const error=Math.hypot(contact.tip.x-contact.target.x,contact.tip.y-contact.target.y);
      assert.ok(error<1e-5,kind+' attack must reach its surface');
