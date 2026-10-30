@@ -1,3 +1,11 @@
+## Prioridade vigente — revisão 30, 30/10/2026
+
+V29 também rejeitada pelo responsável durante esta tarefa. Ler [PEGADAS_REDESENHADAS_V30.md](PEGADAS_REDESENHADAS_V30.md) e a seção v30 do `PIPPO_ATUAL.md`. Nova arte de pegadas, pulso curto e mãos com proporção ampliada. Não restaurar v28/v29 nem alegar aceite visual. Link desta revisão: https://pippoworld-preview.vercel.app/ .
+
+## Prioridade vigente — revisão 29, 30/10/2026
+
+Último pedido rejeita as dobras da implementação v28: somente mão e pequeno trecho de braço. Não alegar que aprovação da imagem v28 é aprovação da animação. Implementação e critérios atuais em [MAOS_CURTAS_E_PEGADA_V29.md](MAOS_CURTAS_E_PEGADA_V29.md); estado em `PIPPO_ATUAL.md` na raiz. Usar a página https://pippoworld-preview.vercel.app/ .
+
 ## Revisão prioritária 28 — braços dobrados e pé original da bateria
 
 30/10/2026. Proposta de braços curtos e dobrados aprovada pelo responsável. Atlas integrado com mãos abertas/fechadas aplicado aos cinco instrumentos, ossos com comprimento fixo e cache por pose. Bateria reutiliza o pé/tornozelo pintado original, com pedal registrado e camada atrás das peças; removida a perna procedural. Referência, fonte e hashes em `dist/assets/music-anatomy-v28/`; detalhes e limites em `docs/BRACOS_E_PEDAL_V28.md` no protótipo. Não restaurar o braço reto da v27. Validação técnica concluída; sem teste físico no iPhone nem aceite da animação pelo responsável. Destino: `https://pippoworld-preview.vercel.app/`.

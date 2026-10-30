@@ -1,0 +1,13 @@
+{
+  "revision": 30,
+  "date": "2026-10-30",
+  "tool": "image_gen built-in",
+  "sha256": "9489d4aef26349e057a92f475e73738072c6d1b3f1803a036ea5c28aaf1d0234",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "reference": "../music-anatomy-v28/approved-keyboard-reference.png",
+  "direction": "Four isolated left/right matched-grip poses, thumb on shaft, three relaxed curved fingers, short wrist, golden Pippo feather material, RGBA transparency. Drum grips on top; mallet side views below. No clenched fist, no elbow, no body.",
+  "usage": "Original generated PNG preserved byte-for-byte. Runtime Canvas crops/rotation at uniform scale, no elbow mesh. Not yet visually approved by the user."
+}

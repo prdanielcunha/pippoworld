@@ -17,24 +17,28 @@ for(const scale of [.4,.65,1,1.4]){
 }
 const rig=fs.readFileSync('dist/music-rig.js','utf8'),html=fs.readFileSync('dist/index.html','utf8');
 assert.ok(!rig.includes('ctx.scale(stretch'),'the painted duck wing must never be stretched by target distance');
-assert.ok(rig.includes('PippoMusicAnatomy.arm('),'all instruments use the fixed-bone anatomy solver');
-assert.ok(rig.includes("dataset.hands='bent-art-28'"),'compact hands are identifiable in runtime evidence');
+assert.ok(rig.includes('PippoMusicAnatomy.compact('),'all instruments use bounded rigid hands');
+assert.ok(rig.includes("dataset.hands='relaxed-grip-30'"),'compact hands are identifiable in runtime evidence');
 assert.ok(html.indexOf('music-anatomy.js')<html.indexOf('music-rig.js'),'anatomy loads before rig');
 console.log('PASS: fixed compact paws, bounded instrument grips, side pedal with animated connected foot, dependency order');
 
 const crypto=require('node:crypto');
 assert.equal(crypto.createHash('sha256').update(fs.readFileSync('dist/assets/hands-approved-v27/hands.png')).digest('hex'),'97224cf69d3da53375cac3c5acd7f3a99975370b67e7ec17d713e7f6c3fcc67c','the hand sheet must remain exactly the user-approved file');
-assert.ok(rig.includes("load('assets/music-anatomy-v28/bent-arms.png')"),'approved art must be loaded by the live rig');
+assert.ok(rig.includes("load('assets/hands-approved-v27/hands.png')"),'approved art must be loaded by the live rig');
 assert.ok(!rig.includes("ctx.fillStyle='#f7d260'"),'rejected procedural hand renderer must not return');
 
 for(const side of [0,1])for(const scale of [.4,.65,1,1.4])for(let i=0;i<120;i++){
  const shoulder={x:200,y:100},target={x:200+Math.sin(i)*180*scale,y:100+(60+i)*scale};
- const p=A.arm(shoulder,target,scale,side);
- assert.ok(Math.abs(Math.hypot(p.elbow.x-shoulder.x,p.elbow.y-shoulder.y)-p.upper)<1e-7,'fixed upper-arm length through the full reach envelope');
- assert.ok(Math.abs(Math.hypot(p.wrist.x-p.elbow.x,p.wrist.y-p.elbow.y)-p.lower)<1e-7,'fixed forearm length through the full reach envelope');
- assert.ok(Object.values(p.elbow).every(Number.isFinite),'no invalid elbow at near/far targets');
+ const p=A.compact(shoulder,target,scale);
+ assert.ok(Math.hypot(p.contact.x-shoulder.x,p.contact.y-shoulder.y)<=p.maximum+1e-7,'hand stays within compact reach');
+ assert.ok(Math.abs(p.contact.x-shoulder.x)<=30*scale+1e-7,'far notes cannot detach the hand sideways');
+ assert.ok(Object.values(p.contact).every(Number.isFinite),'no invalid hand at near/far targets');
 }
 assert.ok(rig.includes("footOverlay.id='musicFeet'"),'feet must be behind the music panel');
 assert.ok(rig.includes('drumBodies.push(c);feet.push(foot)'),'the moving foot must be removed from the body to avoid duplication');
 assert.ok(!rig.includes("fc.strokeStyle='#ce8330'"),'rejected procedural orange leg must not return');
-console.log('PASS: 960 fixed-bone arm poses, source-foot extraction and separate pedal layer');
+console.log('PASS: 960 compact hand targets, source-foot extraction and separate pedal layer');
+
+assert.ok(rig.includes("load('assets/grips-v30/hands.png')"),'dedicated relaxed grip artwork loads in the live rig');
+const source=JSON.parse(fs.readFileSync('dist/assets/grips-v30/source.json','utf8'));
+assert.equal(crypto.createHash('sha256').update(fs.readFileSync('dist/assets/grips-v30/hands.png')).digest('hex'),source.sha256,'generated grip master remains intact');
