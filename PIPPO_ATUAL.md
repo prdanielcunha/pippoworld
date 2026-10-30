@@ -1,3 +1,7 @@
+## Atualização anatômica — revisão 26, 30/10/2026
+
+A partir da v25, nova construção de mãozinhas compactas, sem deformar as asas pela distância ao alvo, alcance limitado para pegada de baquetas e malhetas, pandeiro com mãos pequenas e pé conectado ao pedal lateral do bumbo. Arquivos: `dist/music-anatomy.js`, `dist/music-rig.js`, `tests/music-anatomy.cjs`, `docs/ANATOMIA_E_BATERIA_V26.md`. Esta revisão registra implementação no GitHub, mas não equivale a aceite visual do jogo, teste em iPhone físico ou publicação do Site. Ver critérios pendentes no documento v26.
+
 ## Estado atual — versão 25, 30/10/2026
 
 Esta seção prevalece sobre o histórico abaixo. Fonte do Site: `3b3ae2028677012c2534986e3b24190403a31a87`. Publicação confirmada em https://pippo-prova-25d-20261027.ocasalcunha.chatgpt.site .
