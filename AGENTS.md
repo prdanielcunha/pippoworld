@@ -1,3 +1,7 @@
+## Revisão prioritária 35 — corpo inteiro e pegada
+
+As capturas reais rejeitaram a v34: corte horizontal na barriga durante o golpe e pegada inadequada. A v35 prepara figuras completas antes da deformação: cabeça, barriga central, banco e pés originais preservados; braços e mãos conectados na textura. Não restaurar torso cortado de 230px sobre barriga fixa nem furos artificiais na palma. Nova referência de pegada simétrica com dedos curvados em `sources/v35/`. Ler `prototypes/pippo-25d/docs/CORPO_INTEIRO_E_PEGADA_V35.md` (a partir da raiz). Prévia isolada; main permanece na v31. Inspeção remota e testes técnicos não equivalem a aceite visual do responsável nem Safari físico.
+
 # Orientações para trabalhar neste repositório
 
 ## Autoridade e escopo
