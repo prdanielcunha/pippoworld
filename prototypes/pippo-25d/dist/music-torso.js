@@ -3,7 +3,7 @@
 // Smooth deformation acts on that connected surface; no detached hand sprites.
 const PippoMusicTorso=(()=>{
  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),smooth=t=>t*t*(3-2*t);
- function influence(p,cx){const d=Math.hypot(p.x-cx,p.y-493),radial=1-smooth(clamp((d-53)/65,0,1));return radial*smooth(clamp((p.y-400)/55,0,1))*smooth(clamp((560-p.y)/33,0,1))}
+ function influence(p,cx){const d=Math.hypot(p.x-cx,p.y-493),radial=1-smooth(clamp((d-53)/65,0,1));return radial*smooth(clamp((p.y-400)/55,0,1))*smooth(clamp((535-p.y)/28,0,1))}
  function warp(p,levels){return {x:p.x,y:p.y-24*(levels[0]/8*influence(p,85)+levels[1]/8*influence(p,255))}}
  const contacts={open:[{x:85,y:518},{x:255,y:518}],grip:[{x:94,y:466},{x:259,y:466}]};
  const shoulder=[{x:80,y:382},{x:260,y:382}];

@@ -4,7 +4,7 @@ class Canvas{getContext(){const grad={addColorStop(){}};return new Proxy({create
 global.document={createElement:()=>new Canvas()};const rig=T.create({},{},{frames:{open:{bodyFrames:[[0,0,340,680]],drumFrames:[[0,0,340,680]]},grip:{bodyFrames:[[0,0,340,680]],drumFrames:[[0,0,340,680]]}}});
 for(let l=0;l<=8;l++)for(let r=0;r<=8;r++){
  const levels=[l,r];
- for(const y of [365,560])for(let x=0;x<=340;x+=10)assert.equal(T.warp({x,y},levels).y,y,'deformation vanishes at complete-figure band boundaries');
+ for(const y of [365,535,560])for(let x=0;x<=340;x+=10)assert.equal(T.warp({x,y},levels).y,y,'deformation vanishes at complete-figure band boundaries');
  for(const root of T.shoulder){const p=T.warp(root,levels);assert.ok(Math.hypot(p.x-root.x,p.y-root.y)<1e-8,'the torso shoulder must not leave the neck/body')}
  for(let x=0;x<=340;x+=10)for(let y=330;y<560;y+=5){
   const a=T.warp({x,y},levels),b=T.warp({x,y:y+1},levels);
