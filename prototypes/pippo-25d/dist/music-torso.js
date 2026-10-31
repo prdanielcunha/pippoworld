@@ -5,7 +5,7 @@ const PippoMusicTorso=(()=>{
  const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)),smooth=t=>t*t*(3-2*t);
  function influence(p,cx){const d=Math.hypot(p.x-cx,p.y-493),radial=1-smooth(clamp((d-53)/65,0,1));return radial*smooth(clamp((p.y-400)/55,0,1))*smooth(clamp((560-p.y)/33,0,1))}
  function warp(p,levels){return {x:p.x,y:p.y-24*(levels[0]/8*influence(p,85)+levels[1]/8*influence(p,255))}}
- const contacts={open:[{x:85,y:518},{x:255,y:518}],grip:[{x:84,y:495},{x:256,y:495}]};
+ const contacts={open:[{x:85,y:518},{x:255,y:518}],grip:[{x:109,y:481},{x:243,y:481}]};
  const shoulder=[{x:80,y:382},{x:260,y:382}];
  function triangle(ctx,img,src,dst){
   const [a,b,c]=src,[A,B,C]=dst,det=(b.x-a.x)*(c.y-a.y)-(c.x-a.x)*(b.y-a.y);if(!det)return;

@@ -18,7 +18,7 @@ for(const scale of [.4,.65,1,1.4]){
 const rig=fs.readFileSync('dist/music-rig.js','utf8'),html=fs.readFileSync('dist/index.html','utf8');
 assert.ok(!rig.includes('ctx.scale(stretch'),'the painted duck wing must never be stretched by target distance');
 assert.ok(rig.includes('PippoMusicTorso.create('),'live music rig must use a connected painted torso');
-assert.ok(rig.includes("dataset.hands='immutable-music-33'"),'new construction has its own cache marker');
+assert.ok(rig.includes("dataset.hands='grip-occlusion-34'"),'new construction has its own cache marker');
 assert.ok(!rig.includes("load('assets/hands-approved-v27/hands.png')"),'detached hand sheet must not be loaded');
 assert.ok(!rig.includes("load('assets/grips-v30/hands.png')"),'detached fist sheet must not be loaded');
 assert.ok(html.indexOf('music-anatomy.js')<html.indexOf('music-rig.js'),'anatomy loads before rig');

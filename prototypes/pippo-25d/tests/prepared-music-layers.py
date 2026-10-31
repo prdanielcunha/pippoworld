@@ -13,5 +13,5 @@ visible=front[:,:,3]>0;assert np.array_equal(front[:,:,:3][visible],torso[:,:,:3
 for offset in [0,340]:
  assert front[70,170+offset,3]==0 and front[180,170+offset,3]==0,'belly cannot cover keyboard through hand mask'
  assert front[215:,offset:offset+340,3].max()==0,'no stool/paw below fingers in foreground'
- for x,y in [(75,170),(252,170)]:assert front[y,x+offset,3]>200,'fingertips remain visible'
+ for x,y in [(75,183),(252,183)]:assert front[y,x+offset,3]>200,'fingertips remain visible'
 print('PASS: exact original face RGBA, preserved lower body, original hand RGB, no belly/stool/paw in foreground')

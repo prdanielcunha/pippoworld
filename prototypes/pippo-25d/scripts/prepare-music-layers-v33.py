@@ -33,16 +33,20 @@ for style,row,edge in [('open',0,open_edge),('grip',1,grip_edge)]:
  frame=source.crop((0,row*627,314,(row+1)*627))
  scale=340/270
  layer=frame.transform((340,230),Image.Transform.AFFINE,(1/scale,0,30,0,1/scale,34+350/scale),Image.Resampling.BICUBIC)
- a=np.array(layer);ys=np.arange(230);fade=np.minimum(np.clip(ys/30,0,1),np.clip((215-ys)/20,0,1));a[:,:,3]=np.rint(a[:,:,3]*fade[:,None]).astype('uint8')
+ raw_layer=layer.copy();a=np.array(layer);ys=np.arange(230);fade=np.minimum(np.clip(ys/30,0,1),np.clip((195-ys)/15,0,1));a[:,:,3]=np.rint(a[:,:,3]*fade[:,None]).astype('uint8')
  components,n=label(a[:,:,3]>16);sizes=np.bincount(components.ravel());sizes[0]=0;keep=binary_dilation(components==sizes.argmax(),iterations=2);a[~keep,3]=0
  layer=Image.fromarray(a);torsos.paste(layer,(row*340,0))
  mask=Image.new('L',(314*4,627*4));draw=ImageDraw.Draw(mask)
  for mirror in [False,True]:draw.polygon([((340-x if mirror else x)*4,y*4) for x,y in edge],fill=255)
  mask=mask.resize((314,627),Image.Resampling.LANCZOS)
  mask=mask.transform((340,230),Image.Transform.AFFINE,(1/scale,0,30,0,1/scale,34+350/scale),Image.Resampling.BICUBIC)
- front=np.array(layer);front[:,:,3]=np.minimum(front[:,:,3],np.array(mask));fronts.paste(Image.fromarray(front),(row*340,0))
+ front=np.array(raw_layer);front[:,:,3]=np.minimum(front[:,:,3],np.array(mask));
+ if style=='grip':
+  # Cover curled fingers only; the thumb/index pocket must expose the shaft.
+  yy=np.arange(230)[:,None];front[:,:,3]=np.where(yy>=174,front[:,:,3],0).astype('uint8')
+ fronts.paste(Image.fromarray(front),(row*340,0))
 torsos.save(out/'torso.png',optimize=True);fronts.save(out/'front.png',optimize=True)
-meta={'revision':33,'bodyFrames':[[i*340,0,340,680] for i in range(3)],'drumFrames':[[1020+i*340,0,340,680] for i in range(3)],'hitRows':rows,'sources':{},'files':{}}
+meta={'revision':34,'bodyFrames':[[i*340,0,340,680] for i in range(3)],'drumFrames':[[1020+i*340,0,340,680] for i in range(3)],'hitRows':rows,'sources':{},'files':{}}
 for p in [root/'sources/v23/music-rig.png',root/'dist/assets/music-body-v32/poses.png']:meta['sources'][str(p.relative_to(root))]=hashlib.sha256(p.read_bytes()).hexdigest()
 for p in out.glob('*.png'):meta['files'][p.name]=hashlib.sha256(p.read_bytes()).hexdigest()
 (out/'manifest.json').write_text(json.dumps(meta,separators=(',',':'))+'\n')

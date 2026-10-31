@@ -43,8 +43,8 @@
   ctx.save();ctx.translate(hand.x,hand.y);ctx.rotate(angle);ctx.lineCap='round';if(!headOnly){ctx.lineWidth=9*s;ctx.strokeStyle='#8a5b30';ctx.beginPath();ctx.moveTo(0,12*s);ctx.lineTo(0,-58*s);ctx.stroke()}const g=ctx.createRadialGradient(-10*s,-65*s,1,0,-64*s,29*s);g.addColorStop(0,'#e6bd77');g.addColorStop(1,'#a26c35');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(0,-66*s,27*s,34*s,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#815128';ctx.lineWidth=3*s;ctx.beginPath();ctx.moveTo(-24*s,-66*s);for(let i=0;i<6;i++)ctx.lineTo((-24+i*9)*s,(-66+(i%2?6:-6))*s);ctx.stroke();ctx.restore();
  }
  const api=window.PippoMusicRig={ready:false,performance,prepare,clear,inspect:()=>lastHit,draw(ctx,g,st){
-  if(!image)return null;ensure(g);skeleton.length=0;const kind=st.musicInstrument||'keyboard',model=performance.snapshot(),h=Math.min(g.height*.77,g.width*1.28);const musicPanel=document.getElementById('musicPanel');musicPanel.style.setProperty('--rig-height',h+'px');if(musicPanel.dataset.rig!=='contact-23'){musicPanel.dataset.rig='contact-23';musicPanel.dataset.hands='immutable-music-33';dirty=true}
-  if(musicPanel.dataset.hands!=='immutable-music-33'){musicPanel.dataset.hands='immutable-music-33';dirty=true}
+  if(!image)return null;ensure(g);skeleton.length=0;const kind=st.musicInstrument||'keyboard',model=performance.snapshot(),h=Math.min(g.height*.77,g.width*1.28);const musicPanel=document.getElementById('musicPanel');musicPanel.style.setProperty('--rig-height',h+'px');if(musicPanel.dataset.rig!=='contact-23'){musicPanel.dataset.rig='contact-23';musicPanel.dataset.hands='grip-occlusion-34';dirty=true}
+  if(musicPanel.dataset.hands!=='grip-occlusion-34'){musicPanel.dataset.hands='grip-occlusion-34';dirty=true}
   if(dirty||!layout||layout.kind!==kind){layout=measure(g,kind);dirty=false}
   const s=h/650,cx=g.width*.5,cy=g.height*(kind==='drum'?.83:.89)-(kind==='drum'?35:kind==='xylophone'?20:0)*s;
   const active=model.hands.some(h=>h?.active)||model.foot?.active;
@@ -104,7 +104,7 @@
     contacts.push({foot:true,index:0,contact:model.foot?.contact||false,pedal:p});
    }
   }
-  const panel=document.getElementById('musicPanel');panel.dataset.armError='0';panel.dataset.bodySurface='continuous';panel.dataset.poseCache=String(torso.cacheSize());panel.dataset.artReady='true';panel.dataset.rig='contact-23';panel.dataset.hands='immutable-music-33';panel.dataset.pace=model.pace;panel.dataset.expression=['attentive','focused','delighted'][expression];panel.dataset.stroke=String(model.serial);
+  const panel=document.getElementById('musicPanel');panel.dataset.armError='0';panel.dataset.bodySurface='continuous';panel.dataset.poseCache=String(torso.cacheSize());panel.dataset.artReady='true';panel.dataset.rig='contact-23';panel.dataset.hands='grip-occlusion-34';panel.dataset.pace=model.pace;panel.dataset.expression=['attentive','focused','delighted'][expression];panel.dataset.stroke=String(model.serial);
   lastHit={arms:skeleton.map(a=>({...a})),kind,serial:model.serial,pace:model.pace,expression:panel.dataset.expression,contacts,stage:{width:g.width,height:g.height}};
   return {pose:'music_rig_'+kind+'_'+model.serial,hit:{alpha:bodyAlpha[expression],width:340,height:680,cx,cy,scale:s,stretch:1,anchorX:170,anchorY:650,headBottom:330}};
  }};

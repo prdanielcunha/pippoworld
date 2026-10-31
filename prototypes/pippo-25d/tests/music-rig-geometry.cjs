@@ -56,7 +56,7 @@ const rig=window.PippoMusicRig;
     rig.performance.strike({instrument:kind,index,id:'touch'+index});
     const result=rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
     assert.ok(result?.hit?.width===340,'complete Pippo body remains the original source width');
-    assert.equal(panel.dataset.hands,'immutable-music-33');
+    assert.equal(panel.dataset.hands,'grip-occlusion-34');
     const inspected=rig.inspect();
     assert.equal(inspected.kind,kind);
     for(const a of inspected.arms){
