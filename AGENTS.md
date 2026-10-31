@@ -1,3 +1,7 @@
+## Revisão prioritária 36 — mãos ativas, corpo estável
+
+A captura real da v35 foi rejeitada: o corpo se mexia e a mão parecia travada; a pegada do chocalho estava errada. A v36 mantém barriga/banco/pés do mesmo corpo neutro, troca somente a cabeça nas expressões e elimina bob. A superfície animada contém braços completos até as mãos, presos ao ombro; o pulso gira sem mover o tronco. O chocalho tem pegada vertical própria, e cabeça/cabo/dedos pertencem à mesma arte e transformação. Não restaurar objeto girando sozinho sobre palma fixa. Ler `prototypes/pippo-25d/docs/MAOS_ATIVAS_CORPO_ESTAVEL_V36.md` a partir da raiz. Executar o teste real de raster além da geometria; inspeção remota não substitui Safari físico nem aceite do responsável.
+
 ## Revisão prioritária 35 — corpo inteiro e pegada
 
 As capturas reais rejeitaram a v34: corte horizontal na barriga durante o golpe e pegada inadequada. A v35 prepara figuras completas antes da deformação: cabeça, barriga central, banco e pés originais preservados; braços e mãos conectados na textura. Não restaurar torso cortado de 230px sobre barriga fixa nem furos artificiais na palma. Nova referência de pegada simétrica com dedos curvados em `sources/v35/`. Ler `prototypes/pippo-25d/docs/CORPO_INTEIRO_E_PEGADA_V35.md` (a partir da raiz). Prévia isolada; main permanece na v31. Inspeção remota e testes técnicos não equivalem a aceite visual do responsável nem Safari físico.
