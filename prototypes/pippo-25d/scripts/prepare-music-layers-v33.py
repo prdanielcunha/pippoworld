@@ -43,7 +43,7 @@ for style,row,edge in [('open',0,open_edge),('grip',1,grip_edge)]:
  front=np.array(raw_layer);front[:,:,3]=np.minimum(front[:,:,3],np.array(mask));
  if style=='grip':
   # Cover curled fingers only; the thumb/index pocket must expose the shaft.
-  yy=np.arange(230)[:,None];front[:,:,3]=np.where(yy>=174,front[:,:,3],0).astype('uint8')
+  yy,xx=np.mgrid[:230,:340];pocket=((xx-109)**2+(yy-151)**2<64)|((xx-243)**2+(yy-151)**2<64);front[pocket,3]=0
  fronts.paste(Image.fromarray(front),(row*340,0))
 torsos.save(out/'torso.png',optimize=True);fronts.save(out/'front.png',optimize=True)
 meta={'revision':34,'bodyFrames':[[i*340,0,340,680] for i in range(3)],'drumFrames':[[1020+i*340,0,340,680] for i in range(3)],'hitRows':rows,'sources':{},'files':{}}
