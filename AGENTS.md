@@ -42,3 +42,7 @@ Capturas reais do responsável rejeitaram a mão flutuante da v30. A fonte do pu
 ## Direção vigente 32 — substitui a construção 31
 
 Capturas reais rejeitaram também a v31. O requisito visual agora é torso/ombros/braços/pulsos/mãos desenhados na mesma superfície, implementado em `dist/music-torso.js`. Não restaurar mãos isoladas ou confundir teste do pivô com aceite visual. Ler `prototypes/pippo-25d/docs/CORPO_E_BRACOS_CONTINUOS_V32.md` e executar testes de conexão real da arte e do campo de deformação, além dos contatos.
+
+## Prioridade 33 — cores e contornos
+
+A captura da v32 foi rejeitada: cabeça azul e recortes nas mãos. Não restaurar o preparo de faces por cópia de canvas seguida de readback/putImageData. Usar PNGs derivados do mestre RGBA e máscaras dianteiras em registro com o torso. Ler CORES_E_CONTORNOS_V33.md e executar prepared-music-layers.py. Testes em Chrome não comprovam Safari físico.

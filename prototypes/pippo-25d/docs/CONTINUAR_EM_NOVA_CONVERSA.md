@@ -1,3 +1,7 @@
+## Revisão 33 — cores e contornos
+
+V32 rejeitada no iPhone por cabeça azul e recortes angulares. A fonte musical agora usa PNGs preparados sem leitura/regravação de pixels no preparo visual; rostos RGBA originais preservados e máscaras dianteiras seguem os dedos. Ler CORES_E_CONTORNOS_V33.md dentro dos docs do protótipo. Safari físico ainda precisa de reteste; não alegar aceite visual.
+
 ## Prioridade vigente — revisão 32
 
 O usuário também rejeitou a v31: mão ainda parecia sobreposta ao tronco. Ler [CORPO_E_BRACOS_CONTINUOS_V32.md](CORPO_E_BRACOS_CONTINUOS_V32.md). Novo torso com braços e mãos completos pintados juntos; não restaurar recortes de mãos v27/v30/v31 nem pivô independente. Cabeça/pés originais preservados. Destino https://pippoworld-preview.vercel.app/ ; aceite em iPhone físico pendente.

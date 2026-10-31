@@ -1,3 +1,7 @@
+## Revisão 33 — cores e contornos
+
+V32 rejeitada no iPhone por cabeça azul e recortes angulares. A fonte musical agora usa PNGs preparados sem leitura/regravação de pixels no preparo visual; rostos RGBA originais preservados e máscaras dianteiras seguem os dedos. Ler CORES_E_CONTORNOS_V33.md dentro dos docs do protótipo. Safari físico ainda precisa de reteste; não alegar aceite visual.
+
 ## Estado vigente — revisão 32, torso e braços desenhados juntos
 
 V31 rejeitada nas capturas reais: o pulso registrado ainda parecia mão sobreposta. O renderer musical agora usa uma superfície de torso com ombros, braços curtos, pulsos e mãos desenhados juntos, sem as folhas de mãos isoladas. Fonte e edição limpa preservadas em `dist/assets/music-body-v32/`; módulo `dist/music-torso.js`. Cabeça/expressões, pés e banco continuam da fonte original. Utensílios e layout deixam o cabo visível. Leia `prototypes/pippo-25d/docs/CORPO_E_BRACOS_CONTINUOS_V32.md`. Inspeção remota em 390 × 844; teste físico e aceite visual continuam pendentes. Destino: https://pippoworld-preview.vercel.app/ .

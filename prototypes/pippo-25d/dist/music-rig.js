@@ -2,25 +2,19 @@
 // Music-only rig: complete head/neck/torso, independently registered wings.
 // Instrument contacts are measured from their live DOM surfaces after layout.
 (()=>{
- const performance=PippoPerformance.create();const bodyAlpha=[],musicBodies=[],drumBodies=[],feet=[],skeleton=[];let image,torso,loading,overlay,oc,footOverlay,fc,lastHit=null,expression=0,layout=null,dirty=true;
- const bodyFrames=[[150,0,340,680],[600,0,340,680],[1080,0,340,680]];
+ const performance=PippoPerformance.create();const bodyAlpha=[],skeleton=[];let image,feetImage,renderMeta,torso,loading,overlay,oc,footOverlay,fc,lastHit=null,expression=0,layout=null,dirty=true;
 
  function prepare(){
   if(loading)return loading;api.failed=false;
   const load=src=>new Promise((resolve,reject)=>{const i=new Image;i.onload=()=>resolve(i);i.onerror=reject;i.src=src});
-  loading=Promise.all([load('assets/music-rig-v23/rig.webp'),load('assets/music-body-v32/poses.png')]).then(([body,atlas])=>{
-   image=body;torso=PippoMusicTorso.create(atlas);musicBodies.length=0;bodyAlpha.length=0;drumBodies.length=0;feet.length=0;
-   for(const rect of bodyFrames){
-    const c=document.createElement('canvas');c.width=rect[2];c.height=rect[3];const t=c.getContext('2d');t.drawImage(image,...rect,0,0,c.width,c.height);
-    const m=document.createElement('canvas');m.width=340;m.height=680;const mt=m.getContext('2d');mt.drawImage(c,0,0);mt.clearRect(0,365,340,170);musicBodies.push(m);
-    const data=t.getImageData(0,0,c.width,c.height);bodyAlpha.push(Uint8Array.from({length:c.width*c.height},(_,n)=>data.data[n*4+3]));
-    const foot=document.createElement('canvas');foot.width=120;foot.height=118;const ft=foot.getContext('2d'),pixels=ft.createImageData(120,118);
-    // Extract ONLY the original orange ankle/foot. Keep the stool and feathers.
-    for(let y=0;y<118;y++)for(let x=0;x<120;x++){
-     const k=((y+535)*c.width+x+190)*4,j=(y*120+x)*4,[r,g,b,a]=data.data.slice(k,k+4);
-     if(r>170&&r>g*1.50&&g>b*1.7&&b<100){for(let n=0;n<4;n++)pixels.data[j+n]=data.data[k+n];data.data[k+3]=0}
-    }
-    ft.putImageData(pixels,0,0);t.putImageData(data,0,0);t.clearRect(0,365,340,170);drumBodies.push(c);feet.push(foot);
+  loading=Promise.all([load('assets/music-render-v33/body.png'),load('assets/music-render-v33/torso.png'),load('assets/music-render-v33/front.png'),load('assets/music-render-v33/feet.png'),fetch('assets/music-render-v33/manifest.json').then(r=>{if(!r.ok)throw Error('music render manifest');return r.json()})]).then(([body,atlas,front,foot,meta])=>{
+   image=body;feetImage=foot;renderMeta=meta;torso=PippoMusicTorso.create(atlas,front);bodyAlpha.length=0;
+   // Display sources are immutable PNG images. Hit testing uses prepared alpha
+   // rows and never reads/writes the canvases containing the face or feet.
+   for(const rows of meta.hitRows){
+    const alpha=new Uint8Array(340*680);
+    rows.forEach((spans,y)=>{for(let i=0;i<spans.length;i+=2)alpha.fill(255,y*340+spans[i],y*340+spans[i+1])});
+    bodyAlpha.push(alpha);
    }
    api.ready=true;dirty=true;return true;
   }).catch(()=>{loading=null;api.failed=true;return false});return loading;
@@ -49,8 +43,8 @@
   ctx.save();ctx.translate(hand.x,hand.y);ctx.rotate(angle);ctx.lineCap='round';if(!headOnly){ctx.lineWidth=9*s;ctx.strokeStyle='#8a5b30';ctx.beginPath();ctx.moveTo(0,12*s);ctx.lineTo(0,-58*s);ctx.stroke()}const g=ctx.createRadialGradient(-10*s,-65*s,1,0,-64*s,29*s);g.addColorStop(0,'#e6bd77');g.addColorStop(1,'#a26c35');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(0,-66*s,27*s,34*s,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#815128';ctx.lineWidth=3*s;ctx.beginPath();ctx.moveTo(-24*s,-66*s);for(let i=0;i<6;i++)ctx.lineTo((-24+i*9)*s,(-66+(i%2?6:-6))*s);ctx.stroke();ctx.restore();
  }
  const api=window.PippoMusicRig={ready:false,performance,prepare,clear,inspect:()=>lastHit,draw(ctx,g,st){
-  if(!image)return null;ensure(g);skeleton.length=0;const kind=st.musicInstrument||'keyboard',model=performance.snapshot(),h=Math.min(g.height*.77,g.width*1.28);const musicPanel=document.getElementById('musicPanel');musicPanel.style.setProperty('--rig-height',h+'px');if(musicPanel.dataset.rig!=='contact-23'){musicPanel.dataset.rig='contact-23';musicPanel.dataset.hands='continuous-torso-32';dirty=true}
-  if(musicPanel.dataset.hands!=='continuous-torso-32'){musicPanel.dataset.hands='continuous-torso-32';dirty=true}
+  if(!image)return null;ensure(g);skeleton.length=0;const kind=st.musicInstrument||'keyboard',model=performance.snapshot(),h=Math.min(g.height*.77,g.width*1.28);const musicPanel=document.getElementById('musicPanel');musicPanel.style.setProperty('--rig-height',h+'px');if(musicPanel.dataset.rig!=='contact-23'){musicPanel.dataset.rig='contact-23';musicPanel.dataset.hands='immutable-music-33';dirty=true}
+  if(musicPanel.dataset.hands!=='immutable-music-33'){musicPanel.dataset.hands='immutable-music-33';dirty=true}
   if(dirty||!layout||layout.kind!==kind){layout=measure(g,kind);dirty=false}
   const s=h/650,cx=g.width*.5,cy=g.height*(kind==='drum'?.83:.89)-(kind==='drum'?35:kind==='xylophone'?20:0)*s;
   const active=model.hands.some(h=>h?.active)||model.foot?.active;
@@ -59,7 +53,8 @@
   // One complete registered figure per frame: no double face during transitions.
   const levels=model.hands.map(hit=>!st.reduced&&hit?.active&&!(kind==='keyboard'&&hit.held)?Math.round(hit.lift*8):0);
   const style=kind==='keyboard'||kind==='tambourine'?'open':'grip',pose=torso.pose(style,levels);
-  ctx.drawImage(kind==='drum'?drumBodies[expression]:musicBodies[expression],cx-170*s,cy-650*s+bob,340*s,680*s);
+  const rect=(kind==='drum'?renderMeta.drumFrames:renderMeta.bodyFrames)[expression];
+  ctx.drawImage(image,...rect,cx-170*s,cy-650*s+bob,340*s,680*s);
   ctx.drawImage(pose.canvas,cx-170*s,cy-320*s+bob,340*s,230*s);
   const world=p=>({x:cx+(p.x-170)*s,y:cy+(p.y-650)*s+bob}),contacts=[],targets=layout.targets;
   const hands=pose.contacts.map(world),shoulders=pose.shoulders.map(world);
@@ -104,12 +99,12 @@
     // Reuse the real painted ankle and webbed foot, registered at its original hip.
     // The same foot was removed from the body pixels: exactly two feet, never three.
     fc.save();fc.translate(cx+65*s,cy-103*s+bob);fc.scale(1,1+press*.045);
-    fc.drawImage(feet[expression],-45*s,-12*s,120*s,118*s);fc.restore();
+    fc.drawImage(feetImage,expression*120,0,120,118,-45*s,-12*s,120*s,118*s);fc.restore();
     fc.restore();
     contacts.push({foot:true,index:0,contact:model.foot?.contact||false,pedal:p});
    }
   }
-  const panel=document.getElementById('musicPanel');panel.dataset.armError='0';panel.dataset.bodySurface='continuous';panel.dataset.poseCache=String(torso.cacheSize());panel.dataset.artReady='true';panel.dataset.rig='contact-23';panel.dataset.hands='continuous-torso-32';panel.dataset.pace=model.pace;panel.dataset.expression=['attentive','focused','delighted'][expression];panel.dataset.stroke=String(model.serial);
+  const panel=document.getElementById('musicPanel');panel.dataset.armError='0';panel.dataset.bodySurface='continuous';panel.dataset.poseCache=String(torso.cacheSize());panel.dataset.artReady='true';panel.dataset.rig='contact-23';panel.dataset.hands='immutable-music-33';panel.dataset.pace=model.pace;panel.dataset.expression=['attentive','focused','delighted'][expression];panel.dataset.stroke=String(model.serial);
   lastHit={arms:skeleton.map(a=>({...a})),kind,serial:model.serial,pace:model.pace,expression:panel.dataset.expression,contacts,stage:{width:g.width,height:g.height}};
   return {pose:'music_rig_'+kind+'_'+model.serial,hit:{alpha:bodyAlpha[expression],width:340,height:680,cx,cy,scale:s,stretch:1,anchorX:170,anchorY:650,headBottom:330}};
  }};

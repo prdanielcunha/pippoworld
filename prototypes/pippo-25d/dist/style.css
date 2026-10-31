@@ -178,7 +178,7 @@ body[data-activity=garden] .far{background:#9fbe8e;bottom:25%;height:30%;opacity
 #musicFeet{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}#musicFeet[hidden]{display:none}
 
 /* v32: leave visible space for real shafts between grip and contact surface. */
-#musicPanel[data-hands=continuous-torso-32][data-instrument=keyboard] #keys{bottom:10%}
-#musicPanel[data-hands=continuous-torso-32][data-instrument=xylophone] #keys{bottom:8%}
-#musicPanel[data-hands=continuous-torso-32] #drumKit .snare,#musicPanel[data-hands=continuous-torso-32] #drumKit .tom{top:68%}
-#musicPanel[data-hands=continuous-torso-32] #drumKit .hihat,#musicPanel[data-hands=continuous-torso-32] #drumKit .cymbal{top:62%}
+#musicPanel[data-hands=immutable-music-33][data-instrument=keyboard] #keys{bottom:10%}
+#musicPanel[data-hands=immutable-music-33][data-instrument=xylophone] #keys{bottom:8%}
+#musicPanel[data-hands=immutable-music-33] #drumKit .snare,#musicPanel[data-hands=immutable-music-33] #drumKit .tom{top:68%}
+#musicPanel[data-hands=immutable-music-33] #drumKit .hihat,#musicPanel[data-hands=immutable-music-33] #drumKit .cymbal{top:62%}

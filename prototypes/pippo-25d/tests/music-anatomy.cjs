@@ -18,7 +18,7 @@ for(const scale of [.4,.65,1,1.4]){
 const rig=fs.readFileSync('dist/music-rig.js','utf8'),html=fs.readFileSync('dist/index.html','utf8');
 assert.ok(!rig.includes('ctx.scale(stretch'),'the painted duck wing must never be stretched by target distance');
 assert.ok(rig.includes('PippoMusicTorso.create('),'live music rig must use a connected painted torso');
-assert.ok(rig.includes("dataset.hands='continuous-torso-32'"),'new construction has its own cache marker');
+assert.ok(rig.includes("dataset.hands='immutable-music-33'"),'new construction has its own cache marker');
 assert.ok(!rig.includes("load('assets/hands-approved-v27/hands.png')"),'detached hand sheet must not be loaded');
 assert.ok(!rig.includes("load('assets/grips-v30/hands.png')"),'detached fist sheet must not be loaded');
 assert.ok(html.indexOf('music-anatomy.js')<html.indexOf('music-rig.js'),'anatomy loads before rig');
@@ -37,9 +37,9 @@ for(const side of [0,1])for(const scale of [.4,.65,1,1.4])for(let i=0;i<120;i++)
  assert.ok(Object.values(p.contact).every(Number.isFinite),'no invalid hand at near/far targets');
 }
 assert.ok(rig.includes("footOverlay.id='musicFeet'"),'feet must be behind the music panel');
-assert.ok(rig.includes('drumBodies.push(c);feet.push(foot)'),'the moving foot must be removed from the body to avoid duplication');
+assert.ok(rig.includes('renderMeta.drumFrames'),'the prepared drum body excludes the moving foot to avoid duplication');
 assert.ok(!rig.includes("fc.strokeStyle='#ce8330'"),'rejected procedural orange leg must not return');
 console.log('PASS: 960 compact hand targets, source-foot extraction and separate pedal layer');
 
-assert.ok(rig.includes("load('assets/music-body-v32/poses.png')"),'full torso and arms artwork must load');
+assert.ok(rig.includes("load('assets/music-render-v33/torso.png')"),'full torso and arms artwork must load');
 assert.ok(html.indexOf('music-torso.js')<html.indexOf('music-rig.js'),'torso must be available before rig');

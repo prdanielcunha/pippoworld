@@ -7,7 +7,7 @@ class Canvas {
  getContext(){
   const gradient={addColorStop(){}};
   return new Proxy({
-   getImageData:()=>({data:new Uint8ClampedArray(this.width*this.height*4)}),
+   getImageData:()=>{throw Error('display preparation must not read canvas pixels')},putImageData:()=>{throw Error('display preparation must not rewrite canvas pixels')},
    createRadialGradient:()=>gradient,createLinearGradient:()=>gradient,createImageData:(w,h)=>({data:new Uint8ClampedArray(w*h*4)})
   },{get:(target,key)=>key in target?target[key]:(...args)=>undefined,
      set:(target,key,value)=>{target[key]=value;return true}});
@@ -37,7 +37,7 @@ const document={
  }
 };
 const window={devicePixelRatio:2,addEventListener(){}};
-const context=vm.createContext({document,window,Image:FakeImage,ResizeObserver:class{observe(){}},Uint8Array,Uint8ClampedArray});
+const context=vm.createContext({document,window,fetch:async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync('dist/assets/music-render-v33/manifest.json','utf8'))}),Image:FakeImage,ResizeObserver:class{observe(){}},Uint8Array,Uint8ClampedArray});
 for(const file of ['music-performance.js','music-anatomy.js','music-torso.js','music-rig.js']){
  vm.runInContext(fs.readFileSync('dist/'+file,'utf8'),context,{filename:file});
 }
@@ -56,7 +56,7 @@ const rig=window.PippoMusicRig;
     rig.performance.strike({instrument:kind,index,id:'touch'+index});
     const result=rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
     assert.ok(result?.hit?.width===340,'complete Pippo body remains the original source width');
-    assert.equal(panel.dataset.hands,'continuous-torso-32');
+    assert.equal(panel.dataset.hands,'immutable-music-33');
     const inspected=rig.inspect();
     assert.equal(inspected.kind,kind);
     for(const a of inspected.arms){

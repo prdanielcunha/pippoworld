@@ -1,7 +1,7 @@
 'use strict';
 const assert=require('node:assert/strict'),T=require('../dist/music-torso.js');
 class Canvas{getContext(){const grad={addColorStop(){}};return new Proxy({createLinearGradient:()=>grad},{get:(o,k)=>o[k]||(()=>{}),set:(o,k,v)=>(o[k]=v,true)})}}
-global.document={createElement:()=>new Canvas()};const rig=T.create({});
+global.document={createElement:()=>new Canvas()};const rig=T.create({},{});
 for(let l=0;l<=8;l++)for(let r=0;r<=8;r++){
  const levels=[l,r];
  for(const root of T.shoulder){const p=T.warp(root,levels);assert.ok(Math.hypot(p.x-root.x,p.y-root.y)<1e-8,'the torso shoulder must not leave the neck/body')}
