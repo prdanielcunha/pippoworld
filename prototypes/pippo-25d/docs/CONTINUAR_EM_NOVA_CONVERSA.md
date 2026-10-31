@@ -1,3 +1,7 @@
+## Prioridade vigente — revisão 32
+
+O usuário também rejeitou a v31: mão ainda parecia sobreposta ao tronco. Ler [CORPO_E_BRACOS_CONTINUOS_V32.md](CORPO_E_BRACOS_CONTINUOS_V32.md). Novo torso com braços e mãos completos pintados juntos; não restaurar recortes de mãos v27/v30/v31 nem pivô independente. Cabeça/pés originais preservados. Destino https://pippoworld-preview.vercel.app/ ; aceite em iPhone físico pendente.
+
 ## Prioridade vigente — revisão 31
 
 O usuário rejeitou a v30 por mão cortada/flutuando em capturas reais. Ler [PULSOS_LIGADOS_AO_CORPO_V31.md](PULSOS_LIGADOS_AO_CORPO_V31.md). Não voltar ao pivô nos dedos nem alegar aceite visual. Pulso registrado no corpo durante todo o golpe. Arte original preservada; destino https://pippoworld-preview.vercel.app/ .

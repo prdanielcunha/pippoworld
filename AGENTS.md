@@ -38,3 +38,7 @@ Atualize decisões, inventário/licenças, requisitos e casos de aceite afetados
 ## Prioridade anatômica 31 — substitui v28–v30
 
 Capturas reais do responsável rejeitaram a mão flutuante da v30. A fonte do pulso (`W`) precisa permanecer presa a pixels opacos do corpo durante todo o golpe, não só em repouso. Não restaurar rotação em torno da pegada com pulso solto. Leia `prototypes/pippo-25d/docs/PULSOS_LIGADOS_AO_CORPO_V31.md`; usar os testes de registro de pixels e de 483 quadros, além do contato das pontas. Arte preservada; não inferir aprovação visual ou teste físico.
+
+## Direção vigente 32 — substitui a construção 31
+
+Capturas reais rejeitaram também a v31. O requisito visual agora é torso/ombros/braços/pulsos/mãos desenhados na mesma superfície, implementado em `dist/music-torso.js`. Não restaurar mãos isoladas ou confundir teste do pivô com aceite visual. Ler `prototypes/pippo-25d/docs/CORPO_E_BRACOS_CONTINUOS_V32.md` e executar testes de conexão real da arte e do campo de deformação, além dos contatos.

@@ -1,3 +1,7 @@
+## Estado vigente — revisão 32, torso e braços desenhados juntos
+
+V31 rejeitada nas capturas reais: o pulso registrado ainda parecia mão sobreposta. O renderer musical agora usa uma superfície de torso com ombros, braços curtos, pulsos e mãos desenhados juntos, sem as folhas de mãos isoladas. Fonte e edição limpa preservadas em `dist/assets/music-body-v32/`; módulo `dist/music-torso.js`. Cabeça/expressões, pés e banco continuam da fonte original. Utensílios e layout deixam o cabo visível. Leia `prototypes/pippo-25d/docs/CORPO_E_BRACOS_CONTINUOS_V32.md`. Inspeção remota em 390 × 844; teste físico e aceite visual continuam pendentes. Destino: https://pippoworld-preview.vercel.app/ .
+
 ## Estado vigente — revisão 31, pulso preso ao corpo
 
 V30 rejeitada por capturas reais de iPhone: mão recortada/flutuando. Registro anatômico de pulso agora fixo na arte do corpo; a mão gira a partir dele, preservando braço curto e alcance pelas baquetas. Sem novas imagens. Critérios e evidências em `prototypes/pippo-25d/docs/PULSOS_LIGADOS_AO_CORPO_V31.md`. 483 quadros geométricos amostrados, oito registros de mão e 18 regiões de corpo verificados. Inspeção remota em 390 × 844; aceite em iPhone físico pendente. Link: https://pippoworld-preview.vercel.app/ .

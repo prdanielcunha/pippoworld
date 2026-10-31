@@ -1,0 +1,37 @@
+{
+  "revision": 32,
+  "generated_with": "image_gen (built-in)",
+  "dimensions": [
+    1254,
+    1254
+  ],
+  "reference_images": [
+    "../music-rig-v23/rig.webp",
+    "../music-anatomy-v28/approved-keyboard-reference.png"
+  ],
+  "files": {
+    "poses.png": "2ac02817ea1922c1619ee7c2f5474f48eb89206891ee8145b03e4d7bb4a9cc20",
+    "source-with-shafts.png": "005ccd7b9e708a69625360ae7faf543150458b6269042f31543bb85984cdd91f"
+  },
+  "construction": "Eight complete seated figures: continuous torso, shoulders, short arms, wrists and hands. Top row open; bottom row relaxed grips. Runtime uses first rest figure in each row and continuously deforms the entire torso. Raised key poses retained as production references.",
+  "edit": "Remove wooden shaft segments only, retaining gripping hands. Tool shafts are rendered separately to real contact points.",
+  "source_registration": {
+    "cell": [
+      313.5,
+      627
+    ],
+    "source_rectangle": [
+      30,
+      34,
+      270,
+      550
+    ],
+    "normalized_torso": [
+      340,
+      230
+    ],
+    "normalized_offset_y": -350
+  },
+  "identity": "Original head/face frames, original orange feet, stool and registered kick foot are still rendered from rig-v23. Only the torso/arms region is replaced.",
+  "acceptance": "New artwork and implementation pending user visual acceptance; no physical iPhone test."
+}

@@ -26,19 +26,19 @@ const document={
  querySelector:selector=>{
   const index=Number((selector.match(/"(\d+)"/)||[])[1]||0);
   if(selector.includes('data-piece')){
-   const positions=[[.44,.72,.3,.22],[.58,.68,.17,.11],[.33,.68,.14,.12],[.74,.60,.2,.06],[.20,.58,.2,.06]];
+   const positions=[[.44,.72,.3,.22],[.58,.68,.17,.11],[.33,.68,.14,.12],[.74,.62,.2,.06],[.20,.62,.2,.06]];
    const [x,y,w,h]=positions[index];
    return {getBoundingClientRect:()=>({left:x*width,top:y*height,width:w*width,height:h*height,
     right:(x+w)*width,bottom:(y+h)*height})};
   }
   const h=Math.min(height*.77,width*1.28),keyboardWidth=Math.min(width*.92,h*(panel.dataset.instrument==='xylophone'?.92:.62)),keyWidth=keyboardWidth/8;
-  return {getBoundingClientRect:()=>({left:(width-keyboardWidth)/2+index*keyWidth,top:height*.64,
+  return {getBoundingClientRect:()=>({left:(width-keyboardWidth)/2+index*keyWidth,top:height*(panel.dataset.instrument==='xylophone'?.72:.70),
    width:keyWidth,height:height*.18})};
  }
 };
 const window={devicePixelRatio:2,addEventListener(){}};
 const context=vm.createContext({document,window,Image:FakeImage,ResizeObserver:class{observe(){}},Uint8Array,Uint8ClampedArray});
-for(const file of ['music-performance.js','music-anatomy.js','music-rig.js']){
+for(const file of ['music-performance.js','music-anatomy.js','music-torso.js','music-rig.js']){
  vm.runInContext(fs.readFileSync('dist/'+file,'utf8'),context,{filename:file});
 }
 const rig=window.PippoMusicRig;
@@ -56,7 +56,7 @@ const rig=window.PippoMusicRig;
     rig.performance.strike({instrument:kind,index,id:'touch'+index});
     const result=rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
     assert.ok(result?.hit?.width===340,'complete Pippo body remains the original source width');
-    assert.equal(panel.dataset.hands,'anchored-wrist-31');
+    assert.equal(panel.dataset.hands,'continuous-torso-32');
     const inspected=rig.inspect();
     assert.equal(inspected.kind,kind);
     for(const a of inspected.arms){
@@ -79,8 +79,8 @@ const rig=window.PippoMusicRig;
      rig.performance.advance(delta);
      rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
      for(const a of rig.inspect().arms){
-      assert.ok(Math.hypot(a.mappedWrist.x-a.wrist.x,a.mappedWrist.y-a.wrist.y)<1e-7,'rendered source wrist must remain attached through the entire stroke');
-      assert.ok(a.attachmentError<1e-7,'no independent finger-centred rotation may detach the wrist');
+      assert.equal(a.continuous,true,'both hands must be part of the single torso surface');
+      assert.ok(Number.isFinite(a.contact.x)&&Number.isFinite(a.contact.y),'continuous arm contacts remain finite');
      }
      registeredFrames++;
     }

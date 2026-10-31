@@ -17,14 +17,16 @@ for(const scale of [.4,.65,1,1.4]){
 }
 const rig=fs.readFileSync('dist/music-rig.js','utf8'),html=fs.readFileSync('dist/index.html','utf8');
 assert.ok(!rig.includes('ctx.scale(stretch'),'the painted duck wing must never be stretched by target distance');
-assert.ok(rig.includes('PippoMusicAnatomy.anchored('),'all instruments use bounded rigid hands');
-assert.ok(rig.includes("dataset.hands='anchored-wrist-31'"),'compact hands are identifiable in runtime evidence');
+assert.ok(rig.includes('PippoMusicTorso.create('),'live music rig must use a connected painted torso');
+assert.ok(rig.includes("dataset.hands='continuous-torso-32'"),'new construction has its own cache marker');
+assert.ok(!rig.includes("load('assets/hands-approved-v27/hands.png')"),'detached hand sheet must not be loaded');
+assert.ok(!rig.includes("load('assets/grips-v30/hands.png')"),'detached fist sheet must not be loaded');
 assert.ok(html.indexOf('music-anatomy.js')<html.indexOf('music-rig.js'),'anatomy loads before rig');
 console.log('PASS: fixed compact paws, bounded instrument grips, side pedal with animated connected foot, dependency order');
 
 const crypto=require('node:crypto');
 assert.equal(crypto.createHash('sha256').update(fs.readFileSync('dist/assets/hands-approved-v27/hands.png')).digest('hex'),'97224cf69d3da53375cac3c5acd7f3a99975370b67e7ec17d713e7f6c3fcc67c','the hand sheet must remain exactly the user-approved file');
-assert.ok(rig.includes("load('assets/hands-approved-v27/hands.png')"),'approved art must be loaded by the live rig');
+
 assert.ok(!rig.includes("ctx.fillStyle='#f7d260'"),'rejected procedural hand renderer must not return');
 
 for(const side of [0,1])for(const scale of [.4,.65,1,1.4])for(let i=0;i<120;i++){
@@ -39,6 +41,5 @@ assert.ok(rig.includes('drumBodies.push(c);feet.push(foot)'),'the moving foot mu
 assert.ok(!rig.includes("fc.strokeStyle='#ce8330'"),'rejected procedural orange leg must not return');
 console.log('PASS: 960 compact hand targets, source-foot extraction and separate pedal layer');
 
-assert.ok(rig.includes("load('assets/grips-v30/hands.png')"),'dedicated relaxed grip artwork loads in the live rig');
-const source=JSON.parse(fs.readFileSync('dist/assets/grips-v30/source.json','utf8'));
-assert.equal(crypto.createHash('sha256').update(fs.readFileSync('dist/assets/grips-v30/hands.png')).digest('hex'),source.sha256,'generated grip master remains intact');
+assert.ok(rig.includes("load('assets/music-body-v32/poses.png')"),'full torso and arms artwork must load');
+assert.ok(html.indexOf('music-torso.js')<html.indexOf('music-rig.js'),'torso must be available before rig');
