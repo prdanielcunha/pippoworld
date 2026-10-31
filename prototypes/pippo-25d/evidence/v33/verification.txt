@@ -1,0 +1,42 @@
+PASS: multitouch, child priority, silent turn-taking, pause/no replay, scene exit, persistent session bloom and saved preferences
+PASS: multi-finger TouchEvents, no pointer duplication, independent release, glissando/cancel, two distinct drums, hidden selectors and clean scene exit
+PASS: watering pauses without completion, resumes its remaining time and finishes with the water off
+PASS: slow rendering does not stretch a three-second pour into many seconds
+PASS: uneven 120/210 ms phrase is answered with its original rhythm instead of fixed 340 ms notes
+PASS: lazy activity loading, five drum stroke mappings, narrow reach, whole-figure frames and transformed watering-can target
+PASS: single ball, intact cheeks, extended original collars, gradual neck alpha and torso silhouette constraint
+PASS: crouch and overhead paper-floor samples excluded, including enclosed wing gaps
+PASS: residual paper samples rejected in five low poses; actual belly, orange feet, top eye surround and beak retained
+PASS: ball repeat, pause/resume, reaction, return, cancellation, reduced motion and hidden tab
+PASS: walking pause, live retarget, persistent arrival, distinct affection and toy interruption
+PASS: original gait fallback, eight-frame selection and phase continuity
+PASS: immutable approved originals, source/mask coverage, complete pose inventory, exact interior RGB, neck masking and rejected assets excluded
+PASS: approved turning views, no sliding during turn, live retarget, side rest, touch interruption, expression recovery and single held ball
+PASS: persistent rest/sitting and deliberate expressions keep priority over automatic blinking
+PASS: 48 registered prepared RGBA sprites, immutable atlas hashes, native registration, 12 full-expression anchors, walking/rest loading and no second mask/composite
+PASS: restored right-eye/cheek highlights use exact original RGB and opaque alpha; all 12 complete expressions checked; 3992265 v19 protected pixels unchanged, including opaque eyes, beak, feet, crest/tail and outside repair regions
+PASS: long affection stroke, hold/release, capture/cancel, page-level arrows, key repeat, form/dialog guards and edge feedback
+PASS: both directions, limits, exact arrival, retarget without teleport and touch regions across four sizes
+PASS: eight gait phases, loop boundary, registration and full silhouette limits
+PASS: phone travel, side taps and a bounded slower gait cadence
+PASS: short acceleration and faster full-route traversal
+PASS: inherited speed, no retarget stall, monotonic nearby braking, opposite-direction pivot, exact stop, unchanged normal path, preserved gait phase and pause/cancel across four sizes
+PASS: matching route results at simulated 30/60/120 FPS; not a physical FPS measurement
+PASS: fixed compact paws, bounded instrument grips, side pedal with animated connected foot, dependency order
+PASS: 960 compact hand targets, source-foot extraction and separate pedal layer
+PASS: 26 local recordings, eight-note chords, independent release/unlock, 24 voices, drum overlap, maraca variations, pause/mute/scene cancellation, loading failure and no synthetic fallback
+PASS: 80 rapid strokes, contact/rebound per onset, adaptive pace/joy, separate kick pedal, crossed hands, neighbouring-note polyphony, held-key release and no replay
+PASS: chord release restores held notes; silent rebound settles fully, no extra attacks
+PASS: 483 registered stroke frames; 69 geometry scenarios, 42 precise active contacts, 3 pedal checks across 320/390/940 widths
+PASS: connected torso through all 81 two-hand stroke combinations; no folding, shoulder drift or unbounded pose cache
+PASS: all 49 crops, protected interior 1609060 pixels; paper-like edge samples 617 -> 166; no added silhouette, retained area and row-local matting
+PASS: rendered silhouette touch, transparency, transformed poses, edge tolerance and frame-rate-independent response
+PASS: two feet, continuous positions and velocities, planted support in both directions and exact settled rest
+PASS: interior fidelity, disconnected noise removal, fractional alpha, padded fringe and grounded contact
+PASS: smooth approach, turn/sit phases, reduced-motion bypass, planted feet, continuous support, fixed head/neck and non-folding lower mesh
+PASS: 10 orientation/direction pairs, same-side continuation, in-turn retarget/reversal, stationary pivot, reduced motion and interruption
+PASS: hand-to-torso painted connectivity in all eight complete figures; both source masters intact
+PASS: exact original face RGBA, preserved lower body, original hand RGB, no belly/stool/paw in foreground
+PASS: 26 hashes, licensed sources, decoded audio, levels, recorded note tuning and <1 MB budget
+PASS: 7 lossless sheets, 16 bounded complete figures, transparent corners and opaque face/cheek samples
+PASS: 4 generated sheets, exact RGBA lossless conversion, actual alpha at 8 wing landmarks, transparent corners and valid gait crops
