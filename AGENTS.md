@@ -1,3 +1,7 @@
+## Revisão prioritária 39 — bateria com arte pintada única
+
+A bateria vetorial da v38 foi rejeitada. A v39 usa composição artística transparente com cinco tambores, crash e chimbal duplo, materiais/volume coerentes e contato das baquetas registrado na imagem. Ler `prototypes/pippo-25d/docs/BATERIA_PINTADA_V39.md` a partir da raiz; mestre e prompts em `sources/v39/` no protótipo. Preservar o Pippo v38 e seus braços/pescoço. Main preservada; aceite visual e Safari físico pendentes.
+
 ## Revisão prioritária 38 — pescoço inteiro e braços como superfície contínua
 
 V37/37a rejeitada em capturas reais: linha de pescoço e antebraço saindo do braço. A v38 preserva a cabeça/pescoço original inteiro de cada expressão até y399 e faz a transição no peito; troca capa/colar separados por uma superfície de braço com deformação contínua, em Canvas com vértices compartilhados. Respiração discreta da figura integrada. Bateria com novas superfícies vetoriais, toms à frente do baterista acima do bumbo, aros e tensores. Ler `prototypes/pippo-25d/docs/CONTINUIDADE_ANATOMICA_V38.md` a partir da raiz. Não restaurar o corte y365 ou tomar conectividade alfa por aceite visual. Main preservada, Safari físico e aceite pendentes.

@@ -1,0 +1,6 @@
+PASS: transparent master, hashes, 7 real painted contact surfaces, front-view tom/floor/snare arrangement and HTML registration
+PASS: 525 registered stroke frames; 75 geometry scenarios, 48 precise active contacts, 3 pedal checks across 320/390/940 widths
+PASS: 80 rapid strokes, contact/rebound per onset, adaptive pace/joy, separate kick pedal, crossed hands, neighbouring-note polyphony, held-key release and no replay
+PASS: chord release restores held notes; silent rebound settles fully, no extra attacks
+PASS: fixed compact paws, bounded instrument grips, side pedal with animated connected foot, dependency order
+PASS: 960 compact hand targets, source-foot extraction and separate pedal layer

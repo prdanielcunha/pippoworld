@@ -7,7 +7,7 @@
  function prepare(){
   if(loading)return loading;api.failed=false;
   const load=src=>new Promise((resolve,reject)=>{const i=new Image;i.onload=()=>resolve(i);i.onerror=reject;i.src=src});
-  loading=Promise.all([load('assets/music-render-v38/body.png'),load('assets/music-render-v38/whole.png'),load('assets/music-render-v38/feet.png'),fetch('assets/music-render-v38/manifest.json').then(r=>{if(!r.ok)throw Error('music render manifest');return r.json()})]).then(([body,arms,foot,meta])=>{
+  loading=Promise.all([load('assets/music-render-v38/body.png'),load('assets/music-render-v38/whole.png'),load('assets/music-render-v38/feet.png'),load('assets/drum-kit-v39/kit.webp'),fetch('assets/music-render-v38/manifest.json').then(r=>{if(!r.ok)throw Error('music render manifest');return r.json()})]).then(([body,arms,foot,kit,meta])=>{
    image=body;feetImage=foot;renderMeta=meta;torso=PippoMusicTorso.create(body,arms,null,meta);bodyAlpha.length=0;
    // Display sources are immutable PNG images. Hit testing uses prepared alpha
    // rows and never reads/writes the canvases containing the face or feet.
@@ -24,6 +24,16 @@
  function measure(g,kind){
   const scene=document.getElementById('pippo').getBoundingClientRect();
   const targets=Array.from({length:kind==='drum'?7:8},(_,i)=>surface(document.querySelector(kind==='drum'?'[data-piece="'+i+'"]':'[data-note="'+i+'"]'),scene,kind,i));
+  if(kind==='drum'){
+   const kit=document.getElementById('drumKit'),rect=kit?.getBoundingClientRect?.();
+   if(rect)for(let index=0;index<7;index++){
+    const el=document.querySelector('[data-piece="'+index+'"]');
+    if(!el?.dataset?.skinX)continue;
+    const x=rect.left+Number(el.dataset.skinX)*rect.width,y=rect.top+Number(el.dataset.skinY)*rect.height,r=el.getBoundingClientRect();
+    targets[index]={x:x-scene.left,y:y-scene.top};
+    el.style.setProperty('--contact-local-x',(x-r.left)+'px');el.style.setProperty('--contact-local-y',(y-r.top)+'px');
+   }
+  }
   return {targets,width:g.width,height:g.height,kind};
  }
  function ensure(g){
@@ -72,7 +82,7 @@
     }else contacts.push({arm,index,tip:hand,target,reachable:Math.hypot(hand.x-target.x,hand.y-target.y)<2*s,contact:hit?.held||hit?.contact||false});
    }else if(kind==='drum'){
     const index=hit?.index??(arm?1:3),target=targets[index];if(!target)continue;
-    const tip={x:target.x+((index===3||index===4)?(index===3?-.22:.22)*g.width*.12:0),y:target.y-(hit?lift*amplitude:12*s)};
+    const tip={x:target.x,y:target.y-(hit?lift*amplitude:12*s)};
     const adjusted={x:tip.x,y:target.y},contact=stick(oc,hand,tip,false,s);
     forwardTools.push({hand,tip,mallet:false});
     contacts.push({arm,index,tip:contact,target:adjusted,shaftLength:Math.hypot(tip.x-hand.x,tip.y-hand.y)/s,contact:hit?.contact||false});

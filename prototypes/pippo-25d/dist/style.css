@@ -214,3 +214,17 @@ body[data-activity=garden] .far{background:#9fbe8e;bottom:25%;height:30%;opacity
 #musicPanel[data-hands=clean-wrists-37] #drumKit .cymbal .piece-name,#musicPanel[data-hands=clean-wrists-37] #drumKit .hihat .piece-name{bottom:15%}
 #musicPanel[data-hands=clean-wrists-37] #drumKit .playing,#musicPanel[data-hands=clean-wrists-37] #drumKit .reply{filter:brightness(1.12) drop-shadow(0 0 5px #fff0b6);transform:none;translate:none;rotate:none}
 #musicPanel[data-hands=clean-wrists-37] #drumKit .kick.playing,#musicPanel[data-hands=clean-wrists-37] #drumKit .kick.reply{translate:-50% 0}
+
+/* v39: cohesive painted kit. Controls follow the artwork, not vice versa. */
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39]{top:auto;bottom:8%;height:auto;aspect-ratio:3/2;width:min(98%,calc(var(--rig-height,420px)*.94));background:url(assets/drum-kit-v39/kit.webp) center/100% 100% no-repeat}
+#drumKit[data-art=painted-39] .kit-stands{display:none}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] .drum-piece{background:none;translate:none;aspect-ratio:auto;min-width:0;min-height:44px;filter:none;border:0;box-shadow:none;outline-offset:2px}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] [data-piece="0"]{left:35.80729%;top:46.38672%;width:31.25%;height:46.38672%;bottom:auto;right:auto}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] [data-piece="1"]{left:66.08073%;top:36.81641%;width:20.83333%;height:21.48438%;bottom:auto;right:auto}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] [data-piece="2"]{left:31.901040000000002%;top:17.382810000000003%;width:20.83333%;height:27.832030000000003%;bottom:auto;right:auto}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] [data-piece="3"]{left:78.125%;top:20.507810000000003%;width:20.18229%;height:13.18359%;bottom:auto;right:auto}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] [data-piece="4"]{left:5.53385%;top:4.39453%;width:30.27344%;height:17.57812%;bottom:auto;right:auto}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] [data-piece="5"]{left:13.346350000000001%;top:31.83594%;width:20.507810000000003%;height:37.59766%;bottom:auto;right:auto}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] [data-piece="6"]{left:53.059900000000006%;top:19.335939999999997%;width:18.22917%;height:25.390620000000002%;bottom:auto;right:auto}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] .piece-name{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] .drum-piece.playing::after,#musicPanel[data-hands=clean-wrists-37] #drumKit[data-art=painted-39] .drum-piece.reply::after{display:block;content:"";position:absolute;left:var(--contact-local-x,50%);top:var(--contact-local-y,20%);z-index:1;width:18px;height:18px;min-height:0;border:2px solid #fff9d9;border-radius:50%;background:#fff8d866;box-shadow:0 0 12px #fff3af;transform:translate(-50%,-50%);pointer-events:none}
