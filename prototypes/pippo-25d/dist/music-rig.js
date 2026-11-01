@@ -30,11 +30,14 @@
   if(!overlay){overlay=document.createElement('canvas');overlay.id='musicHands';overlay.setAttribute('aria-hidden','true');document.getElementById('stage').append(overlay);oc=overlay.getContext('2d');new ResizeObserver(()=>{dirty=true}).observe(document.getElementById('stage'));window.addEventListener('resize',()=>{dirty=true})}
   if(!footOverlay){footOverlay=document.createElement('canvas');footOverlay.id='musicFeet';footOverlay.setAttribute('aria-hidden','true');document.getElementById('stage').append(footOverlay);fc=footOverlay.getContext('2d')}footOverlay.hidden=false;overlay.hidden=false;const ratio=Math.min(window.devicePixelRatio||1,2);if(overlay.width!==Math.round(g.width*ratio)||overlay.height!==Math.round(g.height*ratio)){overlay.width=Math.round(g.width*ratio);overlay.height=Math.round(g.height*ratio);dirty=true}oc.setTransform(overlay.width/g.width,0,0,overlay.height/g.height,0,0);oc.clearRect(0,0,g.width,g.height);oc.imageSmoothingEnabled=true;if(footOverlay.width!==overlay.width||footOverlay.height!==overlay.height){footOverlay.width=overlay.width;footOverlay.height=overlay.height}fc.setTransform(overlay.width/g.width,0,0,overlay.height/g.height,0,0);fc.clearRect(0,0,g.width,g.height);fc.imageSmoothingEnabled=true;
  }
- // Torso, shoulders, whole arms and hands are one painted surface.
- // No hand crop, wrist pivot or separate hand transform remains.
- function stick(ctx,hand,tip,mallet,unit){
+ // Painted upper arms stay fixed; wrist and grip move together.
+ function stick(ctx,hand,tip,mallet,unit,front=false){
   const dx=tip.x-hand.x,dy=tip.y-hand.y,len=Math.hypot(dx,dy)||1,ux=dx/len,uy=dy/len,r=mallet?Math.max(5,unit*12):Math.max(2,unit*4);
-  const center={x:tip.x,y:tip.y-r};ctx.save();ctx.lineCap='round';ctx.strokeStyle='#b18d60';ctx.lineWidth=Math.max(3,unit*9);ctx.beginPath();ctx.moveTo(hand.x-ux*28*unit,hand.y-uy*28*unit);ctx.lineTo(center.x,center.y);ctx.stroke();ctx.strokeStyle='#e5c99f';ctx.lineWidth=Math.max(2,unit*5);ctx.stroke();const grad=ctx.createRadialGradient(center.x-r*.3,center.y-r*.4,1,center.x,center.y,r);grad.addColorStop(0,mallet?'#53626a':'#ecd1a0');grad.addColorStop(1,mallet?'#202e35':'#b4854e');ctx.fillStyle=grad;ctx.beginPath();ctx.arc(center.x,center.y,r,0,Math.PI*2);ctx.fill();ctx.restore();return {x:center.x,y:center.y+r};
+  const center={x:tip.x,y:tip.y-r};ctx.save();ctx.lineCap='round';ctx.strokeStyle='#b18d60';ctx.lineWidth=Math.max(3,unit*9);ctx.beginPath();
+  // The butt stays behind the palm. Only the small thumb/index fulcrum
+  // covers the forward shaft; the rest emerges in front of the curled fingers.
+  const start=front?7:-28;
+  ctx.moveTo(hand.x+ux*start*unit,hand.y+uy*start*unit);ctx.lineTo(center.x,center.y);ctx.stroke();ctx.strokeStyle='#e5c99f';ctx.lineWidth=Math.max(2,unit*5);ctx.stroke();const grad=ctx.createRadialGradient(center.x-r*.3,center.y-r*.4,1,center.x,center.y,r);grad.addColorStop(0,mallet?'#53626a':'#ecd1a0');grad.addColorStop(1,mallet?'#202e35':'#b4854e');ctx.fillStyle=grad;ctx.beginPath();ctx.arc(center.x,center.y,r,0,Math.PI*2);ctx.fill();ctx.restore();return {x:center.x,y:center.y+r};
  }
  function tambourine(ctx,p,r){
   ctx.save();const skin=ctx.createRadialGradient(p.x-r*.3,p.y-r*.3,1,p.x,p.y,r);skin.addColorStop(0,'#fff1ce');skin.addColorStop(1,'#d0b57f');ctx.fillStyle='#98623d';ctx.beginPath();ctx.ellipse(p.x,p.y+5,r,r*.86,0,0,Math.PI*2);ctx.fill();ctx.fillStyle=skin;ctx.strokeStyle='#bc9158';ctx.lineWidth=6;ctx.beginPath();ctx.ellipse(p.x,p.y,r*.92,r*.79,0,0,Math.PI*2);ctx.fill();ctx.stroke();for(let i=0;i<8;i++){const a=i*Math.PI/4,x=p.x+Math.cos(a)*r*.96,y=p.y+Math.sin(a)*r*.82;ctx.fillStyle='#b7bdb5';ctx.strokeStyle='#758278';ctx.lineWidth=1.4;for(const off of [-2,2]){ctx.beginPath();ctx.ellipse(x,y+off,7,3,a,0,Math.PI*2);ctx.fill();ctx.stroke()}}ctx.restore();
@@ -51,7 +54,7 @@
   const style=kind==='shaker'?'shaker':kind==='keyboard'||kind==='tambourine'?'open':'grip',pose=torso.pose(style,levels,expression,kind==='drum');
   ctx.drawImage(pose.body,cx-170*s,cy-650*s,340*s,680*s);
   // Arm surfaces are drawn once on the foreground overlay after the tools.
-  const world=p=>({x:cx+(p.x-170)*s,y:cy+(p.y-650)*s+bob}),contacts=[],targets=layout.targets;
+  const world=p=>({x:cx+(p.x-170)*s,y:cy+(p.y-650)*s+bob}),contacts=[],forwardTools=[],targets=layout.targets;
   const hands=pose.contacts.map(world),shoulders=pose.shoulders.map(world);
   for(let side=0;side<2;side++)skeleton.push({side,shoulder:shoulders[side],contact:hands[side],maximum:160*s,continuous:true});
   const reduced=st.reduced;
@@ -65,11 +68,13 @@
     const tip={x:target.x,y:target.y-elevation};
     if(kind==='xylophone'){
      const contact=stick(oc,hand,tip,true,s);contacts.push({arm,index,tip:contact,target,shaftLength:Math.hypot(tip.x-hand.x,tip.y-hand.y)/s,contact:hit?.contact||false});
+     forwardTools.push({hand,tip,mallet:true});
     }else contacts.push({arm,index,tip:hand,target,reachable:Math.hypot(hand.x-target.x,hand.y-target.y)<2*s,contact:hit?.held||hit?.contact||false});
    }else if(kind==='drum'){
     const index=hit?.index??(arm?1:3),target=targets[index];if(!target)continue;
     const tip={x:target.x+((index===3||index===4)?(index===3?-.22:.22)*g.width*.12:0),y:target.y-(hit?lift*amplitude:12*s)};
     const adjusted={x:tip.x,y:target.y},contact=stick(oc,hand,tip,false,s);
+    forwardTools.push({hand,tip,mallet:false});
     contacts.push({arm,index,tip:contact,target:adjusted,shaftLength:Math.hypot(tip.x-hand.x,tip.y-hand.y)/s,contact:hit?.contact||false});
    }else if(kind==='shaker'&&arm===1){
     // The maraca, handle and gripping fingers are painted and transformed
@@ -78,6 +83,7 @@
    }else if(kind==='tambourine')contacts.push({arm,index:0,tip:hand,target:hand,contact:arm===1&&hit?.contact||false});
   }
   torso.front(oc,pose,cx,cy,s,bob);
+  for(const tool of forwardTools)stick(oc,tool.hand,tool.tip,tool.mallet,s,true);
   if(kind==='drum'){
    // The bass pedal is placed to the musician's side of the kick shell.
    // A short orange leg connects it to Pippo; there is no loose floating foot.
