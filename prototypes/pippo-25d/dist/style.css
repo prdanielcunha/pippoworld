@@ -179,7 +179,7 @@ body[data-activity=garden] .far{background:#9fbe8e;bottom:25%;height:30%;opacity
 
 /* v32: leave visible space for real shafts between grip and contact surface. */
 #musicPanel[data-hands=clean-wrists-37][data-instrument=keyboard] #keys{bottom:10%}
-#musicPanel[data-hands=clean-wrists-37][data-instrument=xylophone] #keys{bottom:8%}
+#musicPanel[data-hands=clean-wrists-37][data-instrument=xylophone] #keys{bottom:12%}
 #musicPanel[data-hands=clean-wrists-37] #drumKit .snare,#musicPanel[data-hands=clean-wrists-37] #drumKit .tom{top:68%}
 #musicPanel[data-hands=clean-wrists-37] #drumKit .hihat,#musicPanel[data-hands=clean-wrists-37] #drumKit .cymbal{top:62%}
 
