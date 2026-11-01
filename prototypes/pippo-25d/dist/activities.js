@@ -46,7 +46,7 @@
   playGesture(id,index);$('musicPanel').dataset.held=String(held.size);status(prefs.muted?'Som desligado. Você pode ligar nos ajustes.':instrument==='keyboard'||instrument==='xylophone'?notes[index]+'.':'Você tocou.');
  }
  function end(id,oneShot=false,cancelled=false){window.PippoMusicRig?.performance.release(id);const h=held.get(id);if(!h)return;held.delete(id);if(cancelled||instrument==='keyboard'&&!oneShot)audio.release(id);$('musicPanel').dataset.held=String(held.size);if(![...held.values()].some(v=>v.element===h.element))h.element.classList.remove('playing');if(held.size===0){replyWait=1250;status('Pippo está ouvindo…')}}
- const drumParts=[...document.querySelectorAll('[data-piece]')];
+ const drumParts=[...document.querySelectorAll('[data-piece]')].sort((a,b)=>Number(a.dataset.piece)-Number(b.dataset.piece));
  function pointerControl(element,index){
   element.addEventListener('pointerdown',e=>{if(e.button>0||e.pointerType==='touch'&&useTouchEvents)return;e.preventDefault();if(e.pointerType!=='touch')element.focus({preventScroll:true});try{element.setPointerCapture(e.pointerId)}catch{}start('pointer'+e.pointerId,index,element);const h=held.get('pointer'+e.pointerId);if(h){h.x=e.clientX;h.y=e.clientY}});
   element.addEventListener('pointermove',e=>{const id='pointer'+e.pointerId,h=held.get(id);if(instrument!=='shaker'||!h||blocked||game.getState().paused)return;if(Math.hypot(e.clientX-h.x,e.clientY-h.y)>18){playGesture(id,0);h.x=e.clientX;h.y=e.clientY}});
@@ -72,7 +72,7 @@
  for(const event of ['touchend','touchcancel'])$('musicPanel').addEventListener(event,e=>{e.preventDefault();for(const t of e.changedTouches)end('touch'+t.identifier,false,event==='touchcancel')},{passive:false});
  document.addEventListener('keydown',e=>{
   if(activity!=='music'||blocked||$('comparison').open||e.target?.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName)||!/^Digit[1-8]$/.test(e.code)||e.repeat)return;
-  e.preventDefault();const i=Number(e.code.slice(-1))-1;if(instrument==='drum'?i>4:!['keyboard','xylophone'].includes(instrument)&&i!==0)return;keyboardHeld.add(e.code);start(e.code,i,['keyboard','xylophone'].includes(instrument)?document.querySelector('[data-note="'+i+'"]'):instrument==='drum'?drumParts[i]:$('percussion'));
+  e.preventDefault();const i=Number(e.code.slice(-1))-1;if(instrument==='drum'?i>6:!['keyboard','xylophone'].includes(instrument)&&i!==0)return;keyboardHeld.add(e.code);start(e.code,i,['keyboard','xylophone'].includes(instrument)?document.querySelector('[data-note="'+i+'"]'):instrument==='drum'?drumParts[i]:$('percussion'));
  });
  document.addEventListener('keyup',e=>{keyboardHeld.delete(e.code);end(e.code)});window.addEventListener('blur',()=>{halt()});
  for(const b of document.querySelectorAll('[data-place]'))b.onclick=()=>setActivity(b.dataset.place);

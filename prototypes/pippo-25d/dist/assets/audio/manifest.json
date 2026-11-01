@@ -494,6 +494,44 @@
       "processing": "mono mix, trim, peak gain, 1 ms attack and short tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
       "sha256": "93c6555f14d032a8fc702737a3fa38c36a645cfb07e72d6cacf2de18224baf9c",
       "bytes": 24285
+    },
+    {
+      "id": "tom-high",
+      "file": "tom-high.mp3",
+      "duration": 0.6290249433106576,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "sources/v37/audio/tom-high.flac",
+      "source_url": "https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/dev/etc/samples/drum_tom_hi_soft.flac",
+      "source_page": "https://github.com/sonic-pi-net/sonic-pi/blob/dev/etc/samples/README.md",
+      "source_sha256": "33717a5c456c8d7783226a85e4809f298bfec0e1eb2772da41005757ac8e9124",
+      "source_start": 0,
+      "source_end": 0.6290249433106576,
+      "author": "menegass / Freesound; trimmed by Sonic Pi contributors",
+      "license": "CC0-1.0",
+      "processing": "mono mix, peak gain, 1 ms attack and 5 ms tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "fa5ff7f3be338c0e99ee3fed045e61058cdc094feface15e1030b5a7660fccea",
+      "bytes": 11328
+    },
+    {
+      "id": "floor-tom",
+      "file": "floor-tom.mp3",
+      "duration": 0.8634013605442177,
+      "note": null,
+      "sample_rate": 44100,
+      "channels": 1,
+      "source_file": "sources/v37/audio/floor-tom.flac",
+      "source_url": "https://raw.githubusercontent.com/sonic-pi-net/sonic-pi/dev/etc/samples/drum_tom_lo_soft.flac",
+      "source_page": "https://github.com/sonic-pi-net/sonic-pi/blob/dev/etc/samples/README.md",
+      "source_sha256": "473adf163ce22285b633d2a7f7c673a9f1d0820b0ea184cb497ee45d66c939c3",
+      "source_start": 0,
+      "source_end": 0.8634013605442177,
+      "author": "menegass / Freesound; trimmed by Sonic Pi contributors",
+      "license": "CC0-1.0",
+      "processing": "mono mix, peak gain, 1 ms attack and 5 ms tail fade, MP3 128 kbit/s; no EQ, synthesis, pitch shifting or reverb",
+      "sha256": "7c6cba36d40590d5a684796e1b3abaade785dbbf7c01257f652b22bfb5b0a797",
+      "bytes": 15090
     }
   ],
   "instruments": {
@@ -564,6 +602,12 @@
       ],
       [
         "cymbal"
+      ],
+      [
+        "floor-tom"
+      ],
+      [
+        "tom-high"
       ]
     ],
     "shaker": [

@@ -7,7 +7,7 @@
  function prepare(){
   if(loading)return loading;api.failed=false;
   const load=src=>new Promise((resolve,reject)=>{const i=new Image;i.onload=()=>resolve(i);i.onerror=reject;i.src=src});
-  loading=Promise.all([load('assets/music-render-v36/body.png'),load('assets/music-render-v36/arms.png'),load('assets/music-render-v36/front.png'),load('assets/music-render-v35/feet.png'),fetch('assets/music-render-v36/manifest.json').then(r=>{if(!r.ok)throw Error('music render manifest');return r.json()})]).then(([body,arms,front,foot,meta])=>{
+  loading=Promise.all([load('assets/music-render-v37/body.png'),load('assets/music-render-v37/static.png'),load('assets/music-render-v37/moving.png'),load('assets/music-render-v37/feet.png'),fetch('assets/music-render-v37/manifest.json').then(r=>{if(!r.ok)throw Error('music render manifest');return r.json()})]).then(([body,arms,front,foot,meta])=>{
    image=body;feetImage=foot;renderMeta=meta;torso=PippoMusicTorso.create(body,arms,front,meta);bodyAlpha.length=0;
    // Display sources are immutable PNG images. Hit testing uses prepared alpha
    // rows and never reads/writes the canvases containing the face or feet.
@@ -23,7 +23,7 @@
  function surface(el,scene,kind,index){if(!el)return null;return PippoPerformance.contact(el.getBoundingClientRect(),scene,kind,index)}
  function measure(g,kind){
   const scene=document.getElementById('pippo').getBoundingClientRect();
-  const targets=Array.from({length:kind==='drum'?5:8},(_,i)=>surface(document.querySelector(kind==='drum'?'[data-piece="'+i+'"]':'[data-note="'+i+'"]'),scene,kind,i));
+  const targets=Array.from({length:kind==='drum'?7:8},(_,i)=>surface(document.querySelector(kind==='drum'?'[data-piece="'+i+'"]':'[data-note="'+i+'"]'),scene,kind,i));
   return {targets,width:g.width,height:g.height,kind};
  }
  function ensure(g){
@@ -40,23 +40,23 @@
   ctx.save();const skin=ctx.createRadialGradient(p.x-r*.3,p.y-r*.3,1,p.x,p.y,r);skin.addColorStop(0,'#fff1ce');skin.addColorStop(1,'#d0b57f');ctx.fillStyle='#98623d';ctx.beginPath();ctx.ellipse(p.x,p.y+5,r,r*.86,0,0,Math.PI*2);ctx.fill();ctx.fillStyle=skin;ctx.strokeStyle='#bc9158';ctx.lineWidth=6;ctx.beginPath();ctx.ellipse(p.x,p.y,r*.92,r*.79,0,0,Math.PI*2);ctx.fill();ctx.stroke();for(let i=0;i<8;i++){const a=i*Math.PI/4,x=p.x+Math.cos(a)*r*.96,y=p.y+Math.sin(a)*r*.82;ctx.fillStyle='#b7bdb5';ctx.strokeStyle='#758278';ctx.lineWidth=1.4;for(const off of [-2,2]){ctx.beginPath();ctx.ellipse(x,y+off,7,3,a,0,Math.PI*2);ctx.fill();ctx.stroke()}}ctx.restore();
  }
  const api=window.PippoMusicRig={ready:false,performance,prepare,clear,inspect:()=>lastHit,draw(ctx,g,st){
-  if(!image)return null;ensure(g);skeleton.length=0;const kind=st.musicInstrument||'keyboard',model=performance.snapshot(),h=Math.min(g.height*.77,g.width*1.28);const musicPanel=document.getElementById('musicPanel');musicPanel.style.setProperty('--rig-height',h+'px');if(musicPanel.dataset.rig!=='contact-23'){musicPanel.dataset.rig='contact-23';musicPanel.dataset.hands='hands-only-36';dirty=true}
-  if(musicPanel.dataset.hands!=='hands-only-36'){musicPanel.dataset.hands='hands-only-36';dirty=true}
+  if(!image)return null;ensure(g);skeleton.length=0;const kind=st.musicInstrument||'keyboard',model=performance.snapshot(),h=Math.min(g.height*.77,g.width*1.28);const musicPanel=document.getElementById('musicPanel');musicPanel.style.setProperty('--rig-height',h+'px');if(musicPanel.dataset.rig!=='contact-23'){musicPanel.dataset.rig='contact-23';musicPanel.dataset.hands='clean-wrists-37';dirty=true}
+  if(musicPanel.dataset.hands!=='clean-wrists-37'){musicPanel.dataset.hands='clean-wrists-37';dirty=true}
   if(dirty||!layout||layout.kind!==kind){layout=measure(g,kind);dirty=false}
   const s=h/650,cx=g.width*.5,cy=g.height*(kind==='drum'?.83:.89)-(kind==='drum'?35:kind==='xylophone'?20:0)*s;
   const wanted=model.energy>.65?2:model.energy>.08?1:0;expression=wanted;
   const bob=0; // The body/seat/neck never bob when a hand plays.
   // One complete registered figure per frame: no double face during transitions.
-  const levels=model.hands.map(hit=>st.reduced||!hit?.active?0:kind==='keyboard'&&hit.held?-1:Math.round(hit.lift*(kind==='keyboard'?6:8)));
+  const levels=model.hands.map(hit=>st.reduced||!hit?.active?0:kind==='keyboard'&&hit.held?-1:(kind==='shaker'?Math.sin(hit.q*Math.PI*2)*8:hit.lift*(kind==='keyboard'?6:8)));
   const style=kind==='shaker'?'shaker':kind==='keyboard'||kind==='tambourine'?'open':'grip',pose=torso.pose(style,levels,expression,kind==='drum');
   ctx.drawImage(pose.body,cx-170*s,cy-650*s,340*s,680*s);
-  ctx.drawImage(pose.canvas,cx-230*s,cy-650*s,460*s,680*s);
+  // Arm surfaces are drawn once on the foreground overlay after the tools.
   const world=p=>({x:cx+(p.x-170)*s,y:cy+(p.y-650)*s+bob}),contacts=[],targets=layout.targets;
   const hands=pose.contacts.map(world),shoulders=pose.shoulders.map(world);
   for(let side=0;side<2;side++)skeleton.push({side,shoulder:shoulders[side],contact:hands[side],maximum:160*s,continuous:true});
   const reduced=st.reduced;
   if(kind==='tambourine')tambourine(oc,{x:cx,y:cy-128*s},88*s);
-  for(let arm=0;arm<2;arm++){
+  for(const arm of (kind==='drum'?[1,0]:[0,1])){
    const hit=model.hands[arm],hand=hands[arm],lift=hit?(reduced?0:hit.lift):.35;
    const amplitude=Math.min(g.height*.09,Math.max(18,model.period*.12));
    if(kind==='keyboard'||kind==='xylophone'){
@@ -67,8 +67,8 @@
      const contact=stick(oc,hand,tip,true,s);contacts.push({arm,index,tip:contact,target,shaftLength:Math.hypot(tip.x-hand.x,tip.y-hand.y)/s,contact:hit?.contact||false});
     }else contacts.push({arm,index,tip:hand,target,reachable:Math.hypot(hand.x-target.x,hand.y-target.y)<2*s,contact:hit?.held||hit?.contact||false});
    }else if(kind==='drum'){
-    const index=hit?.index??(arm?3:2),target=targets[index];if(!target)continue;
-    const tip={x:target.x+(index>=3?(index===3?-.22:.22)*g.width*.12:0),y:target.y-(hit?lift*amplitude:12*s)};
+    const index=hit?.index??(arm?1:3),target=targets[index];if(!target)continue;
+    const tip={x:target.x+((index===3||index===4)?(index===3?-.22:.22)*g.width*.12:0),y:target.y-(hit?lift*amplitude:12*s)};
     const adjusted={x:tip.x,y:target.y},contact=stick(oc,hand,tip,false,s);
     contacts.push({arm,index,tip:contact,target:adjusted,shaftLength:Math.hypot(tip.x-hand.x,tip.y-hand.y)/s,contact:hit?.contact||false});
    }else if(kind==='shaker'&&arm===1){
@@ -94,13 +94,13 @@
     fc.fillStyle='#d6c9ac';fc.beginPath();fc.ellipse(p.beater.x,p.beater.y,7*s,9*s,-.15,0,Math.PI*2);fc.fill();
     // Reuse the real painted ankle and webbed foot, registered at its original hip.
     // The same foot was removed from the body pixels: exactly two feet, never three.
-    fc.save();fc.translate(cx+65*s,cy-103*s+bob);fc.scale(1,1+press*.045);
+    fc.save();fc.translate(cx-95*s,cy-103*s);fc.scale(1,1+press*.045);
     fc.drawImage(feetImage,0,0,120,118,-45*s,-12*s,120*s,118*s);fc.restore();
     fc.restore();
     contacts.push({foot:true,index:0,contact:model.foot?.contact||false,pedal:p});
    }
   }
-  const panel=document.getElementById('musicPanel');panel.dataset.armError='0';panel.dataset.bodySurface='continuous';panel.dataset.poseCache=String(torso.cacheSize());panel.dataset.artReady='true';panel.dataset.rig='contact-23';panel.dataset.hands='hands-only-36';panel.dataset.pace=model.pace;panel.dataset.expression=['attentive','focused','delighted'][expression];panel.dataset.stroke=String(model.serial);
+  const panel=document.getElementById('musicPanel');panel.dataset.armError='0';panel.dataset.bodySurface='continuous';panel.dataset.poseCache=String(torso.cacheSize());panel.dataset.artReady='true';panel.dataset.rig='contact-23';panel.dataset.hands='clean-wrists-37';panel.dataset.pace=model.pace;panel.dataset.expression=['attentive','focused','delighted'][expression];panel.dataset.stroke=String(model.serial);
   lastHit={motion:{levels:[...levels],rotations:pose.rotations,bodyStable:true,paintedShaker:kind==='shaker'},arms:skeleton.map(a=>({...a})),kind,serial:model.serial,pace:model.pace,expression:panel.dataset.expression,contacts,stage:{width:g.width,height:g.height}};
   return {pose:'music_rig_'+kind+'_'+model.serial,hit:{alpha:bodyAlpha[expression],width:340,height:680,cx,cy,scale:s,stretch:1,anchorX:170,anchorY:650,headBottom:330}};
  }};

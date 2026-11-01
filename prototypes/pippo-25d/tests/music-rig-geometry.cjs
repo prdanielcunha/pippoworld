@@ -26,7 +26,7 @@ const document={
  querySelector:selector=>{
   const index=Number((selector.match(/"(\d+)"/)||[])[1]||0);
   if(selector.includes('data-piece')){
-   const positions=[[.44,.72,.3,.22],[.58,.68,.17,.11],[.33,.68,.14,.12],[.74,.62,.2,.06],[.20,.62,.2,.06]];
+   const positions=[[.44,.72,.3,.22],[.58,.68,.17,.11],[.33,.68,.14,.12],[.74,.62,.2,.06],[.20,.62,.2,.06],[.12,.73,.24,.18],[.50,.60,.20,.14]];
    const [x,y,w,h]=positions[index];
    return {getBoundingClientRect:()=>({left:x*width,top:y*height,width:w*width,height:h*height,
     right:(x+w)*width,bottom:(y+h)*height})};
@@ -37,7 +37,7 @@ const document={
  }
 };
 const window={devicePixelRatio:2,addEventListener(){}};
-const context=vm.createContext({document,window,fetch:async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync('dist/assets/music-render-v36/manifest.json','utf8'))}),Image:FakeImage,ResizeObserver:class{observe(){}},Uint8Array,Uint8ClampedArray});
+const context=vm.createContext({document,window,fetch:async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync('dist/assets/music-render-v37/manifest.json','utf8'))}),Image:FakeImage,ResizeObserver:class{observe(){}},Uint8Array,Uint8ClampedArray});
 for(const file of ['music-performance.js','music-anatomy.js','music-torso.js','music-rig.js']){
  vm.runInContext(fs.readFileSync('dist/'+file,'utf8'),context,{filename:file});
 }
@@ -51,12 +51,12 @@ const rig=window.PippoMusicRig;
   const drawing=new Canvas().getContext();
   for(const kind of ['keyboard','xylophone','drum','tambourine','shaker']){
    rig.performance.reset(kind);panel.dataset.instrument=kind;
-   const count=kind==='drum'?5:kind==='keyboard'||kind==='xylophone'?8:1;
+   const count=kind==='drum'?7:kind==='keyboard'||kind==='xylophone'?8:1;
    for(let index=0;index<count;index++){
     rig.performance.strike({instrument:kind,index,id:'touch'+index});
     const result=rig.draw(drawing,{width,height,bodyHeight:height*.58},{musicInstrument:kind,reduced:false});
     assert.ok(result?.hit?.width===340,'complete Pippo body remains the original source width');
-    assert.equal(panel.dataset.hands,'hands-only-36');
+    assert.equal(panel.dataset.hands,'clean-wrists-37');
     const inspected=rig.inspect();
     assert.equal(inspected.kind,kind);
     for(const a of inspected.arms){
@@ -90,9 +90,9 @@ const rig=window.PippoMusicRig;
    }
   }
  }
- assert.equal(scenarios,69);
+ assert.equal(scenarios,75);
  assert.equal(pedals,3);
  assert.ok(contacts>=30,'tool tips still reach all pieces and bars');
- assert.equal(registeredFrames,483);
+ assert.equal(registeredFrames,525);
  console.log('PASS: '+registeredFrames+' registered stroke frames; '+scenarios+' geometry scenarios, '+contacts+' precise active contacts, '+pedals+' pedal checks across 320/390/940 widths');
 })().catch(error=>{console.error(error);process.exitCode=1});

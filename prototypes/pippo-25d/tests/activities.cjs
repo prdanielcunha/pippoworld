@@ -5,7 +5,7 @@ class Element{
 }
 const nodes=new Map;function $(id){if(!nodes.has(id))nodes.set(id,new Element(id));return nodes.get(id)}
 const keys=Array.from({length:8},(_,i)=>new Element('key'+i,{note:String(i)})),places=['yard','music','garden'].map(place=>new Element(place,{place})),instruments=['keyboard','drum','xylophone','shaker','tambourine'].map(instrument=>new Element(instrument,{instrument})),all=[...keys,...places,...instruments];
-const drums=Array.from({length:5},(_,i)=>new Element('drum'+i,{piece:String(i)}));all.push(...drums);
+const drums=Array.from({length:7},(_,i)=>new Element('drum'+i,{piece:String(i)}));all.push(...drums);
 const events={},body=new Element('body'),storage=new Map;let paused=false,selected,reactions=0;const audioEvents=[];
 const audio={play(...args){audioEvents.push(['play',...args])},release(id){audioEvents.push(['release',id])},suspend(){audioEvents.push(['suspend'])},setVolume(){},setMuted(){}};
 const game={getState:()=>({paused,reduced:false}),setReduced(){},setActivity(v){selected=v},react(){reactions++}};

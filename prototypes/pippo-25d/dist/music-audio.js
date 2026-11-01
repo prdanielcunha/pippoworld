@@ -14,7 +14,7 @@ const PippoAudio=(()=>{
   function load(){
    if(loading)return loading;
    loading=(async()=>{
-    init();const response=await fetcher('assets/audio/manifest.json?v=recorded-music-21');if(!response.ok)throw Error('sample-manifest');manifest=await response.json();
+    init();const response=await fetcher('assets/audio/manifest.json?v=recorded-music-37');if(!response.ok)throw Error('sample-manifest');manifest=await response.json();
     const items=manifest.samples.filter(s=>!buffers.has(s.id));let next=0;
     await Promise.all(Array.from({length:4},async()=>{while(next<items.length){const s=items[next++],r=await fetcher('assets/audio/'+s.file);if(!r.ok)throw Error('sample-file');const bytes=await r.arrayBuffer();const b=await context.decodeAudioData(bytes);buffers.set(s.id,b)}}));onReady();return true;
    })().catch(error=>{loading=null;onError('load');throw error});return loading;

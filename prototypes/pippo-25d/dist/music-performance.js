@@ -14,7 +14,7 @@ const PippoPerformance=(()=>{
    if(kind==='drum'&&index===0){foot=hit;return hit}
    let arm;
    if(kind==='tambourine'||kind==='shaker')arm=1;
-   else if(kind==='drum'){arm=index===1||index===3?1:0;if([...held.values()].some(v=>v.arm===arm&&v.index!==index))arm=1-arm;}
+   else if(kind==='drum'){arm=index===1||index===6?1:0;if([...held.values()].some(v=>v.arm===arm&&v.index!==index))arm=1-arm;}
    else {
     const other=hands.map((h,i)=>({h,i})).find(({h})=>h&&h.index===index);
     if(other)arm=other.i;
@@ -46,7 +46,7 @@ const PippoPerformance=(()=>{
  // Convert actual DOM geometry to one contact surface in scene coordinates.
  function contact(rect,scene,kind,index){
   const x=rect.left-scene.left+rect.width*.5;
-  const y=rect.top-scene.top+rect.height*(kind==='keyboard'?.36:kind==='xylophone'?.30:kind==='drum'?(index===0?.55:index>=3?.48:.08):.5);
+  const y=rect.top-scene.top+rect.height*(kind==='keyboard'?.36:kind==='xylophone'?.30:kind==='drum'?(index===0?.55:(index===3||index===4)?.48:.14):.5);
   return {x,y};
  }
  return {create,contact,clamp};

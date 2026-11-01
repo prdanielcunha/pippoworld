@@ -10,7 +10,7 @@ for(const scale of [.4,.65,1,1.4]){
  assert.deepEqual(JSON.parse(JSON.stringify(A.reach(shoulder,{x:115,y:117},140*scale))),{x:115,y:117},'near targets preserve exact contact');
  const scene={left:20,top:50,width:420,height:540},kick={right:240,bottom:515,top:385,height:130};
  const rest=A.pedal(kick,scene,220,450,scale,0),hit=A.pedal(kick,scene,220,450,scale,1);
- assert.ok(rest.x>kick.right-scene.left,'pedal stays beside rather than on the face of the bass drum');
+ assert.ok(rest.x<220,'right-foot pedal is on viewer left beside the bass drum');
  assert.ok(rest.x<scene.width&&rest.y<scene.height,'pedal visible inside the stage');
  assert.ok(hit.toe.y>rest.toe.y,'downstroke compresses the same connected foot and rocker');
  for(const p of [rest,hit])for(const key of ['hip','heel','toe','beater'])assert.ok(Number.isFinite(p[key].x)&&Number.isFinite(p[key].y));
@@ -18,7 +18,7 @@ for(const scale of [.4,.65,1,1.4]){
 const rig=fs.readFileSync('dist/music-rig.js','utf8'),html=fs.readFileSync('dist/index.html','utf8');
 assert.ok(!rig.includes('ctx.scale(stretch'),'the painted duck wing must never be stretched by target distance');
 assert.ok(rig.includes('PippoMusicTorso.create('),'live music rig must use a connected painted torso');
-assert.ok(rig.includes("dataset.hands='hands-only-36'"),'new construction has its own cache marker');
+assert.ok(rig.includes("dataset.hands='clean-wrists-37'"),'new construction has its own cache marker');
 assert.ok(!rig.includes("load('assets/hands-approved-v27/hands.png')"),'detached hand sheet must not be loaded');
 assert.ok(!rig.includes("load('assets/grips-v30/hands.png')"),'detached fist sheet must not be loaded');
 assert.ok(html.indexOf('music-anatomy.js')<html.indexOf('music-rig.js'),'anatomy loads before rig');
@@ -40,5 +40,5 @@ assert.ok(rig.includes("footOverlay.id='musicFeet'"),'feet must be behind the mu
 assert.ok(!rig.includes("fc.strokeStyle='#ce8330'"),'rejected procedural orange leg must not return');
 console.log('PASS: 960 compact hand targets, source-foot extraction and separate pedal layer');
 
-assert.ok(rig.includes("load('assets/music-render-v36/body.png')"),'complete figure with connected arms must load');
+assert.ok(rig.includes("load('assets/music-render-v37/body.png')"),'complete figure with connected arms must load');
 assert.ok(html.indexOf('music-torso.js')<html.indexOf('music-rig.js'),'torso must be available before rig');

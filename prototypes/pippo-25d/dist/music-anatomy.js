@@ -29,10 +29,10 @@ const PippoMusicAnatomy=(()=>{
  }
  function pedal(kick,scene,cx,cy,s,press=0){
   // Register under the original painted right foot, not the front drum head.
-  const motion=clamp(press,0,1),x=cx+64*s,y=cy+5*s;
-  return {x,y,press:motion,hip:{x:cx+64*s,y:cy-103*s},
+  const motion=clamp(press,0,1),x=cx-64*s,y=cy+5*s;
+  return {x,y,press:motion,hip:{x:cx-64*s,y:cy-103*s},
    heel:{x:x-12*s,y:y-16*s},toe:{x:x+10*s,y:y-(9-4*motion)*s},
-   beater:{x:kick.right-scene.left+2*s,y:cy-46*s}};
+   beater:{x:(Number.isFinite(kick.left)?kick.left:2*(cx+scene.left)-kick.right)-scene.left-2*s,y:cy-46*s}};
  }
  return {clamp,pawRadius,reach,compact,anchored,pedal};
 })();

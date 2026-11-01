@@ -14,11 +14,12 @@ function components(data,w,h){
  return labels;
 }
 (async()=>{
- const dir='dist/assets/music-render-v36/',meta=JSON.parse(fs.readFileSync(dir+'manifest.json'));
- const [body,arms,front]=await Promise.all(['body','arms','front'].map(n=>loadImage(dir+n+'.png'))),rig=T.create(body,arms,front,meta);
+ const dir='dist/assets/music-render-v37/',meta=JSON.parse(fs.readFileSync(dir+'manifest.json'));
+ const [body,arms,front]=await Promise.all(['body','static','moving'].map(n=>loadImage(dir+n+'.png'))),rig=T.create(body,arms,front,meta);
  let checked=0;
  for(const style of meta.styles)for(const levels of [[0,0],[0,8],[8,0],[8,8],[-1,-1],[3,6],[6,3]]){
   const pose=rig.pose(style,levels),c=createCanvas(340,680),ctx=c.getContext('2d');ctx.drawImage(pose.body,0,0);const before=ctx.getImageData(0,0,340,680).data;ctx.drawImage(pose.canvas,-60,0);
+  assert.ok(before[(450*340+170)*4+3]>240,'the original belly must actually be present and opaque');
   const pixels=ctx.getImageData(0,0,340,680).data,b=before;
   for(let y=365;y<550;y++)for(let x=150;x<=200;x++)for(let k=0;k<4;k++)assert.equal(pixels[(y*340+x)*4+k],b[(y*340+x)*4+k],'belly pixels must remain unchanged while hands move');
   const ap=pose.canvas.getContext('2d').getImageData(0,0,460,680).data,labels=components(ap,460,680);
