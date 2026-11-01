@@ -1,6 +1,6 @@
 ## Revisão prioritária 38 — pescoço inteiro e braços como superfície contínua
 
-V37/37a rejeitada em capturas reais: linha de pescoço e antebraço saindo do braço. A v38 preserva a cabeça/pescoço original inteiro de cada expressão até y399 e faz a transição no peito; troca capa/colar separados por uma superfície de braço com deformação contínua, acelerada por WebGL e fallback Canvas. Respiração discreta da figura integrada. Bateria com novas superfícies vetoriais, toms à frente do baterista acima do bumbo, aros e tensores. Ler `prototypes/pippo-25d/docs/CONTINUIDADE_ANATOMICA_V38.md` a partir da raiz. Não restaurar o corte y365 ou tomar conectividade alfa por aceite visual. Main preservada, Safari físico e aceite pendentes.
+V37/37a rejeitada em capturas reais: linha de pescoço e antebraço saindo do braço. A v38 preserva a cabeça/pescoço original inteiro de cada expressão até y399 e faz a transição no peito; troca capa/colar separados por uma superfície de braço com deformação contínua, em Canvas com vértices compartilhados. Respiração discreta da figura integrada. Bateria com novas superfícies vetoriais, toms à frente do baterista acima do bumbo, aros e tensores. Ler `prototypes/pippo-25d/docs/CONTINUIDADE_ANATOMICA_V38.md` a partir da raiz. Não restaurar o corte y365 ou tomar conectividade alfa por aceite visual. Main preservada, Safari físico e aceite pendentes.
 
 ## Revisão prioritária 37 — junções limpas, pulso contínuo e bateria revisada
 

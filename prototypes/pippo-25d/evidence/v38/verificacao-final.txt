@@ -1,0 +1,4 @@
+PASS: full original face/neck through y399 in all expressions; 99 continuous positive/negative arm poses; actual shoulder-to-grasp raster connectivity and no folded skin triangles
+PASS: 525 registered stroke frames; 75 geometry scenarios, 48 precise active contacts, 3 pedal checks across 320/390/940 widths
+PASS: 80 rapid strokes, contact/rebound per onset, adaptive pace/joy, separate kick pedal, crossed hands, neighbouring-note polyphony, held-key release and no replay
+PASS: chord release restores held notes; silent rebound settles fully, no extra attacks

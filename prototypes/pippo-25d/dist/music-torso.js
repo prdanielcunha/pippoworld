@@ -26,30 +26,6 @@ const PippoMusicTorso=(()=>{
     const a={x,y},b={x:x+w,y},c={x:x+w,y:y+h},d={x,y:y+h};return [[a,b,c],[a,c,d]];
    });
   }
-  let gpu=null;
-  if(meta.revision>=38)try{
-   const canvas=document.createElement('canvas');canvas.width=460;canvas.height=680;
-   const gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:true,preserveDrawingBuffer:true,antialias:false});
-   if(gl&&gl.getParameter(gl.VERSION)){
-    const shader=(type,code)=>{const sh=gl.createShader(type);gl.shaderSource(sh,code);gl.compileShader(sh);if(!gl.getShaderParameter(sh,gl.COMPILE_STATUS))throw Error('arm shader');return sh};
-    const program=gl.createProgram();
-    gl.attachShader(program,shader(gl.VERTEX_SHADER,'attribute vec2 position;attribute vec2 uv;varying vec2 tex;void main(){tex=uv;gl_Position=vec4((position.x+60.0)/460.0*2.0-1.0,1.0-position.y/680.0*2.0,0.0,1.0);}'));
-    gl.attachShader(program,shader(gl.FRAGMENT_SHADER,'precision mediump float;varying vec2 tex;uniform sampler2D art;void main(){gl_FragColor=texture2D(art,tex);}'));
-    gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error('arm program');gl.useProgram(program);
-    const buffer=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
-    for(const [name,offset] of [['position',0],['uv',8]]){const loc=gl.getAttribLocation(program,name);gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,16,offset)}
-    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL,true);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
-    const textures={};for(const style of meta.styles){const texture=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,texture);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,whole[style]);textures[style]=texture}
-    gpu={canvas,gl,buffer,textures,arrays:Object.fromEntries(meta.styles.map(style=>[style,new Float32Array(meshes[style].length*12)]))};
-   }
-  }catch(_){gpu=null}
-  function accelerated(style,levels){
-   if(!gpu||gpu.gl.isContextLost())return false;
-   const {gl,canvas,buffer,textures,arrays}=gpu,data=arrays[style];let i=0;
-   for(const vertices of meshes[style])for(const source of vertices){const target=warp(source,levels,style);data[i++]=target.x;data[i++]=target.y;data[i++]=source.x/340;data[i++]=source.y/680}
-   gl.viewport(0,0,460,680);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,data,gl.DYNAMIC_DRAW);gl.bindTexture(gl.TEXTURE_2D,textures[style]);gl.drawArrays(gl.TRIANGLES,0,data.length/4);
-   ctx.drawImage(canvas,-60,0);return true;
-  }
   // A continuous skin field moves a single painted arm. No independently
   // rotated cap/collar can reveal a second forearm edge. UVs share vertices.
   function triangle(texture,source,dest){
@@ -69,8 +45,8 @@ const PippoMusicTorso=(()=>{
    const rotations=levels.map((level,side)=>rotation(level,side,style));
    if(meta.revision<38){ctx.drawImage(caps[style],0,0);for(let side=0;side<2;side++){const w=wrists[style][side];ctx.save();ctx.translate(w.x,w.y);ctx.rotate(rotations[side]);ctx.drawImage(parts[style][side],-w.x,-w.y);ctx.restore()}}
    else if(levels.every(level=>Math.abs(level)<.0001))ctx.drawImage(whole[style],0,0);
-   else if(!accelerated(style,levels))for(const vertices of meshes[style])triangle(whole[style],vertices,vertices.map(p=>warp(p,levels,style)));
-   return {backend:gpu&&!gpu.gl.isContextLost()?'webgl':'canvas',canvas:output,front:output,body:body(expression,drum),levels,rotations,style,contacts:contacts[style].map(p=>warp(p,levels,style)),shoulders:shoulder.map(p=>({...p}))};
+   else for(const vertices of meshes[style])triangle(whole[style],vertices,vertices.map(p=>warp(p,levels,style)));
+   return {backend:'canvas',canvas:output,front:output,body:body(expression,drum),levels,rotations,style,contacts:contacts[style].map(p=>warp(p,levels,style)),shoulders:shoulder.map(p=>({...p}))};
   }
   function front(ctx,pose,cx,cy,s,bob=0){ctx.save();ctx.translate(cx-170*s,cy-650*s);ctx.scale(s,s);ctx.drawImage(pose.canvas,-60,0);ctx.restore()}
   return {pose,front,cacheSize:()=>0};
