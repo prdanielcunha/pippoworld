@@ -1,0 +1,34 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="robots" content="noindex"><title>Inspeção visual v38</title>
+<style>body{font:14px system-ui;background:#d9d6cd;margin:12px}h1{font-size:18px}iframe{width:390px;height:844px;border:0;background:#f5f1e5;display:block}label,nav{margin-bottom:8px;display:block}button,select{font:inherit;padding:6px}#result{max-width:700px}</style>
+<h1>Inspeção v38 · junções do pulso e bateria revisadas</h1>
+<label>Largura do quadro <select id="size"><option>390</option><option>320</option><option>940</option></select></label>
+<nav aria-label="Quadros do movimento"><button data-phase="0">Congelar contato</button><button data-phase="108">Congelar levantamento máximo</button><button data-phase="240">Congelar retorno</button><button data-phase="60">Congelar ida do chocalho</button><button data-phase="180">Congelar volta do chocalho</button></nav>
+<button id="measure">Medir 80 quadros do renderer</button><p id="result" role="status">Escolha Casa da Música e um instrumento no jogo; depois congele o quadro.</p>
+<iframe title="Jogo em inspeção" src="./index.html"></iframe>
+<script>
+const frame=document.querySelector('iframe');document.getElementById('size').onchange=e=>frame.style.width=e.target.value+'px';
+for(const button of document.querySelectorAll('[data-phase]'))button.onclick=async()=>{
+ const w=frame.contentWindow,d=w.document,game=w.pippoStudy;
+ if(game.getState().activity!=='music'){document.getElementById('result').textContent='Escolha Casa da Música primeiro.';return}
+ if(!game.getState().paused)d.getElementById('pause').click();
+ const rig=w.PippoMusicRig;await rig.prepare();const kind=game.getState().musicInstrument||'keyboard';
+ rig.performance.reset(kind);
+ for(const index of (kind==='drum'?[2,1]:kind==='shaker'||kind==='tambourine'?[0]:[1,6]))rig.performance.strike({instrument:kind,index});
+ rig.performance.advance(Number(button.dataset.phase));
+ const c=d.getElementById('pippo'),rect=c.getBoundingClientRect(),ctx=c.getContext('2d');
+ ctx.setTransform(c.width/rect.width,0,0,c.height/rect.height,0,0);ctx.clearRect(0,0,rect.width,rect.height);
+ rig.draw(ctx,{width:rect.width,height:rect.height},{...game.getState(),reduced:false});
+ const snap=rig.performance.snapshot();
+ document.getElementById('result').textContent=kind+' · '+button.textContent+' · níveis '+rig.inspect().motion.levels.join('/')+' · '+rig.inspect().renderer+' · corpo integrado · braço e pegada conectados v38';
+};
+document.getElementById('measure').onclick=async()=>{
+ const w=frame.contentWindow,d=w.document,rig=w.PippoMusicRig,game=w.pippoStudy;
+ if(game.getState().activity!=='music')return;
+ if(!game.getState().paused)d.getElementById('pause').click();await rig.prepare();
+ const canvas=d.getElementById('pippo'),rect=canvas.getBoundingClientRect(),ctx=canvas.getContext('2d'),times=[];
+ for(let i=0;i<80;i++){
+  if(i%15===0)rig.performance.strike({instrument:game.getState().musicInstrument,index:0});rig.performance.advance(16);
+  const t=w.performance.now();ctx.setTransform(canvas.width/rect.width,0,0,canvas.height/rect.height,0,0);ctx.clearRect(0,0,rect.width,rect.height);rig.draw(ctx,{width:rect.width,height:rect.height},{...game.getState(),reduced:false});times.push(w.performance.now()-t);
+ }
+ times.sort((a,b)=>a-b);document.getElementById('result').textContent='80 renderizações · '+rig.inspect().renderer+' · mediana '+times[40].toFixed(2)+' ms · p95 '+times[76].toFixed(2)+' ms · ensaio remoto; não mede FPS nem latência no aparelho físico.';
+};</script></html>

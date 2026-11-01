@@ -37,7 +37,7 @@ const document={
  }
 };
 const window={devicePixelRatio:2,addEventListener(){}};
-const context=vm.createContext({document,window,fetch:async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync('dist/assets/music-render-v37/manifest.json','utf8'))}),Image:FakeImage,ResizeObserver:class{observe(){}},Uint8Array,Uint8ClampedArray});
+const context=vm.createContext({document,window,fetch:async()=>({ok:true,json:async()=>JSON.parse(fs.readFileSync('dist/assets/music-render-v38/manifest.json','utf8'))}),Image:FakeImage,ResizeObserver:class{observe(){}},Uint8Array,Uint8ClampedArray});
 for(const file of ['music-performance.js','music-anatomy.js','music-torso.js','music-rig.js']){
  vm.runInContext(fs.readFileSync('dist/'+file,'utf8'),context,{filename:file});
 }

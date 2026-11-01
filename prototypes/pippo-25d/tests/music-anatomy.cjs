@@ -40,5 +40,5 @@ assert.ok(rig.includes("footOverlay.id='musicFeet'"),'feet must be behind the mu
 assert.ok(!rig.includes("fc.strokeStyle='#ce8330'"),'rejected procedural orange leg must not return');
 console.log('PASS: 960 compact hand targets, source-foot extraction and separate pedal layer');
 
-assert.ok(rig.includes("load('assets/music-render-v37/body.png')"),'complete figure with connected arms must load');
+assert.ok(rig.includes("load('assets/music-render-v38/body.png')"),'complete figure with connected arms must load');
 assert.ok(html.indexOf('music-torso.js')<html.indexOf('music-rig.js'),'torso must be available before rig');

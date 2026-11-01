@@ -199,3 +199,18 @@ body[data-activity=garden] .far{background:#9fbe8e;bottom:25%;height:30%;opacity
 
 #musicPanel[data-hands=clean-wrists-37] #drumKit{inset:auto;top:3%;height:92%;left:50%}
 #musicPanel[data-hands=clean-wrists-37] #drumKit .kick{top:70%}
+/* v38: rack toms in front of the player, ABOVE the bass drum; original
+   vector skins/shells keep crisp rims and tension hardware at mobile scale. */
+#musicPanel[data-hands=clean-wrists-37] #drumKit .drum-piece{border:0;border-radius:0;background-color:transparent;background-repeat:no-repeat;background-size:100% 100%;box-shadow:none;overflow:visible;isolation:auto;padding:0;translate:none;rotate:none;transform:none}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .drum-piece::before,#musicPanel[data-hands=clean-wrists-37] #drumKit .drum-piece::after,#musicPanel[data-hands=clean-wrists-37] #drumKit .drum-skin{display:none}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .kick{background-image:url('assets/drum-kit-v38/kick.svg');translate:-50% 0}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .tom,#musicPanel[data-hands=clean-wrists-37] #drumKit .tom-high,#musicPanel[data-hands=clean-wrists-37] #drumKit .floor{background-image:url('assets/drum-kit-v38/tom.svg')}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .tom,#musicPanel[data-hands=clean-wrists-37] #drumKit .tom-high{z-index:7}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .snare{background-image:url('assets/drum-kit-v38/snare.svg')}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .cymbal{background-image:url('assets/drum-kit-v38/crash.svg')}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .hihat{background-image:url('assets/drum-kit-v38/hihat.svg')}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .piece-name{bottom:27%;font-size:clamp(10px,1.2vw,13px);color:#234937;text-shadow:0 1px 1px #fff7da;pointer-events:none}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .kick .piece-name{bottom:48%}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .cymbal .piece-name,#musicPanel[data-hands=clean-wrists-37] #drumKit .hihat .piece-name{bottom:15%}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .playing,#musicPanel[data-hands=clean-wrists-37] #drumKit .reply{filter:brightness(1.12) drop-shadow(0 0 5px #fff0b6);transform:none;translate:none;rotate:none}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .kick.playing,#musicPanel[data-hands=clean-wrists-37] #drumKit .kick.reply{translate:-50% 0}
