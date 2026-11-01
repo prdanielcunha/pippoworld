@@ -6,7 +6,7 @@
 
 Novas extrações com `image_gen` preservam braços completos, mas eliminam pedaços de barriga/asa das bordas das mãos. Fonte e prompts em `sources/v37/`. O mestre do chocalho v36 é preservado. A barriga, cabeça original, banco e pés não foram regenerados.
 
-O ombro e a parte superior do braço permanecem fixos. O pulso usa uma partição suave da mesma superfície pintada, com sobreposição de penas na junção; mão/cabo/chocalho compartilham uma transformação rígida. Não se move o ombro para alcançar a nota. O movimento agora usa o valor contínuo do relógio do gesto, sem arredondamento em nove poses, e seis operações de desenho em vez da malha de triângulos. Uma única passagem desenha os braços, removendo a sobreposição que colocava um segundo recorte sobre o punho. Nenhum `getImageData/putImageData` foi introduzido no preparo visual do navegador. Corpo e expressão permanecem separados, sem balanço do tronco.
+O ombro e a parte superior do braço permanecem fixos. O pulso usa uma partição suave da mesma superfície pintada, com sobreposição de penas na junção; mão/cabo/chocalho compartilham uma transformação rígida. Não se move o ombro para alcançar a nota. O movimento agora usa o valor contínuo do relógio do gesto, sem arredondamento em nove poses, e poucos desenhos diretos em vez da malha de triângulos. Uma única passagem desenha os braços, removendo a sobreposição que colocava um segundo recorte sobre o punho. Nenhum `getImageData/putImageData` foi introduzido no preparo visual do navegador. Corpo e expressão permanecem separados, sem balanço do tronco.
 
 ## Referência e configuração musical
 

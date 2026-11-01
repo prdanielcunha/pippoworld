@@ -196,3 +196,6 @@ body[data-activity=garden] .far{background:#9fbe8e;bottom:25%;height:30%;opacity
 #musicPanel[data-hands=clean-wrists-37] #drumKit .hihat::after,#musicPanel[data-hands=clean-wrists-37] #drumKit .cymbal::after{display:none}
 #musicPanel[data-hands=clean-wrists-37] #drumKit .piece-name{font-size:clamp(9px,1.1vw,12px);padding:0;text-align:center}
 #musicPanel[data-hands=clean-wrists-37] #drumKit .floor .piece-name{bottom:25%}
+
+#musicPanel[data-hands=clean-wrists-37] #drumKit{inset:auto;top:3%;height:92%;left:50%}
+#musicPanel[data-hands=clean-wrists-37] #drumKit .kick{top:70%}
