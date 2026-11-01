@@ -19,3 +19,11 @@ Mestre: `sources/v39/drum-kit-master.png`; arquivo otimizado do jogo: `dist/asse
 ## Verificação
 
 `painted-kit-v39.py` confere transparência, hashes, sete pontos realmente sobre pele/latão do mestre e registro HTML. Testes de geometria, ritmo e anatomia conferem regressões. A inspeção do navegador deve verificar composição, pontas e seleção dos sete alvos em tamanhos estreitos e amplo. Aceite visual do responsável e Safari/iPhone físico continuam pendentes.
+
+## Retomada e verificação — 01/11/2026
+
+Continuação confirmada a partir de `637b488135226866275b0248a295a9b2bbfe189b`, na branch `fix/painted-drum-kit-v39-20261101`. A main continua preservada em v31. A bateria já estava integrada e salva nesta branch; o endereço estável de teste ainda apontava para a v31.
+
+Reexecutado `scripts/verify-v23.sh` integralmente e o teste da arte v39: todos passaram. Inspeção no Chrome remoto: sete peças acionadas pela interface; composição inteira, contato e levantamento examinados na página de QA em 390 e 320 pixels, além da visualização ampla. Não constitui teste de som por audição, Safari físico, FPS no iPhone ou aceite visual do responsável.
+
+O endereço `https://pippoworld-preview.vercel.app/` foi atualizado para a implantação pronta `dpl_D1xEnPeYUNkH4dwH8h5F8NxKe2CC`, código `637b488`. A atualização usa o mesmo build inspecionado, sem regenerar arte. A validação da bateria pintada agora integra o comando de verificação geral.
