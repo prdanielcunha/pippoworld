@@ -8,6 +8,7 @@ python3 tests/prepared-music-layers.py
 python3 tests/whole-body-v35.py
 python3 tests/prepared-music-v36.py
 python3 tests/prepared-music-v37.py
+python3 tests/painted-kit-v39.py
 python3 tests/recorded-assets.py
 python3 tests/activity-assets.py
 python3 scripts/verify-v23-assets.py
