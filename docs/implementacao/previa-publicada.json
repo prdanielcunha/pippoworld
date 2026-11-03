@@ -1,0 +1,13 @@
+{
+  "provider": "Sites",
+  "projectId": "appgprj_6adff0b8c06881918d9efb2620f35c79",
+  "url": "https://mundo-pippo-avaliacao-20261027.balmythyme13.chatgpt.site",
+  "access": "owner-only; login da mesma conta do responsável",
+  "version": 1,
+  "deploymentId": "appgdep_6adff443e7e08191aa7b144131f5edb3",
+  "deploymentStatus": "succeeded",
+  "gameSourceCommit": "1e052f1606ec0646998d02e44d5cc9901315adbc",
+  "hostingSnapshotCommit": "5a10910769332df900e99bc054460271dc5848ec",
+  "externalHTTPVerification": "blocked by executor CONNECT proxy 403 before reaching Site; native publication/current_live_url confirmed",
+  "artifactVerification": "29 files HTTP 200 + SHA-256 from exact published archive served locally"
+}

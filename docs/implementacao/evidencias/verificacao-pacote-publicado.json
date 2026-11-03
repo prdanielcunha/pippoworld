@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "1e052f1606ec0646998d02e44d5cc9901315adbc",
+  "testedBundle": "/workspace/pippoworld/work/package-audit/dist",
+  "checkedAtUTC": "2026-10-27T00:50:04.851Z",
+  "filesHTTP200AndSHA256Verified": 29,
+  "adultVersionVisible": true,
+  "engineRendered": true,
+  "audioAfterGesture": "running",
+  "errors": [],
+  "failedRequests": [],
+  "scope": "Pacote exato publicado, servido em HTTP local. Não é teste de aparelho físico nem requisição ao domínio externo."
+}

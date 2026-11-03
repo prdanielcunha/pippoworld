@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "1e052f1606ec0646998d02e44d5cc9901315adbc",
+  "scope": "Somente recursos incorporados; arquivos finais planejados no CSV não existem ainda.",
+  "resources": [
+    {
+      "id": "procedural_visuals",
+      "path": "src/scene/yard.ts",
+      "version": "procedural-v1",
+      "bytes": 14479,
+      "sha256": "9054724d59add67406d257dc9734b441f39e1e239dfd2a0c59e0898a991ff3c3",
+      "origin": "Código original do repositório",
+      "license": "Licença de distribuição dos originais a definir pelo titular",
+      "final": false
+    },
+    {
+      "id": "procedural_audio",
+      "path": "src/audio/mixer.ts",
+      "version": "synth-v1",
+      "bytes": 6925,
+      "sha256": "d094896a671a8a177b0c067ee286c6da53ee86c645a7464bde3cf208aec357f3",
+      "origin": "Código original do repositório",
+      "license": "Licença de distribuição dos originais a definir pelo titular",
+      "final": false
+    },
+    {
+      "id": "babylon_notices",
+      "path": "public/THIRD_PARTY_NOTICES.txt",
+      "version": "@babylonjs/core 9.32.0",
+      "bytes": 10261,
+      "sha256": "773ed9a964606cd58f477a8fd3bbb5c20849d5818ac3189695e3a7d9be70f182",
+      "origin": "https://github.com/BabylonJS/Babylon.js",
+      "license": "Apache-2.0 + NOTICE",
+      "final": true
+    }
+  ]
+}
